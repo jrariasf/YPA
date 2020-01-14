@@ -1,0 +1,107 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             xmlns:d="http://xamarin.com/schemas/2014/forms/design"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+             xmlns:prism="http://prismlibrary.com"
+             prism:ViewModelLocator.AutowireViewModel="True"
+             xmlns:local="clr-namespace:YPA.Views.DataTemplates"
+             mc:Ignorable="d"
+             x:Class="YPA.Views.Poblaciones"
+             Title="Poblaciones">
+    
+    <ContentPage.ToolbarItems>
+        <ToolbarItem Text="+"
+                     Clicked="OnNoteAddedClicked" />
+    </ContentPage.ToolbarItems>
+
+    <StackLayout BackgroundColor="Red" >
+        <Grid ColumnSpacing="0" BackgroundColor="#2028F5" Padding="4,0,0,0" >
+            <Grid.RowDefinitions>
+                <RowDefinition Height="Auto" />
+            </Grid.RowDefinitions>
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="*" />
+                <ColumnDefinition Width="*" />
+                <ColumnDefinition Width="*" />
+                <ColumnDefinition Width="*" />
+                <ColumnDefinition Width="*" />
+                <ColumnDefinition Width="*" />
+                <ColumnDefinition Width="*" />
+                <ColumnDefinition Width="*" />
+                <ColumnDefinition Width="*" />
+                <ColumnDefinition Width="*" />
+                <ColumnDefinition Width="*" />
+                <ColumnDefinition Width="*" />
+                <ColumnDefinition Width="*" />
+            </Grid.ColumnDefinitions>
+            <Label Text="AM" Grid.Column="0" HorizontalTextAlignment="Center" TextColor="#F5F00D" />
+            <Label Text="AR" Grid.Column="1" HorizontalTextAlignment="Center" TextColor="#F5F00D" />
+            <Label Text="AP" Grid.Column="2" HorizontalTextAlignment="Center" TextColor="#F5F00D" />
+            <Label Text="R"  Grid.Column="3" HorizontalTextAlignment="Center" TextColor="#F5F00D" />
+            <Label Text="C" Grid.Column="4" HorizontalTextAlignment="Center" TextColor="#F5F00D" />
+            <Label Text="T" Grid.Column="5" HorizontalTextAlignment="Center" TextColor="#F5F00D" />
+            <Label Text="X" Grid.Column="6" HorizontalTextAlignment="Center" TextColor="#F5F00D" />
+            <Label Text="F" Grid.Column="7" HorizontalTextAlignment="Center" TextColor="#F5F00D" />
+            <Label Text="+" Grid.Column="8" HorizontalTextAlignment="Center" TextColor="#F5F00D" />
+            <Label Text="H" Grid.Column="9" HorizontalTextAlignment="Center" TextColor="#F5F00D" />
+            <Label Text="B" Grid.Column="10" HorizontalTextAlignment="Center" TextColor="#F5F00D" />
+            <Label Text="T" Grid.Column="11" HorizontalTextAlignment="Center" TextColor="#F5F00D" />
+            <Label Text="O" Grid.Column="12" HorizontalTextAlignment="Center" TextColor="#F5F00D" />
+        </Grid>
+
+        <ListView x:Name="listView"
+              
+              ItemSelected="OnListViewItemSelected" IsGroupingEnabled="False" 
+              RowHeight="50" SeparatorVisibility="None" BackgroundColor="#184BF2">
+
+
+
+            <ListView.ItemTemplate>
+                <DataTemplate>
+                    <!--
+                <TextCell Text="{Binding nombrePoblacion}"
+                          Detail="{Binding fecUltMod}" />
+                -->
+
+                    <local:CellPoblacion />
+                </DataTemplate>
+            </ListView.ItemTemplate>
+        </ListView>
+
+        <Grid ColumnSpacing="0" BackgroundColor="#2028F5" Padding="4,0,0,0" >
+            <Grid.RowDefinitions>
+                <RowDefinition Height="Auto" />
+            </Grid.RowDefinitions>
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="*" />
+                <ColumnDefinition Width="*" />
+                <ColumnDefinition Width="*" />
+                <ColumnDefinition Width="*" />
+                <ColumnDefinition Width="*" />
+                <ColumnDefinition Width="*" />
+                <ColumnDefinition Width="*" />
+                <ColumnDefinition Width="*" />
+                <ColumnDefinition Width="*" />
+                <ColumnDefinition Width="*" />
+                <ColumnDefinition Width="*" />
+                <ColumnDefinition Width="*" />
+                <ColumnDefinition Width="*" />
+            </Grid.ColumnDefinitions>
+            <Label Text="AM" Grid.Column="0" HorizontalTextAlignment="Center" TextColor="#F5F00D" />
+            <Label Text="AR" Grid.Column="1" HorizontalTextAlignment="Center" TextColor="#F5F00D" />
+            <Label Text="AP" Grid.Column="2" HorizontalTextAlignment="Center" TextColor="#F5F00D" />
+            <Label Text="R"  Grid.Column="3" HorizontalTextAlignment="Center" TextColor="#F5F00D" />
+            <Label Text="C" Grid.Column="4" HorizontalTextAlignment="Center" TextColor="#F5F00D" />
+            <Label Text="T" Grid.Column="5" HorizontalTextAlignment="Center" TextColor="#F5F00D" />
+            <Label Text="X" Grid.Column="6" HorizontalTextAlignment="Center" TextColor="#F5F00D" />
+            <Label Text="F" Grid.Column="7" HorizontalTextAlignment="Center" TextColor="#F5F00D" />
+            <Label Text="+" Grid.Column="8" HorizontalTextAlignment="Center" TextColor="#F5F00D" />
+            <Label Text="H" Grid.Column="9" HorizontalTextAlignment="Center" TextColor="#F5F00D" />
+            <Label Text="B" Grid.Column="10" HorizontalTextAlignment="Center" TextColor="#F5F00D" />
+            <Label Text="T" Grid.Column="11" HorizontalTextAlignment="Center" TextColor="#F5F00D" />
+            <Label Text="O" Grid.Column="12" HorizontalTextAlignment="Center" TextColor="#F5F00D" />
+        </Grid>
+
+    </StackLayout>
+</ContentPage>    

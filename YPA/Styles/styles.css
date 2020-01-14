@@ -1,0 +1,26 @@
+﻿
+^ContentPage {
+  background-color: lightgreen;
+  margin: 20
+}
+
+stacklayout {
+    background-color: red;
+    -xf-spacing: 2;
+}
+
+stacklayout>stacklayout {
+    background-color: orange;
+}
+
+label, entry, editor {
+    font-size: caption;
+}
+
+label {
+    background-color: red; 
+}
+
+entry {
+    background-color: yellow; 
+}

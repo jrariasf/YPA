@@ -1,0 +1,59 @@
+﻿<?xml version="1.0" encoding="UTF-8"?>
+<ViewCell xmlns="http://xamarin.com/schemas/2014/forms" 
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             xmlns:d="http://xamarin.com/schemas/2014/forms/design"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+             mc:Ignorable="d"
+             x:Class="YPA.Views.DataTemplates.CellPoblacion" >
+    <ViewCell.View>
+        <StackLayout Orientation="Vertical" BackgroundColor="#F5FF0D" Margin="0" Padding="0" Spacing="0" VerticalOptions="Fill">
+
+            <StackLayout Orientation="Horizontal" Padding="0" Margin="10,0,0,0">
+                <Label Text="{Binding nombrePoblacion}" FontAttributes="Bold" TextColor="#2028F5" Margin="0" Padding="0">
+                    <Label.GestureRecognizers>
+                        <TapGestureRecognizer Tapped="TappedVerAlbergues" />
+                    </Label.GestureRecognizers>
+                </Label>
+                <Label x:Name="id" Text="{Binding id}" IsVisible="False" />
+                <Label Text="{Binding altitud} " />
+            </StackLayout>
+
+            <!--<StackLayout Orientation="Horizontal" Spacing="0" BackgroundColor="#0A73BC" CascadeInputTransparent="False" HorizontalOptions="FillAndExpand" >-->
+
+            <Grid ColumnSpacing="0" BackgroundColor="#F5FF0D" >
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="*" />
+                </Grid.RowDefinitions>
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="*" />
+                    <ColumnDefinition Width="*" />
+                    <ColumnDefinition Width="*" />
+                    <ColumnDefinition Width="*" />
+                    <ColumnDefinition Width="*" />
+                    <ColumnDefinition Width="*" />
+                    <ColumnDefinition Width="*" />
+                    <ColumnDefinition Width="*" />
+                    <ColumnDefinition Width="*" />
+                    <ColumnDefinition Width="*" />
+                    <ColumnDefinition Width="*" />
+                    <ColumnDefinition Width="*" />
+                    <ColumnDefinition Width="*" />
+                </Grid.ColumnDefinitions>
+                <CheckBox IsChecked="{Binding albergueMunicipal}" IsEnabled="False" Scale="0.6" Grid.Column="0" Color="#2028F5" />
+                <CheckBox IsChecked="{Binding albergueParroquial}" IsEnabled="False" Scale="0.6" Grid.Column="1" Color="#2028F5" />
+                <CheckBox IsChecked="{Binding alberguePrivado}" IsEnabled="False" Scale="0.6" Grid.Column="2" Color="#2028F5" />
+                <CheckBox IsChecked="{Binding restaurante}" IsEnabled="False" Scale="0.6" Grid.Column="3" Color="#2028F5" />
+                <CheckBox IsChecked="{Binding cafeteria}" IsEnabled="False" Scale="0.6" Grid.Column="4" Color="#2028F5" />
+                <CheckBox IsChecked="{Binding tienda}" IsEnabled="False" Scale="0.6" Grid.Column="5" Color="#2028F5" />
+                <CheckBox IsChecked="{Binding cajero}" IsEnabled="False" Scale="0.6" Grid.Column="6" Color="#2028F5" />
+                <CheckBox IsChecked="{Binding fuente}" IsEnabled="False" Scale="0.6" Grid.Column="7" Color="#2028F5" />
+                <CheckBox IsChecked="{Binding farmacia}" IsEnabled="False" Scale="0.6" Grid.Column="8" Color="#2028F5" />
+                <CheckBox IsChecked="{Binding hospital}" IsEnabled="False" Scale="0.6" Grid.Column="9" Color="#2028F5" />
+                <CheckBox IsChecked="{Binding bus}" IsEnabled="False" Scale="0.6" Grid.Column="10" Color="#2028F5" />
+                <CheckBox IsChecked="{Binding tren}" IsEnabled="False" Scale="0.6" Grid.Column="11" Color="#2028F5" />
+                <CheckBox IsChecked="{Binding oficinaDeCorreos}" IsEnabled="False" Scale="0.6" Grid.Column="12" Color="#2028F5" />
+            </Grid>
+
+        </StackLayout>
+    </ViewCell.View>
+</ViewCell>

@@ -1,0 +1,251 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             xmlns:d="http://xamarin.com/schemas/2014/forms/design"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+             mc:Ignorable="d"
+             x:Class="YPA.Views.Formularios.EntryALOJAMIENTOS">
+    <!--
+    <ContentPage.Content>
+        <StackLayout>
+            <Label Text="Welcome to Xamarin.Forms!"
+                VerticalOptions="CenterAndExpand" 
+                HorizontalOptions="CenterAndExpand" />
+        </StackLayout>
+    </ContentPage.Content>
+    -->
+    
+    <ContentPage.Resources>
+        <StyleSheet Source="/Styles/styles.css" />
+    </ContentPage.Resources>
+    
+    <StackLayout Margin="5" BackgroundColor="Orange">
+        
+        <StackLayout Orientation="Horizontal" HeightRequest="40" >
+            <Label Text="nombreAlojamiento:" BackgroundColor="red" VerticalTextAlignment="Center" />
+            <Entry Text="{Binding nombreAlojamiento}"   HorizontalOptions="FillAndExpand" MaxLength="50" FontSize="Micro" />
+        </StackLayout>
+        <StackLayout Orientation="Horizontal">
+            <StackLayout Orientation="Horizontal" HeightRequest="40" >
+                <Label Text="direccion:"  VerticalTextAlignment="Center" />
+                <Entry Text="{Binding direccion}"  HorizontalOptions="FillAndExpand" MaxLength="50" />
+            </StackLayout>
+            <StackLayout Orientation="Horizontal" HeightRequest="40" >
+                <Label Text="idPoblacion:"  VerticalTextAlignment="Center" />
+                <Entry Text="{Binding idPoblacion}"  HorizontalOptions="FillAndExpand" />
+                <Picker x:Name="picker" Title="elige población" >
+                    
+                </Picker>
+            </StackLayout>
+        </StackLayout>
+        <StackLayout Orientation="Horizontal">
+            <StackLayout Orientation="Horizontal" HeightRequest="40" >
+                <Label Text="tipo:"  VerticalTextAlignment="Center" />
+                <Entry Text="{Binding tipo}"  HorizontalOptions="FillAndExpand" MaxLength="10"  />
+            </StackLayout>
+            <StackLayout Orientation="Horizontal" HeightRequest="40" >
+                <Label Text="subTipo:"  VerticalTextAlignment="Center" />
+                <Entry Text="{Binding subTipo}"  HorizontalOptions="FillAndExpand" MaxLength="12" />
+            </StackLayout>
+            <StackLayout Orientation="Horizontal" HeightRequest="40" >
+                <Label Text="latitud:"  VerticalTextAlignment="Center" />
+                <Entry Text="{Binding latitud}"  HorizontalOptions="FillAndExpand" />
+            </StackLayout>
+            <StackLayout Orientation="Horizontal" HeightRequest="40" >
+                <Label Text="longitud:"  VerticalTextAlignment="Center" />
+                <Entry Text="{Binding longitud}"  HorizontalOptions="FillAndExpand" />
+            </StackLayout>
+        </StackLayout>
+        <StackLayout Orientation="Horizontal">
+            <StackLayout Orientation="Horizontal" HeightRequest="40" >
+                <Label Text="personaContacto:"  VerticalTextAlignment="Center" />
+                <Entry Text="{Binding personaContacto}"  HorizontalOptions="FillAndExpand" />
+            </StackLayout>
+            <StackLayout Orientation="Horizontal" HeightRequest="40" >
+                <Label Text="email:"  VerticalTextAlignment="Center" />
+                <Entry Text="{Binding email}"  HorizontalOptions="FillAndExpand" />
+            </StackLayout>
+            <StackLayout Orientation="Horizontal" HeightRequest="40" >
+                <Label Text="web:"  VerticalTextAlignment="Center" />
+                <Entry Text="{Binding web}"  HorizontalOptions="FillAndExpand" />
+            </StackLayout>
+        </StackLayout>
+        <StackLayout Orientation="Horizontal">
+            <StackLayout Orientation="Horizontal" HeightRequest="40" >
+                <Label Text="telefono1:"  VerticalTextAlignment="Center" />
+                <Entry Text="{Binding telefono1}"  HorizontalOptions="FillAndExpand" />
+            </StackLayout>
+            <StackLayout Orientation="Horizontal" HeightRequest="40" >
+                <Label Text="telefono2:"  VerticalTextAlignment="Center" />
+                <Entry Text="{Binding telefono2}"  HorizontalOptions="FillAndExpand" />
+            </StackLayout>
+            <StackLayout Orientation="Horizontal" HeightRequest="40" >
+                <Label Text="telefono3:"  VerticalTextAlignment="Center" />
+                <Entry Text="{Binding telefono3}"  HorizontalOptions="FillAndExpand" />
+            </StackLayout>
+        </StackLayout>
+        <StackLayout Orientation="Horizontal">
+            <StackLayout Orientation="Horizontal" HeightRequest="40" >
+                <Label Text="precio:"  VerticalTextAlignment="Center" />
+                <Entry Text="{Binding precio}"  HorizontalOptions="FillAndExpand" />
+            </StackLayout>
+            <StackLayout Orientation="Horizontal" HeightRequest="40" >
+                <Label Text="disponibilidad:"  VerticalTextAlignment="Center" />
+                <Entry Text="{Binding disponibilidad}"  HorizontalOptions="FillAndExpand" />
+            </StackLayout>
+            <StackLayout Orientation="Horizontal" HeightRequest="40" >
+                <Label Text="numPlazas:"  VerticalTextAlignment="Center" />
+                <Entry Text="{Binding numPlazas}"  HorizontalOptions="FillAndExpand" />
+            </StackLayout>
+            <StackLayout Orientation="Horizontal" HeightRequest="40" >
+                <Label Text="numHabitaciones:"  VerticalTextAlignment="Center" />
+                <Entry Text="{Binding numHabitaciones}"  HorizontalOptions="FillAndExpand" />
+            </StackLayout>
+        </StackLayout>
+        <Grid ColumnSpacing="20">
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="*" />
+                </Grid.RowDefinitions>
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="*" />
+                    <ColumnDefinition Width="*" />
+                </Grid.ColumnDefinitions>
+
+                <StackLayout Orientation="Horizontal" Grid.Column="0" Grid.Row="0" >
+                    <CheckBox IsChecked="{Binding soloPeregrinos}" />
+                    <Label Text="soloPeregrinos" VerticalTextAlignment="Center" />
+                </StackLayout>
+                <StackLayout Orientation="Horizontal" Grid.Column="1" Grid.Row="0" >
+                    <CheckBox IsChecked="{Binding admiteReserva}" />
+                    <Label Text="admiteReserva" VerticalTextAlignment="Center" />
+                </StackLayout>
+         </Grid>
+         <StackLayout Orientation="Horizontal">
+            <StackLayout Orientation="Horizontal" HeightRequest="40" >
+                <Label Text="horaApertura:"  VerticalTextAlignment="Center" />
+                <Entry Text="{Binding horaApertura}"  HorizontalOptions="FillAndExpand" />
+            </StackLayout>
+            <StackLayout Orientation="Horizontal" HeightRequest="40" >
+                <Label Text="horaCierre:"  VerticalTextAlignment="Center" />
+                <Entry Text="{Binding horaCierre}"  HorizontalOptions="FillAndExpand" />
+            </StackLayout>
+         </StackLayout>
+
+        <Grid ColumnSpacing="20">
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="*" />
+                    <RowDefinition Height="*" />
+                    <RowDefinition Height="*" />
+                    <RowDefinition Height="*" />
+                    <RowDefinition Height="*" />
+                    <RowDefinition Height="*" />
+                    <RowDefinition Height="*" />
+                </Grid.RowDefinitions>
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="*" />
+                    <ColumnDefinition Width="*" />
+                    <ColumnDefinition Width="*" />
+                </Grid.ColumnDefinitions>
+
+                <StackLayout Orientation="Horizontal" Grid.Column="0" Grid.Row="0" >
+                    <CheckBox IsChecked="{Binding accesibilidad}" />
+                    <Label Text="accesibilidad" VerticalTextAlignment="Center" />
+                </StackLayout>
+                <StackLayout Orientation="Horizontal" Grid.Column="1" Grid.Row="0" >
+                    <CheckBox IsChecked="{Binding taquillas}" />
+                    <Label Text="taquillas" VerticalTextAlignment="Center" />
+                </StackLayout>
+                <StackLayout Orientation="Horizontal" Grid.Column="2" Grid.Row="0" >
+                    <CheckBox IsChecked="{Binding sabanas}" />
+                    <Label Text="sabanas" VerticalTextAlignment="Center" />
+                </StackLayout>
+                <StackLayout Orientation="Horizontal" Grid.Column="0" Grid.Row="1" >
+                    <CheckBox IsChecked="{Binding mantas}" />
+                    <Label Text="mantas" VerticalTextAlignment="Center" />
+                </StackLayout>
+                <StackLayout Orientation="Horizontal" Grid.Column="1" Grid.Row="1" >
+                    <CheckBox IsChecked="{Binding toallas}" />
+                    <Label Text="toallas" VerticalTextAlignment="Center" />
+                </StackLayout>
+                <StackLayout Orientation="Horizontal" Grid.Column="2" Grid.Row="1" >
+                    <CheckBox IsChecked="{Binding lavadero}" />
+                    <Label Text="lavadero" VerticalTextAlignment="Center" />
+                </StackLayout>
+                <StackLayout Orientation="Horizontal" Grid.Column="0" Grid.Row="2" >
+                    <CheckBox IsChecked="{Binding lavadora}" />
+                    <Label Text="lavadora" VerticalTextAlignment="Center" />
+                </StackLayout>
+                <StackLayout Orientation="Horizontal" Grid.Column="1" Grid.Row="2" >
+                    <CheckBox IsChecked="{Binding secadora}" />
+                    <Label Text="secadora" VerticalTextAlignment="Center" />
+                </StackLayout>
+                <StackLayout Orientation="Horizontal" Grid.Column="2" Grid.Row="2" >
+                    <CheckBox IsChecked="{Binding calefaccion}" />
+                    <Label Text="calefaccion" VerticalTextAlignment="Center" />
+                </StackLayout>
+                <StackLayout Orientation="Horizontal" Grid.Column="0" Grid.Row="3" >
+                    <CheckBox IsChecked="{Binding cocina}" />
+                    <Label Text="cocina" VerticalTextAlignment="Center" />
+                </StackLayout>
+                <StackLayout Orientation="Horizontal" Grid.Column="1" Grid.Row="3" >
+                    <CheckBox IsChecked="{Binding microondas}" />
+                    <Label Text="microondas" VerticalTextAlignment="Center" />
+                </StackLayout>
+                <StackLayout Orientation="Horizontal" Grid.Column="2" Grid.Row="3" >
+                    <CheckBox IsChecked="{Binding frigorifico}" />
+                    <Label Text="frigorifico" VerticalTextAlignment="Center" />
+                </StackLayout>
+                <StackLayout Orientation="Horizontal" Grid.Column="0" Grid.Row="4" >
+                    <CheckBox IsChecked="{Binding maquinaBebidas}" />
+                    <Label Text="maquinaBebidas" VerticalTextAlignment="Center" />
+                </StackLayout>
+                <StackLayout Orientation="Horizontal" Grid.Column="1" Grid.Row="4" >
+                    <CheckBox IsChecked="{Binding maquinaVending}" />
+                    <Label Text="maquinaVending" VerticalTextAlignment="Center" />
+                </StackLayout>
+                <StackLayout Orientation="Horizontal" Grid.Column="2" Grid.Row="4" >
+                    <CheckBox IsChecked="{Binding jardin}" />
+                    <Label Text="jardin" VerticalTextAlignment="Center" />
+                </StackLayout>
+                <StackLayout Orientation="Horizontal" Grid.Column="0" Grid.Row="5" >
+                    <CheckBox IsChecked="{Binding piscina}" />
+                    <Label Text="piscina" VerticalTextAlignment="Center" />
+                </StackLayout>
+                <StackLayout Orientation="Horizontal" Grid.Column="1" Grid.Row="5" >
+                    <CheckBox IsChecked="{Binding bicis}" />
+                    <Label Text="bicis" VerticalTextAlignment="Center" />
+                </StackLayout>
+                <StackLayout Orientation="Horizontal" Grid.Column="2" Grid.Row="5" >
+                    <CheckBox IsChecked="{Binding establo}" />
+                    <Label Text="establo" VerticalTextAlignment="Center" />
+                </StackLayout>
+                <StackLayout Orientation="Horizontal" Grid.Column="0" Grid.Row="6" >
+                    <CheckBox IsChecked="{Binding mascotas}" />
+                    <Label Text="mascotas" VerticalTextAlignment="Center" />
+                </StackLayout>
+                <StackLayout Orientation="Horizontal" Grid.Column="1" Grid.Row="6" >
+                    <CheckBox IsChecked="{Binding wifi}" />
+                    <Label Text="wifi" VerticalTextAlignment="Center" />
+                </StackLayout>
+            </Grid>
+
+
+            <StackLayout Orientation="Horizontal" HeightRequest="40" >
+                <Label Text="observaciones:"  VerticalTextAlignment="Center" MinimumWidthRequest="80"/>
+                <Editor Text="{Binding observaciones}"  HorizontalOptions="FillAndExpand" MaxLength="300" />
+            </StackLayout>
+
+        <Grid>
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="*" />
+                <ColumnDefinition Width="*" />
+            </Grid.ColumnDefinitions>
+            <Button Text="Save" 
+                    Clicked="OnSaveButtonClicked" />
+            <Button Grid.Column="1"
+                    Text="Delete" 
+                    Clicked="OnDeleteButtonClicked"/>
+        </Grid>
+
+    </StackLayout>
+</ContentPage>

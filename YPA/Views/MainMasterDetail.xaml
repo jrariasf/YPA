@@ -1,0 +1,19 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<MasterDetailPage xmlns="http://xamarin.com/schemas/2014/forms"
+                  xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+                  xmlns:prism="http://prismlibrary.com"
+                  prism:ViewModelLocator.AutowireViewModel="True"
+                  x:Class="YPA.Views.MainMasterDetail">
+
+    <MasterDetailPage.Master>
+        <ContentPage Title="Menu">
+            <StackLayout Padding="20">
+                <!-- TODO: // Update the Layout and add some real menu items  -->
+                <Button Text="Poblaciones" Command="{Binding NavigateCommand}" CommandParameter="NavigationPage/Poblaciones" />
+                <Button Text="Alojamientos" Command="{Binding NavigateCommand}" CommandParameter="NavigationPage/Alojamientos" />
+                <Button Text="Caminos" Command="{Binding NavigateCommand}" CommandParameter="NavigationPage/Caminos" />
+            </StackLayout>
+        </ContentPage>
+    </MasterDetailPage.Master>
+    
+</MasterDetailPage>

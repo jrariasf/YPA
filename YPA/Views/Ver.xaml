@@ -1,0 +1,36 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             xmlns:prism="http://prismlibrary.com"
+             prism:ViewModelLocator.AutowireViewModel="True"
+             xmlns:local="clr-namespace:YPA.Views.DataTemplates"
+             x:Class="YPA.Views.Ver">
+ 
+    <ContentPage.ToolbarItems>
+        <ToolbarItem Name="Ordenar"
+                 Command="{Binding AddCommand}"  >
+            <ToolbarItem.Icon>
+                <OnPlatform x:TypeArguments="FileImageSource"
+                    Android="plus"
+                    WinPhone="Assets/add.png" />
+            </ToolbarItem.Icon>
+        </ToolbarItem>
+    </ContentPage.ToolbarItems>
+
+    <ContentPage.Content>
+        <StackLayout>
+        <Button Text="{Binding nombreBoton, FallbackValue=No Bindinggg}" Command="{Binding MiCoBmando}" CommandParameter="tómalo" />
+        <!-- <Label Text="{Binding nombreBoton}" Command="{Binding MiComando}" CommandParameter="pulsada la label" /> -->
+            <ListView x:Name="listView" ItemsSource="{Binding listaAlojamientos}" Margin="20" >
+            <!-- <ListView x:Name="listView" Margin="20" ItemSelected="OnItemSelected" > -->
+            <!--IsPullToRefreshEnabled="true" RefreshControlColor="Blue"  -->
+            <ListView.ItemTemplate>
+                <DataTemplate>
+                    <!-- <TextCell Text="{Binding nombreLargoCamino}" Detail="{Binding fecUltMod}" /> -->
+                    <local:CellAlojamiento/>
+                </DataTemplate>
+            </ListView.ItemTemplate>
+        </ListView>
+        </StackLayout>
+    </ContentPage.Content>
+</ContentPage>

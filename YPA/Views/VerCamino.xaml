@@ -1,0 +1,79 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             xmlns:d="http://xamarin.com/schemas/2014/forms/design"
+             xmlns:prism="http://prismlibrary.com"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+             
+             mc:Ignorable="d"            
+             xmlns:local="clr-namespace:YPA.Views.DataTemplates"
+             xmlns:converter="clr-namespace:YPA.Views"
+             x:Class="YPA.Views.VerCamino"
+             Title="VerCamino">
+    <!--  xmlns:sys="clr-namespace:System;assembly=mscorlib" -->
+    <ContentPage.ToolbarItems>
+        <ToolbarItem Name="Add"
+                 Command="{Binding AddCommand}"  >
+            <ToolbarItem.Icon>
+                <OnPlatform x:TypeArguments="FileImageSource"
+                    Android="plus"
+                    WinPhone="Assets/add.png" />
+            </ToolbarItem.Icon>
+        </ToolbarItem>
+    </ContentPage.ToolbarItems>
+    <!--
+    <ContentPage.Resources>
+        <ResourceDictionary>
+            <converter:IntToColorStringConverter x:Key="intToColorString" />
+        </ResourceDictionary>
+    </ContentPage.Resources>
+ -->
+    <ContentPage.Content>
+        <ListView x:Name="listView" Margin="20" ItemSelected="OnItemSelected" >
+            <!--IsPullToRefreshEnabled="true" RefreshControlColor="Blue"  -->
+            <ListView.ItemTemplate>
+                <DataTemplate>
+                    <!-- <TextCell Text="{Binding nombreLargoCamino}" Detail="{Binding fecUltMod}" /> -->
+                    <local:CellEtapaCamino/>
+                </DataTemplate>
+            </ListView.ItemTemplate>
+        </ListView>
+
+        <!--
+        <StackLayout BindingContext="{x:Static sys:DateTime.Now}"
+                 HorizontalOptions="Center"
+                 VerticalOptions="Center">
+
+            <Label Text="{Binding Year, StringFormat='The year is {0}'}" />
+            <Label Text="{Binding StringFormat='The month is {0:MMMM}'}" />
+            <Label Text="{Binding Day, StringFormat='The day is {0}'}" />
+            <Label Text="{Binding StringFormat='The time is {0:T}'}" />
+
+            <Label Text="ROTATION"
+               BindingContext="{x:Reference Name=slider}"
+               Rotation="{Binding Path=Value}"
+               FontAttributes="Bold"
+               FontSize="Large"
+               HorizontalOptions="Center"
+               VerticalOptions="CenterAndExpand" />
+
+            <Slider x:Name="slider"
+                Maximum="360"
+                VerticalOptions="CenterAndExpand" />
+
+            <Label BindingContext="{x:Reference slider}"
+               Text="{Binding Value, StringFormat='The angle is {0:F0} degrees'}"
+               FontAttributes="Bold"
+               FontSize="Large"
+               HorizontalOptions="Center"
+               VerticalOptions="CenterAndExpand" />
+
+            <Label Text="{Binding TablaCAMINOS[0].nombreLargoCamino, StringFormat='Vamos a poner el nombre largo: {0}  Adiossss'}" TextColor="red" />
+            <Entry Text="{Binding TablaCAMINOS[0].nombreLargoCamino}" TextColor="blue" />
+
+        </StackLayout>
+-->
+
+
+    </ContentPage.Content>
+</ContentPage>
