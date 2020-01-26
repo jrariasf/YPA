@@ -17,7 +17,7 @@ namespace YPA.Data
         {
             System.Console.WriteLine("DEBUG - Database: Vamos a abrir la BD y a crear las tablas");
             _database = new SQLiteAsyncConnection(dbPath);
-            _db = new SQLiteConnection(dbPath);            
+            _db = new SQLiteConnection(dbPath);
             _database.CreateTableAsync<TablaCAMINOS>().Wait();
             _database.CreateTableAsync<TablaPOBLACIONES>().Wait();
             _database.CreateTableAsync<TablaALOJAMIENTOS>().Wait();
@@ -115,10 +115,36 @@ namespace YPA.Data
         public Task<List<TablaALOJAMIENTOS>> GetAlojamientosByCityAsync(int id) => _database.Table<TablaALOJAMIENTOS>()
                             .Where(i => i.idPoblacion == id)
                             .ToListAsync();
-        public List<TablaALOJAMIENTOS> GetAlojamientosByCity(int id)
+        public List<TablaALOJAMIENTOS> GetAlojamientosByCity(int idPoblacion)
         {
-            List<TablaALOJAMIENTOS> miLista =  _db.Table<TablaALOJAMIENTOS>().Where(i => i.idPoblacion == id).ToList();
+            Console.WriteLine("DEBUG - GetAlojamientosByCity: idPoblacion:{0}", idPoblacion);
+            //List<TablaALOJAMIENTOS> miLista = _db.Table<TablaALOJAMIENTOS>().Where(i => i.idPoblacion == id).ToList();
+
+            string comando = "select * from TablaALOJAMIENTOS where idPoblacion=?";
+            List<TablaALOJAMIENTOS> miLista = _db.Query<TablaALOJAMIENTOS>(comando, idPoblacion);
+
+            Console.WriteLine("DEBUG - GetAlojamientosByCity: Count:{0}", miLista.Count);
+
+            //Console.WriteLine("DEBUG - GetAlojamientosByCity: {0}", miLista.ToString());
+            //Console.WriteLine("DEBUG - GetAlojamientosByCity({0}): {1}", idPoblacion, miLista[0].nombreAlojamiento);
             return miLista;
+        }
+
+        /*
+        public Task<List<TablaALOJAMIENTOS>> GetAlojamientosQueryAsync(string query)
+        {
+            Console.WriteLine("DEBUG - GetAlojamientosQueryAsync() query:{0}", query);           
+            return _database.QueryAsync<TablaALOJAMIENTOS>(query);             
+        }
+        */
+        public async Task<List<TablaALOJAMIENTOS>> GetAlojamientosQueryAsync(string query)
+        {
+            Console.WriteLine("DEBUG - GetAlojamientosQueryAsync() query:{0}", query);
+            //List<TablaALOJAMIENTOS> miLista;
+            //miLista = await _database.QueryAsync<TablaALOJAMIENTOS>(query);
+            //miLista = _db.Query<TablaALOJAMIENTOS>(query);
+            //return miLista;
+            return await _database.QueryAsync<TablaALOJAMIENTOS>(query);
         }
 
         public Task<int> SaveAlojamientosAsync(TablaALOJAMIENTOS note)

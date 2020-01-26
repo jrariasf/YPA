@@ -49,7 +49,8 @@ namespace YPA
         {
             InitializeComponent();
 
-            await NavigationService.NavigateAsync("MainMasterDetail/NavigationPage/Poblaciones");
+            //await NavigationService.NavigateAsync("MainMasterDetail/NavigationPage/Poblaciones");
+            await NavigationService.NavigateAsync("MainMasterDetail/NavigationPage/Ver?listado=albergues&idPoblacion=100");
         }
 
         public async void IrA(string page)

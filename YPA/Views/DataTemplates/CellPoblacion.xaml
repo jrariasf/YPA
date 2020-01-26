@@ -3,6 +3,8 @@
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
              xmlns:d="http://xamarin.com/schemas/2014/forms/design"
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+             xmlns:prism="http://prismlibrary.com"             
+             prism:ViewModelLocator.AutowireViewModel="True"
              mc:Ignorable="d"
              x:Class="YPA.Views.DataTemplates.CellPoblacion" >
     <ViewCell.View>
@@ -10,9 +12,24 @@
 
             <StackLayout Orientation="Horizontal" Padding="0" Margin="10,0,0,0">
                 <Label Text="{Binding nombrePoblacion}" FontAttributes="Bold" TextColor="#2028F5" Margin="0" Padding="0">
+                    <!--
+                    <Label.Behaviors>
+                        <prism:EventToCommandBehavior EventName="Tapped"
+                                                      Command="{Binding PoblacionTocada}"
+                                                      CommandParameter="{Binding Text, Source={x:Reference id}}"/>
+
+                    </Label.Behaviors>
+                    -->
+                    <!--
                     <Label.GestureRecognizers>
                         <TapGestureRecognizer Tapped="TappedVerAlbergues" />
                     </Label.GestureRecognizers>
+                    -->
+                    <!--
+                    <Label.GestureRecognizers>
+                        <TapGestureRecognizer  Command="{Binding PoblacionTocada}"  CommandParameter="{Binding Text, Source={x:Reference id}}" />
+                    </Label.GestureRecognizers>
+                    -->
                 </Label>
                 <Label x:Name="id" Text="{Binding id}" IsVisible="False" />
                 <Label Text="{Binding altitud} " />

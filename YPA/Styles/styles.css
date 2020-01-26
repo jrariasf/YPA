@@ -5,7 +5,7 @@
 }
 
 stacklayout {
-    background-color: red;
+    background-color: #F5F2BD;
     -xf-spacing: 2;
 }
 
@@ -17,10 +17,17 @@ label, entry, editor {
     font-size: caption;
 }
 
-label {
+/*label {
     background-color: red; 
 }
+*/
 
 entry {
     background-color: yellow; 
+}
+
+checkbox {
+    background-color: blue;
+    color: yellow;
+    /*transform: scale(0.6);*/
 }
