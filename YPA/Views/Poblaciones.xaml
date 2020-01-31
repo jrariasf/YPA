@@ -11,8 +11,8 @@
              Title="Poblaciones">
     
     <ContentPage.ToolbarItems>
-        <ToolbarItem Text="+"
-                     Clicked="OnNoteAddedClicked" />
+        <ToolbarItem Text="+"  Command="{Binding AddPoblacionClicked}"
+                               CommandParameter="toma mi parámetro" />
     </ContentPage.ToolbarItems>
 
     <StackLayout BackgroundColor="Red" >
@@ -51,19 +51,18 @@
         </Grid>
 
         <ListView x:Name="listView"
-              
-              ItemSelected="OnListViewItemSelected" IsGroupingEnabled="False" 
+              ItemsSource="{Binding listaPoblaciones, Mode=TwoWay}"
+              IsGroupingEnabled="False" 
               RowHeight="50" SeparatorVisibility="None" BackgroundColor="#184BF2">
-
-
+             <!-- ItemSelected="OnListViewItemSelected" -->
+            <ListView.Behaviors>
+                <prism:EventToCommandBehavior EventName="ItemTapped"
+                                          Command="{Binding ItemTappedCommand}"
+                                          EventArgsParameterPath="Item" />
+            </ListView.Behaviors>
 
             <ListView.ItemTemplate>
                 <DataTemplate>
-                    <!--
-                <TextCell Text="{Binding nombrePoblacion}"
-                          Detail="{Binding fecUltMod}" />
-                -->
-
                     <local:CellPoblacion />
                 </DataTemplate>
             </ListView.ItemTemplate>

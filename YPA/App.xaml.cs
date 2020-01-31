@@ -55,7 +55,7 @@ namespace YPA
 
         public async void IrA(string page)
         {
-            Console.WriteLine("App:IrA({0})", page);
+            Console.WriteLine("DEBUG - App:IrA({0})", page);
             await NavigationService.NavigateAsync(page);
         }
 
@@ -69,6 +69,8 @@ namespace YPA
             containerRegistry.RegisterForNavigation<VerCamino, VerCaminoViewModel>();
             containerRegistry.RegisterForNavigation<Alojamientos, AlojamientosViewModel>();
             containerRegistry.RegisterForNavigation<Ver, VerViewModel>();
+            containerRegistry.RegisterForNavigation<Views.Formularios.EntryPOBLACIONES, ViewModels.Formularios.EntryPOBLACIONESViewModel>();
+            containerRegistry.RegisterForNavigation<Views.Formularios.PruebaUno, PruebaUnoViewModel>();
         }
     }
 }

@@ -32,8 +32,8 @@
                 <Label x:Name="subTipoLabel" Text="{Binding subTipo}"  HorizontalOptions="FillAndExpand"  TextColor="black"  Grid.Column="1" 
                        IsVisible="{Binding Source={x:Reference subTipoLabel}, Path=Text, Converter={StaticResource labelVisible}}" />
                 <Label Text="{Binding nombreAlojamiento}" Grid.Column="2" TextColor="#D20C24"  />
-                <Label Text="{Binding precio}"  HorizontalOptions="FillAndExpand" Grid.Column="3"  />
-                <Label Text="€" HorizontalOptions="FillAndExpand" Grid.Column="4" Padding="-5,0,0,0" />
+                <Label Text="{Binding precio, StringFormat='{0} €'}"  HorizontalOptions="FillAndExpand" Grid.Column="3"  />
+                <!-- <Label Text="€" HorizontalOptions="FillAndExpand" Grid.Column="4" Padding="-5,0,0,0" /> -->
             </Grid>
 
             <StackLayout Orientation="Horizontal">

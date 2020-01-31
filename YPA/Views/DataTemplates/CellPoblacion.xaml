@@ -3,18 +3,21 @@
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
              xmlns:d="http://xamarin.com/schemas/2014/forms/design"
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
-             xmlns:prism="http://prismlibrary.com"             
-             prism:ViewModelLocator.AutowireViewModel="True"
+             xmlns:viewModels="clr-namespace:YPA.ViewModels"
              mc:Ignorable="d"
              x:Class="YPA.Views.DataTemplates.CellPoblacion" >
     <ViewCell.View>
         <StackLayout Orientation="Vertical" BackgroundColor="#F5FF0D" Margin="0" Padding="0" Spacing="0" VerticalOptions="Fill">
 
             <StackLayout Orientation="Horizontal" Padding="0" Margin="10,0,0,0">
+                <Button Text="+" Command="{Binding Source={RelativeSource AncestorType={x:Type viewModels:PoblacionesViewModel}}, Path=VerAlojamientosDePoblacion}" 
+                        CommandParameter="{Binding Text, Source={x:Reference id}}" 
+                        FontSize="14" Padding="0" Margin="0" WidthRequest="20" HeightRequest="14">
+                </Button> 
                 <Label Text="{Binding nombrePoblacion}" FontAttributes="Bold" TextColor="#2028F5" Margin="0" Padding="0">
                     <!--
                     <Label.Behaviors>
-                        <prism:EventToCommandBehavior EventName="Tapped"
+                        <prism:EventToCommandBehavior EventName="Focused"
                                                       Command="{Binding PoblacionTocada}"
                                                       CommandParameter="{Binding Text, Source={x:Reference id}}"/>
 
@@ -32,7 +35,7 @@
                     -->
                 </Label>
                 <Label x:Name="id" Text="{Binding id}" IsVisible="False" />
-                <Label Text="{Binding altitud} " />
+                <Label Text="{Binding altitud,  StringFormat='{0}m'} " />
             </StackLayout>
 
             <!--<StackLayout Orientation="Horizontal" Spacing="0" BackgroundColor="#0A73BC" CascadeInputTransparent="False" HorizontalOptions="FillAndExpand" >-->

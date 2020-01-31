@@ -14,13 +14,14 @@ namespace YPA.Views
 {
     [XamlCompilation(XamlCompilationOptions.Compile)]
     public partial class Poblaciones : ContentPage
-    {
+    {        
         public Poblaciones()
         {
             Console.WriteLine("CONSTR - Poblaciones()");
             InitializeComponent();
         }
 
+        /*
         protected override async void OnAppearing()
         {
             base.OnAppearing();
@@ -28,7 +29,9 @@ namespace YPA.Views
 
             listView.ItemsSource = await App.Database.GetPoblacionesAsync();
         }
+        */
 
+        /*
         async void OnNoteAddedClicked(object sender, EventArgs e)
         {
             Console.WriteLine("CONSTR - OnNoteAddedClicked()");
@@ -37,7 +40,9 @@ namespace YPA.Views
                 BindingContext = new TablaPOBLACIONES()
             });
         }
+        */
 
+        /*
         async void OnListViewItemSelected(object sender, SelectedItemChangedEventArgs e)
         {
             Console.WriteLine("CONSTR - OnListViewItemSelected()");
@@ -49,5 +54,6 @@ namespace YPA.Views
                 });
             }
         }
+        */
     }
 }

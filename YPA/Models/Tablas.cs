@@ -2,6 +2,7 @@
 using SQLite;
 using System.Collections.Generic;
 using System.Text;
+using System.ComponentModel;
 
 namespace YPA.Models
 {
@@ -20,8 +21,17 @@ namespace YPA.Models
         public DateTime fecUltMod { get; set; }
     }
 
-    public class TablaPOBLACIONES
-    {
+    public class TablaPOBLACIONES : INotifyPropertyChanged
+    {        
+        public event PropertyChangedEventHandler PropertyChanged;
+        int _altitud;
+        private void RaisePropertyChanged(string propertyName = null)
+        {
+            Console.WriteLine("DEBUG3 - Tablas - TablaPOBLACIONES - RaisePropertyChanged{0}", propertyName);
+            PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));
+        }
+
+
         [PrimaryKey, AutoIncrement]
         public int id { get; set; }
         [Indexed, MaxLength(30)]
@@ -31,7 +41,17 @@ namespace YPA.Models
         public int numHabitantes { get; set; }
         public double latitud { get; set; }
         public double longitud { get; set; }
-        public int altitud { get; set; }
+        public int altitud {
+            get { return _altitud; }
+            set
+            {
+                if (_altitud != value)
+                {
+                    _altitud = value;
+                    RaisePropertyChanged(nameof(altitud));
+                }
+            }
+        }
         public bool albergueMunicipal { get; set; }
         public bool albergueParroquial { get; set; }
         public bool alberguePrivado { get; set; }

@@ -220,13 +220,14 @@ namespace YPA.ViewModels
             Console.WriteLine("CONSTR - VerViewModel()  idPoblacionActual:{0}", idPoblacionActual);
 
             // Cargamos el Picker con las poblaciones que tienen alojamientos:
-            CargarPoblacionesQueryAsync();
+            CargarPoblacionesConAlojamientoQueryAsync();
 
+            Console.WriteLine("DEBUG - VerVM - VerViewModel UriPath: {0}", _navigationService.GetNavigationUriPath());
 
         }
 
         //async IEnumerable<int> EjecutaQueryAsync(string query)
-        async void CargarPoblacionesQueryAsync()
+        async void CargarPoblacionesConAlojamientoQueryAsync()
         {
             /*
             string query = "select distinct(idPoblacion) from TablaALOJAMIENTOS"; 

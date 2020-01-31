@@ -86,6 +86,13 @@ namespace YPA.Data
         public Task<int> SavePoblacionesAsync(TablaPOBLACIONES note)
         {
             //if (note.NombrePoblacion != null && note.NombrePoblacion != "" && note.NombrePoblacion.Length > 0)
+            /*
+            if (note == null)
+            {
+                Console.WriteLine("DEBUG - SavePoblacionesAsync(null)  retornamos -1");
+                return; 
+            }
+            */
             if (note.id != 0)
             {
                 return _database.UpdateAsync(note);

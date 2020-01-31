@@ -3,33 +3,37 @@
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
              xmlns:d="http://xamarin.com/schemas/2014/forms/design"
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+             xmlns:prism="http://prismlibrary.com"             
+             prism:ViewModelLocator.AutowireViewModel="True"
+             xmlns:local="clr-namespace:YPA.ViewModels.Formularios"
              mc:Ignorable="d"
              x:Class="YPA.Views.Formularios.EntryPOBLACIONES">
-    <StackLayout Margin="20">
+
+    <StackLayout  Margin="20">
 
         <StackLayout Orientation="Horizontal" HeightRequest="40" >
             <Label Text="Nombre Población:" BackgroundColor="Azure" VerticalTextAlignment="Center" />
-            <Entry Text="{Binding nombrePoblacion}" BackgroundColor="Yellow" HorizontalOptions="FillAndExpand" />
+            <Entry Text="{Binding poblacion.nombrePoblacion, Mode=TwoWay}" BackgroundColor="Yellow" HorizontalOptions="FillAndExpand" />
         </StackLayout>
         <StackLayout Orientation="Horizontal" HeightRequest="40" >
             <Label Text="Provincia:" VerticalTextAlignment="Center" />
-            <Entry Text="{Binding provincia}" HorizontalOptions="FillAndExpand" />
+            <Entry Text="{Binding poblacion.provincia}" HorizontalOptions="FillAndExpand" />
         </StackLayout>
         <StackLayout Orientation="Horizontal" HeightRequest="40" >
             <Label Text="Número de habitantes:" VerticalTextAlignment="Center" />
-            <Entry Text="{Binding numHabitantes}" HorizontalOptions="FillAndExpand" />
+            <Entry Text="{Binding poblacion.numHabitantes}" HorizontalOptions="FillAndExpand" />
         </StackLayout>
         <StackLayout Orientation="Horizontal" HeightRequest="40" >
             <Label Text="Latitud:" VerticalTextAlignment="Center" />
-            <Entry Text="{Binding latitud}" HorizontalOptions="FillAndExpand" />
+            <Entry Text="{Binding poblacion.latitud}" HorizontalOptions="FillAndExpand" />
         </StackLayout>
         <StackLayout Orientation="Horizontal" HeightRequest="40" >
             <Label Text="Longitud:" VerticalTextAlignment="Center" />
-            <Entry Text="{Binding longitud}" HorizontalOptions="FillAndExpand" />
+            <Entry Text="{Binding poblacion.longitud}" HorizontalOptions="FillAndExpand" />
         </StackLayout>
         <StackLayout Orientation="Horizontal" HeightRequest="40" >
             <Label Text="Altitud:" VerticalTextAlignment="Center" />
-            <Entry Text="{Binding altitud}" HorizontalOptions="FillAndExpand" />
+            <Entry Text="{Binding poblacion.altitud, Mode=TwoWay}" HorizontalOptions="FillAndExpand" />
         </StackLayout>
 
         <Grid ColumnSpacing="20">
@@ -48,56 +52,56 @@
             </Grid.ColumnDefinitions>
 
             <StackLayout Orientation="Horizontal" Grid.Column="0" Grid.Row="0" >
-                <CheckBox IsChecked="{Binding albergueMunicipal}" />
+                <CheckBox IsChecked="{Binding poblacion.albergueMunicipal}" />
                 <Label Text="Albergue Municipal" VerticalTextAlignment="Center" />
             </StackLayout>
             <StackLayout Orientation="Horizontal" Grid.Column="0" Grid.Row="1" >
-                <CheckBox IsChecked="{Binding albergueParroquial}" />
+                <CheckBox IsChecked="{Binding poblacion.albergueParroquial}" />
                 <Label Text="Albergue Parroquial" VerticalTextAlignment="Center" />
             </StackLayout>
             <StackLayout Orientation="Horizontal" Grid.Column="0" Grid.Row="2" >
-                <CheckBox IsChecked="{Binding alberguePrivado}" />
+                <CheckBox IsChecked="{Binding poblacion.alberguePrivado}" />
                 <Label Text="Albergue Privado" VerticalTextAlignment="Center" />
             </StackLayout>
 
             <StackLayout Orientation="Horizontal" Grid.Column="0" Grid.Row="3" >
-                <CheckBox IsChecked="{Binding restaurante}" />
+                <CheckBox IsChecked="{Binding poblacion.restaurante}" />
                 <Label Text="Restaurante" VerticalTextAlignment="Center" />
             </StackLayout>
             <StackLayout Orientation="Horizontal" Grid.Column="0" Grid.Row="4" >
-                <CheckBox IsChecked="{Binding cafeteria}" />
+                <CheckBox IsChecked="{Binding poblacion.cafeteria}" />
                 <Label Text="Cafetería" VerticalTextAlignment="Center" />
             </StackLayout>
             <StackLayout Orientation="Horizontal" Grid.Column="0" Grid.Row="5">
-                <CheckBox IsChecked="{Binding tienda}" />
+                <CheckBox IsChecked="{Binding poblacion.tienda}" />
                 <Label Text="Tienda" VerticalTextAlignment="Center" />
             </StackLayout>
             <StackLayout Orientation="Horizontal" Grid.Column="0" Grid.Row="6">
-                <CheckBox IsChecked="{Binding cajero}" />
+                <CheckBox IsChecked="{Binding poblacion.cajero}" />
                 <Label Text="Cajero" VerticalTextAlignment="Center" />
             </StackLayout>
             <StackLayout Orientation="Horizontal" Grid.Column="1" Grid.Row="0">
-                <CheckBox IsChecked="{Binding fuente}" />
+                <CheckBox IsChecked="{Binding poblacion.fuente}" />
                 <Label Text="Fuente" VerticalTextAlignment="Center" />
             </StackLayout>
             <StackLayout Orientation="Horizontal" Grid.Column="1" Grid.Row="1" >
-                <CheckBox IsChecked="{Binding farmacia}" />
+                <CheckBox IsChecked="{Binding poblacion.farmacia}" />
                 <Label Text="Farmacia" VerticalTextAlignment="Center" />
             </StackLayout>
             <StackLayout Orientation="Horizontal" Grid.Column="1" Grid.Row="2" >
-                <CheckBox IsChecked="{Binding hospital}" />
+                <CheckBox IsChecked="{Binding poblacion.hospital}" />
                 <Label Text="Hospital" VerticalTextAlignment="Center" />
             </StackLayout>
             <StackLayout Orientation="Horizontal" Grid.Column="1" Grid.Row="3" >
-                <CheckBox IsChecked="{Binding bus}" />
+                <CheckBox IsChecked="{Binding poblacion.bus}" />
                 <Label Text="Bus" VerticalTextAlignment="Center" />
             </StackLayout>
             <StackLayout Orientation="Horizontal" Grid.Column="1" Grid.Row="4" >
-                <CheckBox IsChecked="{Binding tren}" />
+                <CheckBox IsChecked="{Binding poblacion.tren}" />
                 <Label Text="Tren" VerticalTextAlignment="Center" />
             </StackLayout>
             <StackLayout Orientation="Horizontal" Grid.Column="1" Grid.Row="5" >
-                <CheckBox IsChecked="{Binding OficinaDeCorreos}" />
+                <CheckBox IsChecked="{Binding poblacion.oficinaDeCorreos}" />
                 <Label Text="Oficina de Correos" VerticalTextAlignment="Center" />
             </StackLayout>
         </Grid>
@@ -108,11 +112,15 @@
                 <ColumnDefinition Width="*" />
                 <ColumnDefinition Width="*" />
             </Grid.ColumnDefinitions>
+            <Button Grid.Column="0" Text="Save"   Command="{Binding OnSaveButtonClicked}"   CommandParameter="grabar" />
+            <Button Grid.Column="1" Text="Delete" Command="{Binding OnDeleteButtonClicked}" CommandParameter="borrar" />
+            <!--
             <Button Text="Save" 
                     Clicked="OnSaveButtonClicked" />
             <Button Grid.Column="1"
                     Text="Delete" 
                     Clicked="OnDeleteButtonClicked"/>
+            -->
         </Grid>
     </StackLayout>
 </ContentPage>    
