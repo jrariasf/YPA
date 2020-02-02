@@ -9,8 +9,8 @@
 
 
     <ViewCell.View>
-        <StackLayout Orientation="Horizontal" Padding="0" Margin="10,0,0,0" 
-                     IsVisible="{Binding nombrePoblacion, Converter={StaticResource poblacionVisible}}">
+        <StackLayout Orientation="Horizontal" Padding="0" Margin="10,0,0,0"
+                     IsEnabled="{Binding nombrePoblacion, Converter={StaticResource poblacionVisible}}">
             <StackLayout.Resources>
                 <ResourceDictionary>
                     <converter:IntToColorStringConverter x:Key="intToColorString" />

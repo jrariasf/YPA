@@ -3,35 +3,36 @@
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml" 
              xmlns:d="http://xamarin.com/schemas/2014/forms/design"
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+             xmlns:prism="http://prismlibrary.com"             
+             prism:ViewModelLocator.AutowireViewModel="True"             
              x:Class="YPA.Views.Formularios.EntryCAMINOS"
              Title="EntryCAMINOS">
+    
+    
     <StackLayout Margin="20">
 
         <StackLayout Orientation="Horizontal" >
             <Label Text="Nombre corto" BackgroundColor="Azure" VerticalTextAlignment="Center" />
-            <Entry Text="{Binding nombreCortoCamino}" BackgroundColor="Yellow" HorizontalOptions="FillAndExpand" />
+            <Entry Text="{Binding camino.nombreCortoCamino}" BackgroundColor="Yellow" HorizontalOptions="FillAndExpand" />
         </StackLayout>
         <StackLayout Orientation="Horizontal" >
             <Label Text="Nombre largo" VerticalTextAlignment="Center" />
-            <Entry Text="{Binding nombreLargoCamino}" HorizontalOptions="FillAndExpand" />
+            <Entry Text="{Binding camino.nombreLargoCamino}" HorizontalOptions="FillAndExpand" />
         </StackLayout>
         <StackLayout Orientation="Horizontal" >
             <Label Text="Longitud" VerticalTextAlignment="Center" />
-            <Entry Placeholder="longitud en km..." Text="{Binding longitud}" HeightRequest="40" />
+            <Entry Placeholder="longitud en km..." Text="{Binding camino.longitud}" HeightRequest="40" />
         </StackLayout>
         <Editor Placeholder="Introduce una pequeña descripción del camino..." FontSize="Small" BackgroundColor="DarkGray"
-                Text="{Binding informacion}"
+                Text="{Binding camino.informacion}"
                 HeightRequest="100" />
         <Grid>
             <Grid.ColumnDefinitions>
                 <ColumnDefinition Width="*" />
                 <ColumnDefinition Width="*" />
             </Grid.ColumnDefinitions>
-            <Button Text="Save" 
-                    Clicked="OnSaveButtonClicked" />
-            <Button Grid.Column="1"
-                    Text="Delete" 
-                    Clicked="OnDeleteButtonClicked"/>
+            <Button Grid.Column="0" Text="Save"   Command="{Binding OnSaveButtonClicked}"   CommandParameter="grabar" />
+            <Button Grid.Column="1" Text="Delete" Command="{Binding OnDeleteButtonClicked}" CommandParameter="borrar" />
         </Grid>
     </StackLayout>
 </ContentPage>    

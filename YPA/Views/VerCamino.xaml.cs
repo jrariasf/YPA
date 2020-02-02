@@ -92,6 +92,7 @@ namespace YPA.Views
             return PoblacionVisible.siguientePoblacion;
         }
 
+        /*
         private void OnItemSelected(object sender, SelectedItemChangedEventArgs e)
         {
             Console.WriteLine("DEBUG - OnItemSelected: sender: {0}  tipo_sender: {1}  selectedItem: {2}",
@@ -101,6 +102,7 @@ namespace YPA.Views
 
             //DisplayAlert("Item Selected", e.SelectedItem.ToString(), "ok");
         }
+        */
 
         protected override async void OnAppearing()
         {
@@ -110,49 +112,24 @@ namespace YPA.Views
 
             Acumulado.acumulado = 0;
             PoblacionVisible.miVerCamino = this;
+            PoblacionVisible.esRutaPrincipal = true;
+            PoblacionVisible.siguientePoblacion = "";
 
 
-
-            //if (((MainPage)Application.Current.MainPage).camino == "CaminoDeMadrid")
             if (((App)Application.Current).camino == "CaminoDeMadrid")
-                {
-                //_xx_ PoblacionVisible.siguientePoblacion = "Fuencarral";
-                //_xx_ listView.ItemsSource = await App.Database.GetCaminoDeMadridAsync();
-                //_xx_ listView.ItemsSource = new ObservableCollection<TablaCaminoDeMadrid>( await App.Database.GetCaminoDeMadridAsync() );
-
+            {             
                 miLista = new ObservableCollection<TablaBaseCaminos>(await App.Database.GetCaminoDeMadridAsync());
-                /*
-                if (miLista.Count() == 0)
-                {
-                    Console.WriteLine("DEBUG - OnAppearing  miLista contiene 0 elementos");
-                    return;
-                }
-                Console.WriteLine("DEBUG - OnAppearing  miLista[0].nombrePoblacion: {0}", miLista[0].nombrePoblacion);
-                */
+                
                 int num = CalcularRuta();
                 Console.WriteLine("DEBUG - OnAppearing: Se han eliminado {0} poblaciones", num);
                 //miLista.RemoveAt(5);
                 listView.ItemsSource = miLista;
-
-                //PoblacionVisible.siguientePoblacion = CalculaSiguientePoblacion(listView);
-                //CalculaSiguientePoblacion(listView);
+               
                 CalculaSiguientePoblacion("");
 
             }
-            //else if (((MainPage)Application.Current.MainPage).camino == "SanSalvador")
             else if (((App)Application.Current).camino == "SanSalvador")
             {
-                //PoblacionVisible.siguientePoblacion = "Carbajal de la Legua";
-                //listView.ItemsSource = await App.Database.GetCaminoSanSalvadorAsync();
-
-                /*
-                if (miLista.Count() == 0)
-                {
-                    Console.WriteLine("DEBUG - OnAppearing  miLista contiene 0 elementos");
-                    return;
-                }
-                */
-
                 miLista = new ObservableCollection<TablaBaseCaminos>(await App.Database.GetCaminoSanSalvadorAsync());
                 int num = CalcularRuta();
                 Console.WriteLine("DEBUG - OnAppearing: Se han eliminado {0} poblaciones", num);
@@ -193,11 +170,15 @@ namespace YPA.Views
     {
         public object Convert(object value, Type targetType, object parameter, CultureInfo culture)
         {
-            Console.WriteLine("DEBUG - IntToColorStringConverter:Convert  value: {0}", (bool)value);
+            string respuesta = "";
             if ((bool)value == false)
-                return "Yellow";
+                respuesta = "Yellow";
             else
-                return "Blue";
+                respuesta = "Blue";
+
+            Console.WriteLine("DEBUG - IntToColorStringConverter:Convert  value: {0}   respuesta:{1}", (bool)value, respuesta);
+
+            return respuesta;
         }
 
         public object ConvertBack(object value, Type targetType, object parameter, CultureInfo culture)
@@ -241,8 +222,8 @@ namespace YPA.Views
         public static bool esRutaPrincipal = true;
         public object Convert(object value, Type targetType, object parameter, CultureInfo culture)
         {
-            Console.WriteLine("DEBUG - PoblacionVisible:Convert  value: {0}   parameter: {1}  siguientePoblacion: {2}",
-                              value, parameter == null ? "null" : parameter, siguientePoblacion);
+            //Console.WriteLine("DEBUG - PoblacionVisible:Convert  value: {0}   parameter: {1}  siguientePoblacion: {2}",
+            //                  value, parameter == null ? "null" : parameter, siguientePoblacion);
             string primeraPoblacion;
             int posicion = ((string)value).IndexOf(VerCamino.separador);
             if (posicion == -1)
@@ -258,20 +239,17 @@ namespace YPA.Views
 
             if (primeraPoblacion == siguientePoblacion)
             {
-                //Calculamos la nueva siguientePoblacion:
-                /*
-                posicion = ((string)parameter).IndexOf(',');
-                siguientePoblacion = ((string)parameter).Substring(0, posicion);
-                */
-                //App.Current.Views  VerCamino.CalculaSiguientePoblacion(primeraPoblacion);
-                //((VerCamino)(((MainPage)Application.Current.MainPage).MenuPages[(int)YoPilgrim.Models.MenuItemType.VerCamino])).
+                //Calculamos la nueva siguientePoblacion:                
                 miVerCamino.CalculaSiguientePoblacion(primeraPoblacion);
                 esRutaPrincipal = true;
-                return true;
-            }
+                //return true;
+            } else
+                esRutaPrincipal = false;
 
-            esRutaPrincipal = false;
-            return false;
+            Console.WriteLine("DEBUG2 - PoblacionVisible:Convert  value: {0}   parameter: {1}  siguientePoblacion: {2}   devuelve:{3}",
+                              value, parameter == null ? "null" : parameter, siguientePoblacion, esRutaPrincipal);
+            //return false;
+            return esRutaPrincipal;
         }
 
         public object ConvertBack(object value, Type targetType, object parameter, CultureInfo culture)

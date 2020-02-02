@@ -22,7 +22,7 @@ namespace YPA.Views.DataTemplates
             InitializeComponent();
         }
 
-
+/*
         async private void OnVerEtapasCamino(object sender, EventArgs e)
         {
             Console.WriteLine("DEBUG - Estamos en CellCamino.xaml.cs:OnVerEtapasCamino");
@@ -30,11 +30,11 @@ namespace YPA.Views.DataTemplates
             Console.WriteLine("DEBUG - e: {0}", e.ToString());
             var b = (Button)sender;
             Console.WriteLine("DEBUG - Asignado el botón");
-            /*
-             * var item = (YoPilgrim.Models.TablaCAMINOS)(b.CommandParameter);
-            Console.WriteLine("DEBUG - Largo: {0}   Corto: {1}   Longitud: {2}",
-                              item.nombreLargoCamino, item.nombreCortoCamino, item.longitud);
-             */
+            
+            //var item = (YoPilgrim.Models.TablaCAMINOS)(b.CommandParameter);
+            //Console.WriteLine("DEBUG - Largo: {0}   Corto: {1}   Longitud: {2}",
+            //                  item.nombreLargoCamino, item.nombreCortoCamino, item.longitud);
+             
             var cadena = (String)(b.CommandParameter);
             Console.WriteLine("DEBUG - nombreCortoCamino: {0}", cadena);
             Console.WriteLine("DEBUG - CellCamino - OnVerEtapasCamino  Ahora es cuando deberiamos navegar a VerCamino?camino={0}", cadena);
@@ -46,13 +46,12 @@ namespace YPA.Views.DataTemplates
             //var newPage = ((MainPage)Application.Current.MainPage).MenuPages[(int)YoPilgrim.Models.MenuItemType.VerCamino];
             //newPage.BindingContext = Models.TablaCAMINOS;
 
-
-
         }
-
+*/
 
     }
 
+    /*
     class MyClass
     {
         public ICommand MyCommand { protected set; get; }
@@ -62,4 +61,5 @@ namespace YPA.Views.DataTemplates
 
         }
     }
+    */
 }

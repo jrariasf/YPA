@@ -9,7 +9,7 @@
              mc:Ignorable="d"
              x:Class="YPA.Views.Formularios.EntryPOBLACIONES">
 
-    <StackLayout  Margin="20">
+    <StackLayout Margin="20">
 
         <StackLayout Orientation="Horizontal" HeightRequest="40" >
             <Label Text="Nombre Población:" BackgroundColor="Azure" VerticalTextAlignment="Center" />

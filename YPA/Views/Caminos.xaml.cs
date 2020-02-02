@@ -27,7 +27,7 @@ namespace YPA.Views
 
             listView.ItemsSource = await App.Database.GetCaminosAsync();
         }
-        
+/*        
         async void OnNoteAddedClicked(object sender, EventArgs e)
         {
             Console.WriteLine("Caminos.xaml.cs:OnNoteAddedClicked");
@@ -49,7 +49,7 @@ namespace YPA.Views
                 });
             }
         }
-
+*/
         /*
         private void OnVerEtapasButtonClicked(object sender, EventArgs e)        
         {

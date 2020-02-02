@@ -70,6 +70,7 @@ namespace YPA
             containerRegistry.RegisterForNavigation<Alojamientos, AlojamientosViewModel>();
             containerRegistry.RegisterForNavigation<Ver, VerViewModel>();
             containerRegistry.RegisterForNavigation<Views.Formularios.EntryPOBLACIONES, ViewModels.Formularios.EntryPOBLACIONESViewModel>();
+            containerRegistry.RegisterForNavigation<Views.Formularios.EntryCAMINOS, ViewModels.Formularios.EntryCAMINOSViewModel>();
             containerRegistry.RegisterForNavigation<Views.Formularios.PruebaUno, PruebaUnoViewModel>();
         }
     }

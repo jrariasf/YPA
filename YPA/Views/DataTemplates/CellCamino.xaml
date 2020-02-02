@@ -3,20 +3,19 @@
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
              xmlns:d="http://xamarin.com/schemas/2014/forms/design"
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+             xmlns:viewModels="clr-namespace:YPA.ViewModels"
              mc:Ignorable="d"
-             xmlns:my="clr-namespace:YPA.Views.DataTemplates"
-             xmlns:tb="clr-namespace:YPA.Models"
              x:Class="YPA.Views.DataTemplates.CellCamino">
     <ViewCell.View>
         <StackLayout Orientation="Horizontal" Padding="0" Margin="10,0,0,0">
-            <Label Text="{Binding nombreLargoCamino}" FontAttributes="Bold" TextColor="#2028F5" Margin="0" Padding="0" />
-            <Label Text="{Binding longitud} " />
-            <Button Text="ver etapas" VerticalOptions="Start" Clicked="OnVerEtapasCamino" CommandParameter="{Binding nombreCortoCamino}"
-                    BackgroundColor="#DE1E1E" CornerRadius="10"
-                    BorderColor="Brown" BorderWidth="2">
-                <!-- <Button.BindingContext>
-                    <tb:TablaCAMINOS/>
-                </Button.BindingContext> -->
+            <Label Text="{Binding nombreLargoCamino}" FontAttributes="Bold" TextColor="#2028F5" Margin="0" Padding="0" VerticalOptions="Center"/>
+            <Label x:Name="nombreCorto" Text="{Binding nombreCortoCamino}" IsVisible="False" FontAttributes="Bold" TextColor="#2028F5" Margin="0" Padding="0" />
+            <Label Text="{Binding longitud, StringFormat='{0}km'}" VerticalOptions="Center" />
+            <Button Text="Ver Etapas" Command="{Binding Source={RelativeSource AncestorType={x:Type viewModels:CaminosViewModel}}, Path=VerEtapasCamino}" 
+                        CommandParameter="{Binding Text, Source={x:Reference nombreCorto}}" 
+                        FontSize="14" Padding="0" Margin="0" WidthRequest="120" HeightRequest="14"
+                        BackgroundColor="Red" BorderColor="Brown" BorderWidth="2">
+           
                 <VisualStateManager.VisualStateGroups>
                     <VisualStateGroup x:Name="CommonStates">
                         <VisualState x:Name="Normal">

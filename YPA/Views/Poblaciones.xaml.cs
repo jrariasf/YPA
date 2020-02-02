@@ -17,7 +17,7 @@ namespace YPA.Views
     {        
         public Poblaciones()
         {
-            Console.WriteLine("CONSTR - Poblaciones()");
+            Console.WriteLine("DEBUG - CONSTR - Poblaciones()");
             InitializeComponent();
         }
 

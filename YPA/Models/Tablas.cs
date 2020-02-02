@@ -27,7 +27,7 @@ namespace YPA.Models
         int _altitud;
         private void RaisePropertyChanged(string propertyName = null)
         {
-            Console.WriteLine("DEBUG3 - Tablas - TablaPOBLACIONES - RaisePropertyChanged{0}", propertyName);
+            //Console.WriteLine("DEBUG3 - Tablas - TablaPOBLACIONES - RaisePropertyChanged{0}", propertyName);
             PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));
         }
 

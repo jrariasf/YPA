@@ -35,7 +35,7 @@
                     -->
                 </Label>
                 <Label x:Name="id" Text="{Binding id}" IsVisible="False" />
-                <Label Text="{Binding altitud,  StringFormat='{0}m'} " />
+                <Label Text="{Binding altitud,  StringFormat='{0}m'}" />
             </StackLayout>
 
             <!--<StackLayout Orientation="Horizontal" Spacing="0" BackgroundColor="#0A73BC" CascadeInputTransparent="False" HorizontalOptions="FillAndExpand" >-->

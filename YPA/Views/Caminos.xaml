@@ -1,39 +1,48 @@
 ﻿<?xml version="1.0" encoding="utf-8" ?>
 <ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             xmlns:d="http://xamarin.com/schemas/2014/forms/design"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
              xmlns:prism="http://prismlibrary.com"
              prism:ViewModelLocator.AutowireViewModel="True"
-             xmlns:local="clr-namespace:YPA.Views.DataTemplates"             
+             xmlns:local="clr-namespace:YPA.Views.DataTemplates"    
+             mc:Ignorable="d"
              x:Class="YPA.Views.Caminos"
              Title="Caminos">
 
     <ContentPage.ToolbarItems>
-        <!-- <ToolbarItem Text="+"
-                     Clicked="OnNoteAddedClicked" /> -->
-        <ToolbarItem Text="+"  Clicked="OnNoteAddedClicked" CommandParameter="prueba" />
-        
+        <!-- <ToolbarItem Text="+"  Clicked="OnNoteAddedClicked" CommandParameter="prueba" /> -->
+        <ToolbarItem Text="+"  Command="{Binding AddCaminoClicked}"
+                               CommandParameter="toma mi parámetro" />
     </ContentPage.ToolbarItems>
-
+<!--
     <ListView x:Name="listView"
               Margin="20"
               ItemSelected="OnListViewItemSelected">
         <ListView.ItemTemplate>
             <DataTemplate>
-                <!-- <TextCell Text="{Binding nombreLargoCamino}" Detail="{Binding fecUltMod}" /> -->
                 <local:CellCamino/>
-                <!--
-                <StackLayout Orientation="Horizontal" Padding="0" Margin="10,0,0,0">
-                    <Label Text="Probandoooo" FontAttributes="Bold" TextColor="#2028F5" Margin="0" Padding="0" />
-                    
-                    <Label Text="{Binding nombreLargoCamino}" FontAttributes="Bold" TextColor="#2028F5" Margin="0" Padding="0" />
-                    <Label Text="{Binding longitud} " />
-                    <Button Text="ver etapas" VerticalOptions="Start" Clicked="OnVerEtapasCamino" CommandParameter="{Binding nombreCortoCamino}"
-                    BackgroundColor="#DE1E1E" CornerRadius="10"
-                    BorderColor="Brown" BorderWidth="2">
-                    </Button>                    
-                </StackLayout>
-                -->
             </DataTemplate>
         </ListView.ItemTemplate>
     </ListView>
+-->
+    <StackLayout BackgroundColor="Red" >
+        <ListView x:Name="listView"
+              ItemsSource="{Binding listaCaminos, Mode=TwoWay}"
+              IsGroupingEnabled="False" 
+              RowHeight="50" SeparatorVisibility="None" BackgroundColor="Beige">
+
+            <ListView.Behaviors>
+                <prism:EventToCommandBehavior EventName="ItemTapped"
+                                          Command="{Binding ItemTappedCommand}"
+                                          EventArgsParameterPath="Item" />
+            </ListView.Behaviors>
+
+            <ListView.ItemTemplate>
+                <DataTemplate>
+                    <local:CellCamino />
+                </DataTemplate>
+            </ListView.ItemTemplate>
+        </ListView>
+    </StackLayout>
 </ContentPage>        
