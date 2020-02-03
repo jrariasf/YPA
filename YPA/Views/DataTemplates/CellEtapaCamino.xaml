@@ -3,13 +3,13 @@
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
              xmlns:d="http://xamarin.com/schemas/2014/forms/design"
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
-             xmlns:converter="clr-namespace:YPA.Views"
+             xmlns:converter="clr-namespace:YPA.ViewModels"
              mc:Ignorable="d"
              x:Class="YPA.Views.DataTemplates.CellEtapaCamino">
 
 
     <ViewCell.View>
-        <StackLayout Orientation="Horizontal" Padding="0" Margin="10,0,0,0"
+        <StackLayout Orientation="Horizontal" Padding="0" Margin="10,0" Spacing="15"
                      IsEnabled="{Binding nombrePoblacion, Converter={StaticResource poblacionVisible}}">
             <StackLayout.Resources>
                 <ResourceDictionary>
@@ -29,10 +29,10 @@
                     </DataTrigger>
                 </Label.Triggers> -->
             </Label>
-            <Label Text="{Binding nombrePoblacion}" HorizontalOptions="Start" />
-            <Label Text="{Binding nodosSiguientes} " HorizontalOptions="Start"/>
-            <Label Text="{Binding distanciaNodosSiguientes} " AnchorX="30" HorizontalOptions="End"/>
-            <Label Text="{Binding distanciaNodosSiguientes,  Converter={StaticResource acumulado}}" AnchorX="30" HorizontalOptions="EndAndExpand"/>
+            <Label Text="{Binding nombrePoblacion}" HorizontalOptions="Start" FontAttributes="Bold" MinimumWidthRequest="200"/>
+            <Label Text="{Binding nodosSiguientes} " HorizontalOptions="Start" FontSize="12" />
+            <Label Text="{Binding distanciaNodosSiguientes} " AnchorX="30" HorizontalOptions="End" />
+            <Label Text="{Binding distanciaNodosSiguientes, StringFormat='{0}km', Converter={StaticResource acumulado}}" AnchorX="30" HorizontalOptions="EndAndExpand" />
         </StackLayout>
     </ViewCell.View>
 </ViewCell>

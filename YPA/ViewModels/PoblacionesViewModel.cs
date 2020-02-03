@@ -14,8 +14,8 @@ namespace YPA.ViewModels
     {
         INavigationService _navigationService;
 
-        public event PropertyChangedEventHandler PropertyChanged;
-        private void RaisePropertyChanged(string propertyName = null)
+        public new event PropertyChangedEventHandler PropertyChanged;
+        private new void RaisePropertyChanged(string propertyName = null)
         {
             //Console.WriteLine("DEBUG3 - PoblacionesVM - RaisePropertyChanged{0}", propertyName);
             PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));

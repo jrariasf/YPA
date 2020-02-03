@@ -20,6 +20,7 @@ namespace YPA.Views
             InitializeComponent();
         }
 
+        /*
         protected override async void OnAppearing()
         {
             Console.WriteLine("Caminos.xaml.cs:OnAppearing()");
@@ -27,6 +28,7 @@ namespace YPA.Views
 
             listView.ItemsSource = await App.Database.GetCaminosAsync();
         }
+        */
 /*        
         async void OnNoteAddedClicked(object sender, EventArgs e)
         {
@@ -59,7 +61,7 @@ namespace YPA.Views
           
         }
         */
-
+        /*
         async private void OnVerEtapasCamino(object sender, EventArgs e)
         {
             Console.WriteLine("DEBUG - Estamos en Caminos:OnVerEtapasCamino");
@@ -67,11 +69,11 @@ namespace YPA.Views
             Console.WriteLine("DEBUG - e: {0}", e.ToString());
             var b = (Button)sender;
             Console.WriteLine("DEBUG - Asignado el botón");
-            /*
-             * var item = (YoPilgrim.Models.TablaCAMINOS)(b.CommandParameter);
-            Console.WriteLine("DEBUG - Largo: {0}   Corto: {1}   Longitud: {2}",
-                              item.nombreLargoCamino, item.nombreCortoCamino, item.longitud);
-             */
+            
+            // var item = (YoPilgrim.Models.TablaCAMINOS)(b.CommandParameter);
+            //Console.WriteLine("DEBUG - Largo: {0}   Corto: {1}   Longitud: {2}",
+            //                  item.nombreLargoCamino, item.nombreCortoCamino, item.longitud);
+            
             var cadena = (String)(b.CommandParameter);
             Console.WriteLine("DEBUG - nombreCortoCamino: {0}", cadena);
             Console.WriteLine("DEBUG - Caminos:OnVerEtapasCamino  Ahora es cuando deberiamos navegar a VerCamino");
@@ -81,8 +83,7 @@ namespace YPA.Views
             //var newPage = ((MainPage)Application.Current.MainPage).MenuPages[(int)YoPilgrim.Models.MenuItemType.VerCamino];
             //newPage.BindingContext = Models.TablaCAMINOS;
 
-
-
         }
+    */
     }
 }

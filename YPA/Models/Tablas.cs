@@ -6,15 +6,34 @@ using System.ComponentModel;
 
 namespace YPA.Models
 {
-    public class TablaCAMINOS
+    public class TablaCAMINOS : INotifyPropertyChanged
     {
+        public event PropertyChangedEventHandler PropertyChanged;
+        int _longitud;
+        private void RaisePropertyChanged(string propertyName = null)
+        {
+            //Console.WriteLine("DEBUG3 - Tablas - TablaPOBLACIONES - RaisePropertyChanged{0}", propertyName);
+            PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));
+        }
+
         [PrimaryKey, AutoIncrement]
         public int id { get; set; }
         [NotNull, MaxLength(20)]
         public string nombreCortoCamino { get; set; }  // Se utilizará para dar nombre a la tabla en la BD
         [NotNull, MaxLength(30)]
         public string nombreLargoCamino { get; set; }
-        public int longitud { get; set; }
+        public int longitud
+        {
+            get { return _longitud; }
+            set
+            {
+                if (_longitud != value)
+                {
+                    _longitud = value;
+                    RaisePropertyChanged(nameof(longitud));
+                }
+            }
+        }
         [MaxLength(1000)]
         public string informacion { get; set; }
         [NotNull]
@@ -133,6 +152,7 @@ namespace YPA.Models
         public DateTime fecUltMod { get; set; }
     }
 
+    // Tabla donde cada usuario de la aplicación guardará sus caminos, es decir, las etapas de su camino para saber dónde dormir cada día, si hacer día de descanso, etc...
     public class TablaMisCaminos
     {
         [PrimaryKey, AutoIncrement]
@@ -140,11 +160,13 @@ namespace YPA.Models
         [NotNull, Indexed]   // Podriamos ordenar por este campo a la hora de visualizar esta tabla. Pero un cambio en una fecha de un registro obliga a cambiar el resto de fechas en los restantes registros posteriores.
         public DateTime dia { get; set; } // Fecha en la que se sale de "inicioEtapa". O también, fecha en la que se hace noche en finEtapa.
         [NotNull, MaxLength(30)]
-        public string caminoBase { get; set; } // Por sUtilizar la nomenclatura "nombreCortoCamino". Si mi camino abarca varios caminos (por ejemplo Camino de Madrid y camino francés), poder identificar a qué camino pertenece esa etapa.
+        public string caminoBase { get; set; } // Podemos utilizar la nomenclatura "nombreCortoCamino". Si mi camino abarca varios caminos (por ejemplo Camino de Madrid y camino francés), poder identificar a qué camino pertenece esa etapa.
         [MaxLength(30)]
         public string inicioEtapa { get; set; } // contiene el nombrePoblacion desde donde comenzamos ese día.
         [MaxLength(30)]
         public string finEtapa { get; set; } // contiene el nombrePoblacion donde terminamos ese día.
+        [MaxLength(200)]
+        public string bifurcaciones { get; set; } // Contiene pares inicioBifurcacion#poblacionSiguiente separados por ";". Hay un par por cada bifurcación existente en esa etapa.
         [MaxLength(100)]
         public string comentarios { get; set; } // Campo para poner comentarios como: día de descanso, visitar ruinas de tal, comer en no sé dónde, etc...
     }
@@ -164,6 +186,8 @@ namespace YPA.Models
         [MaxLength(25)]
         public string distanciaNodosSiguientes { get; set; }
         //public DateTime fecUltMod { get; set; }
+        [Ignore]
+        public bool esVisible { get; set; }
     }
 
     public class TablaCaminoDeMadrid : TablaBaseCaminos
