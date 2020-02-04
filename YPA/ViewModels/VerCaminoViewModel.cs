@@ -18,6 +18,9 @@ namespace YPA.ViewModels
 
         public static char separador = ';';
 
+        Dictionary<string, string> bifurcaciones = null; // new Dictionary<string, string>();
+        bool primeraVez = true;
+
         public new event PropertyChangedEventHandler PropertyChanged;
         private new void RaisePropertyChanged(string propertyName = null)
         {
@@ -117,21 +120,30 @@ namespace YPA.ViewModels
             PoblacionVisible.esRutaPrincipal = true;
             PoblacionVisible.siguientePoblacion = "";
 
-            CalculaSiguientePoblacion("");
+            //CalculaSiguientePoblacion("");
 
         }
 
         void EstablecerVisibilidad()
         {
             bool estamosEnBifurcacion = false;
+            double acumulado = 0;
             string siguienteNodo;
             int posicion;
+            
 
             siguienteNodo = listaEtapas[0].nombrePoblacion; // Lo inicializamos con el nombre de la primera población.
 
             Console.WriteLine("DEBUG - VerCaminoVM - EstablecerVisibilidad() entrar  siguienteNodo:{0}", siguienteNodo);
 
             List<TablaBaseCaminos> borrar = new List<TablaBaseCaminos>();
+
+            if (primeraVez)
+            {
+                if (bifurcaciones == null)
+                    bifurcaciones = new Dictionary<string, string>();
+                
+            }
 
             foreach (var item in listaEtapas)
             {
@@ -167,6 +179,17 @@ namespace YPA.ViewModels
                 //Lo siguiente sólo es válido para un nodo que pertenezca al camino configurado:
                 if (dataItem.esVisible == true)
                 {
+                    string distanciaSiguiente = dataItem.distanciaNodosSiguientes;
+                    string primeraDistancia;
+                    dataItem.acumulado = acumulado;
+
+                    posicion = distanciaSiguiente.IndexOf(VerCaminoViewModel.separador);
+                    if (posicion == -1)
+                        primeraDistancia = distanciaSiguiente;
+                    else
+                        primeraDistancia = distanciaSiguiente.Substring(0, posicion);
+                    acumulado += double.Parse(primeraDistancia);
+
                     //Primero hay que comprobar si estamos en un fin de bifurcación. Y despues se comprueba si estamos en un inicio de bifurcación (un nodo puede ser las dos cosas):
                     if (dataItem.FinBifurcacion)
                     {
@@ -187,6 +210,8 @@ namespace YPA.ViewModels
                         else
                             siguienteNodo = (dataItem.nodosSiguientes).Substring(0, posicion);
 
+                        bifurcaciones.Add(dataItem.nombrePoblacion, siguienteNodo);
+
                     }
                     else
                     {
@@ -196,6 +221,13 @@ namespace YPA.ViewModels
                     Console.WriteLine("DEBUG - VerCaminoVM - EstablecerVisibilidad: siguienteNodo {0}", siguienteNodo);
                 }
 
+                primeraVez = false;
+
+            }
+
+            foreach (KeyValuePair<string, string> kvp in bifurcaciones)
+            {
+                Console.WriteLine("DEBUG - VerCaminoVM - EstablecerVisibilidad: bifurcaciones: Key = {0}, Value = {1}", kvp.Key, kvp.Value);
             }
 
             Console.WriteLine("DEBUG - VerCaminoVM - EstablecerVisibilidad: Número de nodos en listaEtapas:{0}", listaEtapas.Count());
@@ -245,7 +277,6 @@ namespace YPA.ViewModels
             Console.WriteLine("DEBUG - CONSTR - VerCaminoViewModel()");
             _navigationService = navigationService;
             
-
         }
     }
 

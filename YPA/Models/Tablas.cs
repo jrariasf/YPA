@@ -187,6 +187,8 @@ namespace YPA.Models
         public string distanciaNodosSiguientes { get; set; }
         //public DateTime fecUltMod { get; set; }
         [Ignore]
+        public double acumulado { get; set; }
+        [Ignore]
         public bool esVisible { get; set; }
     }
 

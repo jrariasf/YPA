@@ -10,7 +10,8 @@
 
     <ViewCell.View>
         <StackLayout Orientation="Horizontal" Padding="0" Margin="10,0" Spacing="15"
-                     IsEnabled="{Binding nombrePoblacion, Converter={StaticResource poblacionVisible}}">
+                     IsEnabled="{Binding esVisible}" >
+                     <!-- IsEnabled="{Binding nombrePoblacion, Converter={StaticResource poblacionVisible}}"> -->
             <StackLayout.Resources>
                 <ResourceDictionary>
                     <converter:IntToColorStringConverter x:Key="intToColorString" />
@@ -32,7 +33,8 @@
             <Label Text="{Binding nombrePoblacion}" HorizontalOptions="Start" FontAttributes="Bold" MinimumWidthRequest="200"/>
             <Label Text="{Binding nodosSiguientes} " HorizontalOptions="Start" FontSize="12" />
             <Label Text="{Binding distanciaNodosSiguientes} " AnchorX="30" HorizontalOptions="End" />
-            <Label Text="{Binding distanciaNodosSiguientes, StringFormat='{0}km', Converter={StaticResource acumulado}}" AnchorX="30" HorizontalOptions="EndAndExpand" />
+            <Label Text="{Binding acumulado, StringFormat='{0}km'}" AnchorX="30" HorizontalOptions="EndAndExpand" />
+            <!-- <Label Text="{Binding distanciaNodosSiguientes, StringFormat='{0}km', Converter={StaticResource acumulado}}" AnchorX="30" HorizontalOptions="EndAndExpand" /> -->
         </StackLayout>
     </ViewCell.View>
 </ViewCell>
