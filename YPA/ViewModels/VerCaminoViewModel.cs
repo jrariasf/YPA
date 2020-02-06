@@ -123,6 +123,10 @@ namespace YPA.ViewModels
                 return false;
             }
 
+            List<TablaBaseCaminos> miLista = await App.Database.GetEtapasCamino(caminoActual);
+            back_listaEtapas = new ObservableCollection<TablaBaseCaminos>(miLista);
+
+            /*
             if (caminoActual == "CaminoDeMadrid")
             {
                 Console.WriteLine("DEBUG - VerCaminoVM - RellenarLista()  CaminoDeMadrid");
@@ -159,6 +163,7 @@ namespace YPA.ViewModels
                 Console.WriteLine("DEBUG - VerCaminoVM - RellenarLista()  Camino no contemplado");
                 return false;
             }
+            */
 
             return true;
         }

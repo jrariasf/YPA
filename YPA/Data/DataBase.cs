@@ -26,6 +26,13 @@ namespace YPA.Data
         }
 
 
+        public Task<List<TablaBaseCaminos>> GetEtapasCamino(string camino)
+        {
+            string sql = "select * from Tabla" + camino;
+
+            return _database.QueryAsync<TablaBaseCaminos>(sql);
+        }
+
         public Task<List<TablaCaminoDeMadrid>> GetCaminoDeMadridAsync()
         {
             return _database.Table<TablaCaminoDeMadrid>().ToListAsync();
