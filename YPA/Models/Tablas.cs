@@ -189,7 +189,12 @@ namespace YPA.Models
         [Ignore]
         public double acumulado { get; set; }
         [Ignore]
+        public double distanciaAlFinal { get; set; }
+        [Ignore]
         public bool esVisible { get; set; }
+        [Ignore]
+        public bool esEtapa { get; set; }  // Para el checbox que sirve para establecer las etapas
+
     }
 
     public class TablaCaminoDeMadrid : TablaBaseCaminos

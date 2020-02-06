@@ -29,10 +29,10 @@
     </ContentPage.Resources>
  -->
     <ContentPage.Content>
-        <ListView x:Name="listView"
+        <ListView x:Name="listView"   
               ItemsSource="{Binding listaEtapas, Mode=TwoWay}"
               IsGroupingEnabled="False" 
-              RowHeight="50" SeparatorVisibility="None" BackgroundColor="#F8D878">
+              RowHeight="40" SeparatorVisibility="None" BackgroundColor="#F8D878">
 
             <ListView.Behaviors>
                 <prism:EventToCommandBehavior EventName="ItemTapped"
