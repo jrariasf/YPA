@@ -11,6 +11,8 @@
              x:Class="YPA.Views.VerCamino"
              Title="VerCamino">
     <!--  xmlns:sys="clr-namespace:System;assembly=mscorlib" -->
+
+    
     <ContentPage.ToolbarItems>
         <ToolbarItem Name="Add"
                  Command="{Binding AddCommand}"  >
@@ -32,14 +34,15 @@
         <ListView x:Name="listView"   
               ItemsSource="{Binding listaEtapas, Mode=TwoWay}"
               IsGroupingEnabled="False" 
-              RowHeight="40" SeparatorVisibility="None" BackgroundColor="#F8D878">
-
+              RowHeight="35" SeparatorVisibility="None" BackgroundColor="#90F5EB" Margin="6,0,0,0" >
+            <!--
             <ListView.Behaviors>
                 <prism:EventToCommandBehavior EventName="ItemTapped"
                                           Command="{Binding ItemTappedCommand}"
                                           EventArgsParameterPath="Item" />
             </ListView.Behaviors>
-            
+            -->
+         
             <ListView.ItemTemplate>
                 <DataTemplate>
                     <local:CellEtapaCamino/>

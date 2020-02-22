@@ -23,15 +23,36 @@ namespace YPA.Data
             _database.CreateTableAsync<TablaALOJAMIENTOS>().Wait();
             _database.CreateTableAsync<TablaCaminoDeMadrid>().Wait();
             _database.CreateTableAsync<TablaSanSalvador>().Wait();
+            _database.CreateTableAsync<TablaSanabres>().Wait();
+            _database.CreateTableAsync<TablaFinisterre>().Wait();
         }
 
 
-        public Task<List<TablaBaseCaminos>> GetEtapasCamino(string camino)
+        public Task<List<TablaBaseCaminos>> GetPoblacionesCamino(string camino)
         {
             string sql = "select * from Tabla" + camino;
 
             return _database.QueryAsync<TablaBaseCaminos>(sql);
         }
+
+        public List<string> GetPoblacionesConAlbergue(string camino)
+        {
+            string sql = "select TablaPOBLACIONES.nombrePoblacion from TablaPOBLACIONES INNER JOIN Tabla" + camino +
+                         " ON TablaPOBLACIONES.nombrePoblacion = Tabla" + camino +
+                         ".nombrePoblacion where TablaPOBLACIONES.albergueMunicipal = 1 OR TablaPOBLACIONES.albergueParroquial = 1 OR TablaPOBLACIONES.alberguePrivado = 1";
+
+            List<RespString> result = _db.Query<RespString>(sql);
+
+            List<string> miLista = new List<string>();
+            foreach (RespString item in result)
+            {
+                miLista.Add(item.nombrePoblacion);
+            }
+
+            return miLista;
+
+        }
+
 
         public Task<List<TablaCaminoDeMadrid>> GetCaminoDeMadridAsync()
         {
@@ -77,17 +98,37 @@ namespace YPA.Data
             return _database.Table<TablaPOBLACIONES>().ToListAsync();
         }
 
+   
         public Task<TablaPOBLACIONES> GetPoblacionesAsync(int id) => _database.Table<TablaPOBLACIONES>()
                             .Where(i => i.id == id)
                             .FirstOrDefaultAsync();
 
-        public string DamePoblacion(int id)
+        public string DameNombrePoblacionPorId(int id)
         {
             string comando = "select nombrePoblacion from TablaPOBLACIONES where id=?"; // + id;
             //var cmd = new SQLiteCommand(_db);
             List<TablaPOBLACIONES> miLista = _db.Query<TablaPOBLACIONES>(comando, id);
             Console.WriteLine(miLista[0].nombrePoblacion);
             return miLista[0].nombrePoblacion;
+
+        }
+
+        public int DameIdPoblacionDeNombre(string poblacion)
+        {
+            string comando = "select id from TablaPOBLACIONES where nombrePoblacion=?";
+            //Console.WriteLine("DEBUG - VerVM-OnNavigatedTo() comando:{0}", comando);
+            var idPoblacion = App.Database._db.ExecuteScalar<int>(comando, poblacion);
+            Console.WriteLine("DEBUG - VerVM-OnNavigatedTo() La poblacion {0} se corresponde con id: {1}", 
+                poblacion, idPoblacion);
+            return idPoblacion; //_xx_ Ver qué pasa si pedimos el id de una población que no existe !!!
+        }
+
+        public Task<List<TablaPOBLACIONES>> DamePoblacionesPorNombre(string poblacion)
+        {
+            string comando = "select * from TablaPOBLACIONES where nombrePoblacion=?"; // + id;
+            //var cmd = new SQLiteCommand(_db);
+            //List<TablaPOBLACIONES> miLista = _database.QueryAsync<TablaPOBLACIONES>(comando, poblacion);            
+            return _database.QueryAsync<TablaPOBLACIONES>(comando, poblacion);
 
         }
         public Task<int> SavePoblacionesAsync(TablaPOBLACIONES note)
@@ -126,10 +167,10 @@ namespace YPA.Data
                             .Where(i => i.id == id)
                             .FirstOrDefaultAsync();
 
-        public Task<List<TablaALOJAMIENTOS>> GetAlojamientosByCityAsync(int id) => _database.Table<TablaALOJAMIENTOS>()
+        public Task<List<TablaALOJAMIENTOS>> GetAlojamientosByIdPoblacionAsync(int id) => _database.Table<TablaALOJAMIENTOS>()
                             .Where(i => i.idPoblacion == id)
                             .ToListAsync();
-        public List<TablaALOJAMIENTOS> GetAlojamientosByCity(int idPoblacion)
+        public List<TablaALOJAMIENTOS> GetAlojamientosByIdPoblacion(int idPoblacion)
         {
             Console.WriteLine("DEBUG - GetAlojamientosByCity: idPoblacion:{0}", idPoblacion);
             //List<TablaALOJAMIENTOS> miLista = _db.Table<TablaALOJAMIENTOS>().Where(i => i.idPoblacion == id).ToList();
@@ -139,8 +180,6 @@ namespace YPA.Data
 
             Console.WriteLine("DEBUG - GetAlojamientosByCity: Count:{0}", miLista.Count);
 
-            //Console.WriteLine("DEBUG - GetAlojamientosByCity: {0}", miLista.ToString());
-            //Console.WriteLine("DEBUG - GetAlojamientosByCity({0}): {1}", idPoblacion, miLista[0].nombreAlojamiento);
             return miLista;
         }
 

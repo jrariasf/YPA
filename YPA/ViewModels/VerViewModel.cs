@@ -130,7 +130,7 @@ namespace YPA.ViewModels
                 entero = parameter.Value;
             */
             idPoblacionActual = parameter == null ? (SelectedPoblacion == null ? idPoblacionActual : SelectedPoblacion.idPoblacion) : parameter.idPoblacion;
-            List<TablaALOJAMIENTOS> miLista = App.Database.GetAlojamientosByCity(idPoblacionActual);
+            List<TablaALOJAMIENTOS> miLista = App.Database.GetAlojamientosByIdPoblacion(idPoblacionActual);
             listaAlojamientos = new ObservableCollection<TablaALOJAMIENTOS>(miLista);
 
         }
@@ -165,14 +165,15 @@ namespace YPA.ViewModels
 
             Console.WriteLine("DEBUG - VerVM-ExecuteOrdenarPor() ANTES DE ORDENAR");
             int contador = 0;
+            float miSplit = 0;
             foreach (TablaALOJAMIENTOS registro in listaAlojamientos)
             {
                 Console.WriteLine("DEBUG - VerVM-ExecuteOrdenarPor() cont:{0}  Nombre:{1}   precio:{2}", contador, registro.nombreAlojamiento, registro.precio);
+                miSplit = registro.precio == "D" ? 0 : float.Parse(registro.precio.Split(new char[] { '-', '+' })[0].PadLeft(10, '0'));
+
                 Console.WriteLine("DEBUG - VerVM-ExecuteOrdenarPor() cont:{0}  Nombre:{1}   precio:{2}  PadLeft:{3}  Split:{4}", contador++,
-                    registro.nombreAlojamiento, registro.precio, registro.precio.PadLeft(10, '0'),
-                    float.Parse(registro.precio.Split(new char[] { '-', '+' })[0].PadLeft(10, '0')));
-                //registro.precio.Split(new char[] { '-', '+' })[0].PadLeft(10, '0'));
-                //registro.precio.PadLeft(10, '0').Split(new char[] { '-', '+' })[0]);;
+                    registro.nombreAlojamiento, registro.precio, registro.precio.PadLeft(10, '0'), miSplit);
+                    //float.Parse(registro.precio.Split(new char[] { '-', '+' })[0].PadLeft(10, '0')));     
             }
 
             if (parameter == "alfabetico")
@@ -192,10 +193,10 @@ namespace YPA.ViewModels
             else if (parameter == "precio")
             {
                 if (ordenAscendente)
-                    listaAlojamientos = new ObservableCollection<TablaALOJAMIENTOS>(listaAlojamientos.OrderBy(x => float.Parse(x.precio.Split(new char[] { '-', '+' })[0].PadLeft(10, '0'))));
-                //listaAlojamientos = new ObservableCollection<TablaALOJAMIENTOS>(listaAlojamientos.OrderBy(x => ((x.precio.PadLeft(10, '0')).Split(new char[] { '-', '+' }))[0]  ));
+                    listaAlojamientos = new ObservableCollection<TablaALOJAMIENTOS>(listaAlojamientos.OrderBy(x => x.precio == "D" ? 0 : float.Parse(x.precio.Split(new char[] { '-', '+' })[0].PadLeft(10, '0'))));
+                    //listaAlojamientos = new ObservableCollection<TablaALOJAMIENTOS>(listaAlojamientos.OrderBy(x => float.Parse(x.precio.Split(new char[] { '-', '+' })[0].PadLeft(10, '0'))));                  
                 else
-                    listaAlojamientos = new ObservableCollection<TablaALOJAMIENTOS>(listaAlojamientos.OrderByDescending(x => float.Parse(x.precio.Split(new char[] { '-', '+' })[0].PadLeft(10, '0'))));
+                    listaAlojamientos = new ObservableCollection<TablaALOJAMIENTOS>(listaAlojamientos.OrderByDescending(x => x.precio == "D" ? 0 : float.Parse(x.precio.Split(new char[] { '-', '+' })[0].PadLeft(10, '0'))));
             }
             else
                 Console.WriteLine("DEBUG - VerVM-ExecuteOrdenarPor(): Opción no contemplada!!");
@@ -260,21 +261,46 @@ namespace YPA.ViewModels
         }
 
         public void OnNavigatedTo(INavigationParameters parameters)
-        {
+        {            
+            List<TablaALOJAMIENTOS> miLista = null;
             var listado = parameters["listado"] as string;
             var idPoblacion = parameters["idPoblacion"] as string;
+            var poblacion = parameters["poblacion"] as string;
 
             Console.WriteLine("DEBUG - OnNavigatedTo() listado:{0}  idPoblacion:{1}   idPoblacionActual:{2}", listado, idPoblacion, idPoblacionActual);
 
             if (idPoblacion == null)
             {
-                if (listaAlojamientos != null)
-                    return; // Utilizamos la lista de Alojamientos que ya tuviésemos en memoria.
+                if (poblacion != null)
+                {
+                    int id = App.Database.DameIdPoblacionDeNombre(poblacion);
+                    if (id >= 0)
+                        idPoblacion = id.ToString();
+                }
                 else
-                    idPoblacion = idPoblacionActual.ToString();
+                    return;
+                
+                if (idPoblacion == null)                
+                {
+                    if (listaAlojamientos != null)
+                        return; // Utilizamos la lista de Alojamientos que ya tuviésemos en memoria.
+                    else
+                    {
+                        idPoblacion = idPoblacionActual.ToString();
+                        
+                    }
+                }                
             }
 
-            string comando = "select count(*) from TablaALOJAMIENTOS where idPoblacion=?";
+            idPoblacionActual = int.Parse(idPoblacion);
+
+            miLista = App.Database.GetAlojamientosByIdPoblacion(idPoblacionActual);
+
+            Console.WriteLine("DEBUG - VerVM-OnNavigatedTo(): Hay {0} alojamientos", miLista == null ? "0 (NULL)" : miLista.Count().ToString());
+
+            /* Comandos de prueba:
+            string comando;
+            comando = "select count(*) from TablaALOJAMIENTOS where idPoblacion=?";
             //Console.WriteLine("DEBUG - VerVM-OnNavigatedTo() comando:{0}", comando);
             var count = App.Database._db.ExecuteScalar<int>(comando, idPoblacion);
             Console.WriteLine("DEBUG - VerVM-OnNavigatedTo() res:{0}", count);
@@ -283,7 +309,8 @@ namespace YPA.ViewModels
             if (cantidad.Count() > 0)
                 Console.WriteLine("DEBUG - VerVM-OnNavigatedTo() cantidad:{0}", cantidad[0]);
             else
-                Console.WriteLine("DEBUG - VerVM-OnNavigatedTo() La lista cantidad está vacía");
+                Console.WriteLine("DEBUG - VerVM-OnNavigatedTo() La lista cantidad está vacía");            
+
 
             comando = "select nombreAlojamiento from TablaALOJAMIENTOS where idPoblacion=?";
             List<Respuesta> nombres = App.Database._db.Query<Respuesta>(comando, idPoblacion);
@@ -292,12 +319,11 @@ namespace YPA.ViewModels
             {
                 Console.WriteLine("DEBUG - VerVM-OnNavigatedTo() Nombre alojamiento:{0}", nombre.nombreAlojamiento);
             }
+            */
 
-            //comando = "select * from TablaALOJAMIENTOS where idPoblacion=?";
-            //List<TablaALOJAMIENTOS> miLista = App.Database._db.Query<TablaALOJAMIENTOS>(comando, idPoblacion);
 
-            idPoblacionActual = int.Parse(idPoblacion);
-            List<TablaALOJAMIENTOS> miLista = App.Database.GetAlojamientosByCity(idPoblacionActual);
+            //idPoblacionActual = int.Parse(idPoblacion);
+            //List<TablaALOJAMIENTOS> miLista = App.Database.GetAlojamientosByCity(idPoblacionActual);
 
             Console.WriteLine("DEBUG - VerVM-OnNavigatedTo(): Hay {0} alojamientos", miLista.Count());
             foreach (TablaALOJAMIENTOS registro in miLista)

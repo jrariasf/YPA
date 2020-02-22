@@ -57,7 +57,7 @@
                     <CheckBox IsChecked="{Binding ordenAscendente}" IsEnabled="True" Scale="0.8" BackgroundColor="Yellow"/>
                     <Label Text="ASC" VerticalTextAlignment="Center" FontSize="Default" Padding="5,0,10,0" />
                 </StackLayout>
-                
+                 
 
             </StackLayout>
 

@@ -26,7 +26,7 @@ namespace YPA.Views.Formularios
             InitializeComponent();
 
             //Task<TablaPOBLACIONES> pob = App.Database.GetPoblacionesAsync(100);
-               string pob = App.Database.DamePoblacion(100);
+            string pob = App.Database.DameNombrePoblacionPorId(100);
 
             Console.WriteLine("DEBUG - EntryALOJAMIENTOS  nombrePoblacion: {0}", pob);
 

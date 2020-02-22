@@ -30,7 +30,7 @@
         <ListView x:Name="listView"
               ItemsSource="{Binding listaCaminos, Mode=TwoWay}"
               IsGroupingEnabled="False" 
-              RowHeight="50" SeparatorVisibility="None" BackgroundColor="Beige">
+              RowHeight="40" SeparatorVisibility="None" BackgroundColor="White">
 
             <ListView.Behaviors>
                 <prism:EventToCommandBehavior EventName="ItemTapped"

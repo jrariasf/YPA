@@ -6,6 +6,10 @@ using System.ComponentModel;
 
 namespace YPA.Models
 {
+    public class RespString
+    {
+        public string nombrePoblacion { get; set; }
+    }
     public class TablaCAMINOS : INotifyPropertyChanged
     {
         public event PropertyChangedEventHandler PropertyChanged;
@@ -41,7 +45,7 @@ namespace YPA.Models
     }
 
     public class TablaPOBLACIONES : INotifyPropertyChanged
-    {        
+    {
         public event PropertyChangedEventHandler PropertyChanged;
         int _altitud;
         private void RaisePropertyChanged(string propertyName = null)
@@ -60,7 +64,8 @@ namespace YPA.Models
         public int numHabitantes { get; set; }
         public double latitud { get; set; }
         public double longitud { get; set; }
-        public int altitud {
+        public int altitud
+        {
             get { return _altitud; }
             set
             {
@@ -171,8 +176,38 @@ namespace YPA.Models
         public string comentarios { get; set; } // Campo para poner comentarios como: día de descanso, visitar ruinas de tal, comer en no sé dónde, etc...
     }
 
-    public class TablaBaseCaminos
+    public class TablaBaseCaminos : INotifyPropertyChanged, IEquatable<TablaBaseCaminos>
     {
+        public event PropertyChangedEventHandler PropertyChanged;
+        bool _esEtapa;
+        double _acumuladoEtapa;
+        private void RaisePropertyChanged(string propertyName = null)
+        {
+            //Console.WriteLine("DEBUG3 - Tablas - TablaBaseCaminos - RaisePropertyChanged{0}", propertyName);
+            PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));
+        }
+        
+
+        public bool Equals(TablaBaseCaminos other)
+        {
+            //throw new NotImplementedException();
+            if (other is null)
+                return false;
+
+            if (other.id == this.id)
+                return true;
+
+            return false;
+
+        }
+
+        public TablaBaseCaminos()
+        { }
+        public TablaBaseCaminos(int _id)
+        {
+            id = _id;
+        }
+
         [PrimaryKey, AutoIncrement]
         public int id { get; set; }
         [Indexed, MaxLength(30)]
@@ -189,11 +224,38 @@ namespace YPA.Models
         [Ignore]
         public double acumulado { get; set; }
         [Ignore]
+        public double acumuladoEtapa
+        {
+            get { return _acumuladoEtapa; }
+            set
+            {
+                if (_acumuladoEtapa != value)
+                {
+                    _acumuladoEtapa = value;
+                    RaisePropertyChanged(nameof(acumuladoEtapa));
+                }
+            }
+        }
+
+        [Ignore]
         public double distanciaAlFinal { get; set; }
         [Ignore]
         public bool esVisible { get; set; }
         [Ignore]
-        public bool esEtapa { get; set; }  // Para el checbox que sirve para establecer las etapas
+        public bool tieneAlbergue { get; set; }
+        [Ignore]
+        public bool esEtapa   // Para el checbox que sirve para establecer las etapas
+        {
+            get { return _esEtapa; }
+            set
+            {
+                if (_esEtapa != value)
+                {
+                    _esEtapa = value;
+                    RaisePropertyChanged(nameof(esEtapa));
+                }
+            }
+        }
 
     }
 
@@ -233,5 +295,14 @@ namespace YPA.Models
         public string distanciaNodosSiguientes { get; set; }
         //public DateTime fecUltMod { get; set; }
         */
+    }
+
+    public class TablaSanabres : TablaBaseCaminos
+    {
+
+    }
+    public class TablaFinisterre : TablaBaseCaminos
+    {
+
     }
 }

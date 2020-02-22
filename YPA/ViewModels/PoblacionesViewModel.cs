@@ -94,6 +94,7 @@ namespace YPA.ViewModels
             //throw new NotImplementedException();
             var navigationMode = parameters.GetNavigationMode();
             Console.WriteLine("DEBUG2 - PoblacionesVM - OnNavigatedTo()  navigationMode:{0}", navigationMode);
+            
             /* Esto que viene ya no lo hago porque he conseguido que al cambiar algún campo de TablaALOJAMIENTOS, el UI se entere y actualice el valor:
             if (navigationMode == NavigationMode.Back)
             {
@@ -101,15 +102,34 @@ namespace YPA.ViewModels
                 CargarPoblacionesAsync();
             }
             */
+            
+            string poblacion = parameters.GetValue<string>("poblacion");
+            Console.WriteLine("DEBUG2 - PoblacionesVM - OnNavigatedTo(poblacion:{0})", poblacion);
+
+            if (navigationMode == NavigationMode.Back)
+            {
+                Console.WriteLine("DEBUG2 - VerCaminoVM - OnNavigatedTo: Como estamos en BACK, retornamos sin mas");
+                return;
+            }
+
+            CargarPoblacionesAsync(poblacion);
+
         }
 
-        
 
-        async void CargarPoblacionesAsync()
+
+        async void CargarPoblacionesAsync(string poblacion)
         {
-            Console.WriteLine("DEBUG - PoblacionesVM - CargarPoblacionesAsync");
-            string query = "select * from TablaPOBLACIONES";
-            List<TablaPOBLACIONES> miLista = await App.Database.GetPoblacionesAsync(); // QueryAsync<TablaPOBLACIONES>(query);
+            Console.WriteLine("DEBUG - PoblacionesVM - CargarPoblacionesAsync  poblacion: {0}",
+                poblacion == null ? "NULL" : poblacion);
+
+            List<TablaPOBLACIONES> miLista;
+
+            if (poblacion == null)
+                miLista = await App.Database.GetPoblacionesAsync();
+            else
+                miLista = await App.Database.DamePoblacionesPorNombre(poblacion);
+
             listaPoblaciones = new ObservableCollection<TablaPOBLACIONES>(miLista);
         }
 
@@ -118,7 +138,7 @@ namespace YPA.ViewModels
             Console.WriteLine("DEBUG - CONSTR - PoblacionesViewModel()");
             _navigationService = navigationService;
 
-            CargarPoblacionesAsync();
+            //CargarPoblacionesAsync(null);
         }
     }
 }
