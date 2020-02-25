@@ -23,10 +23,13 @@
         <ResourceDictionary>
             <Style  TargetType="Label">
                 <Setter Property = "TextColor" Value="Green" />
-                <Setter Property = "FontSize"  Value="12" />
+                <Setter Property = "FontSize"  Value="Micro" />
             </Style>
             <Style  TargetType="CheckBox">
                 <Setter Property = "IsEnabled" Value="False" />
+            </Style>
+            <Style  TargetType="Button">
+                <Setter Property = "FontSize"  Value="Micro" />
             </Style>
             <Style  TargetType="StackLayout">
                 <Setter Property = "Spacing" Value="0" />
@@ -54,17 +57,17 @@
                 <Button Text="Precio" Command="{Binding OrdenarPor}" CommandParameter="precio" />
                 <!-- <Button Text="{Binding nombreBo ton, FallbackValue=No Bindinggg}" Command="{Binding OrdenarPor}" CommandParameter="toma3" /> -->
                 <StackLayout Orientation="Horizontal" BackgroundColor="#33A717" >
-                    <CheckBox IsChecked="{Binding ordenAscendente}" IsEnabled="True" Scale="0.8" BackgroundColor="Yellow"/>
-                    <Label Text="ASC" VerticalTextAlignment="Center" FontSize="Default" Padding="5,0,10,0" />
+                    <CheckBox IsChecked="{Binding ordenAscendente}" IsEnabled="True" Scale="0.6" />
+                    <Label Text="ASC" VerticalTextAlignment="Center" Padding="5,0,10,0" />
                 </StackLayout>
                  
 
             </StackLayout>
 
             <StackLayout Orientation="Horizontal">
-                <Entry x:Name="miquery" Text="{Binding laquery}" Placeholder="Introduce la query y pulsa el bótón" FontSize="12" MaxLength="100"></Entry>
-                <Button Text="Query" Command="{Binding EjecutarQuery}" CommandParameter="toma query" FontSize="12" Padding="0" Margin="0" WidthRequest="50" ></Button>
-                <Button Text="Reset" Command="{Binding Recargar}" CommandParameter="toma query" FontSize="12" Padding="0" Margin="0" WidthRequest="50" ></Button>
+                <Entry x:Name="miquery" Text="{Binding laquery}" Placeholder="Escribe la query..." FontSize="12" MaxLength="100"></Entry>
+                <Button Text="Query" Command="{Binding EjecutarQuery}" CommandParameter="toma query" Padding="0" Margin="0" WidthRequest="50" ></Button>
+                <Button Text="Reset" Command="{Binding Recargar}" CommandParameter="toma query" Padding="0" Margin="0" WidthRequest="50" ></Button>
 
                 <Picker x:Name="MyPicker" Title="Población"   HorizontalOptions="End" FontSize="14" WidthRequest="190"  TextColor="Red" TitleColor="Red"
                         SelectedIndex="{Binding IndexValue, Mode=TwoWay}"

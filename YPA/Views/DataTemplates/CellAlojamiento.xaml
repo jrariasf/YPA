@@ -49,9 +49,9 @@
 
             <Grid ColumnSpacing="15" RowSpacing="0" >
                 <Grid.RowDefinitions>
-                    <RowDefinition Height="19" />
-                    <RowDefinition Height="19" />
-                    <RowDefinition Height="19" />
+                    <RowDefinition Height="16" />
+                    <RowDefinition Height="16" />
+                    <RowDefinition Height="16" />
                 </Grid.RowDefinitions>
                 <Grid.ColumnDefinitions>
                     <ColumnDefinition Width="Auto" />

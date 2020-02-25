@@ -3,14 +3,13 @@
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
              xmlns:d="http://xamarin.com/schemas/2014/forms/design"
              xmlns:prism="http://prismlibrary.com"
-             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
-             
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"             
              mc:Ignorable="d"            
              xmlns:local="clr-namespace:YPA.Views.DataTemplates"
+             xmlns:sys="clr-namespace:System;assembly=mscorlib"
              xmlns:converter="clr-namespace:YPA.Views"
              x:Class="YPA.Views.VerCamino"
              Title="VerCamino">
-    <!--  xmlns:sys="clr-namespace:System;assembly=mscorlib" -->
 
     
     <ContentPage.ToolbarItems>
@@ -30,9 +29,39 @@
         </ResourceDictionary>
     </ContentPage.Resources>
  -->
-    <ContentPage.Content>
+
+
+
+
+    <StackLayout Orientation="Vertical" >
+        <StackLayout Orientation="Horizontal">
+            <Button Text="Guardar" 
+                    Command="{Binding GuardarCamino}" />
+            <Button Text="Resumen"
+                    Command="{Binding VerResumenCamino}" />
+            <DatePicker VerticalOptions="CenterAndExpand"  Date="{Binding Path=fechaInicio, TargetNullValue={x:Static sys:DateTime.Now}}" >
+                <DatePicker.Format>yyyy-MM-dd</DatePicker.Format>
+                <DatePicker.MinimumDate>
+                    <sys:DateTime x:FactoryMethod="Parse">
+                        <x:Arguments>
+                            <x:String>Jan 1 2000</x:String>
+                        </x:Arguments>
+                    </sys:DateTime>
+                </DatePicker.MinimumDate>
+                <DatePicker.MaximumDate>
+                    <sys:DateTime x:FactoryMethod="Parse">
+                        <x:Arguments>
+                            <x:String>Jul 18 2073</x:String>
+                        </x:Arguments>
+                    </sys:DateTime>
+                </DatePicker.MaximumDate>
+            </DatePicker>
+        </StackLayout>
+
+
+
         <ListView x:Name="listView"   
-              ItemsSource="{Binding listaEtapas, Mode=TwoWay}"
+              ItemsSource="{Binding listaPuntosDePaso, Mode=TwoWay}"
               IsGroupingEnabled="False" 
               RowHeight="35" SeparatorVisibility="None" BackgroundColor="#90F5EB" Margin="6,0,0,0" >
             <!--
@@ -42,13 +71,14 @@
                                           EventArgsParameterPath="Item" />
             </ListView.Behaviors>
             -->
-         
+
             <ListView.ItemTemplate>
                 <DataTemplate>
                     <local:CellEtapaCamino/>
                 </DataTemplate>
             </ListView.ItemTemplate>
         </ListView>
+    </StackLayout>
 
-    </ContentPage.Content>
+
 </ContentPage>

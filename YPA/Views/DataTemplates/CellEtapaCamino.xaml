@@ -20,7 +20,7 @@
             <Grid.ColumnDefinitions >
                 <ColumnDefinition Width="25" />
                 <ColumnDefinition Width="*" />
-                <ColumnDefinition Width="7*" />
+                <ColumnDefinition Width="6*" />
                 <ColumnDefinition Width="2*" />
                 <ColumnDefinition Width="2*" />
                 <ColumnDefinition Width="2*" />
@@ -90,7 +90,8 @@
 
             <!-- <Label Text="{Binding acumuladoEtapa, StringFormat='{0:0.0} km'}" Grid.Column="3"  -->
             <Label Text="{Binding acumuladoEtapa, Converter={StaticResource sustituirPorCadenaVacia}}" Grid.Column="3"                         
-                   AnchorX="30" HorizontalOptions="EndAndExpand" VerticalTextAlignment="Center" FontSize="Micro" />
+                   TextColor="#000000" AnchorX="30" FontSize="Caption" FontAttributes="Bold"
+                   HorizontalOptions="EndAndExpand" VerticalTextAlignment="Center"  Padding="0,0,4,0" />
 
             <!--
                 <Label.Triggers>
@@ -116,12 +117,12 @@
                 -->
 
 
-            <Label Text="{Binding distanciaNodosSiguientes, StringFormat='{0} km'}" Grid.Column="4" 
-                   AnchorX="30" HorizontalOptions="EndAndExpand" VerticalTextAlignment="Center" FontSize="Micro"/>
-            <Label Text="{Binding distanciaAlFinal, StringFormat='{0:0.0} km'}" Grid.Column="5"
-                   AnchorX="30" HorizontalOptions="EndAndExpand" VerticalTextAlignment="Center" FontSize="Micro" Padding="2,0" />
-            <Label Text="{Binding acumulado, StringFormat='{0:0.0} km'}" Grid.Column="6"
-                   HorizontalOptions="EndAndExpand" VerticalTextAlignment="Center" FontSize="Micro" Padding="2,0" />
+            <Label Text="{Binding distanciaNodosSiguientes, StringFormat='{0}'}" Grid.Column="4" 
+                   AnchorX="30" HorizontalOptions="EndAndExpand" VerticalTextAlignment="Center" FontSize="Caption"/>
+            <Label Text="{Binding distanciaAlFinal, StringFormat='{0:0.0}'}" Grid.Column="5"
+                   AnchorX="30" HorizontalOptions="EndAndExpand" VerticalTextAlignment="Center" FontSize="Caption" Padding="2,0" />
+            <Label Text="{Binding acumulado, StringFormat='{0:0.0}'}" Grid.Column="6"
+                   HorizontalOptions="EndAndExpand" VerticalTextAlignment="Center" FontSize="Caption" Padding="2,0" />
 
             <Button Text="VER" Grid.Column="7"
                     Command="{Binding Source={RelativeSource AncestorType={x:Type viewModels:VerCaminoViewModel}}, Path=VerPoblacion}" 

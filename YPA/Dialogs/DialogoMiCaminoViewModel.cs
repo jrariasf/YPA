@@ -1,0 +1,130 @@
+﻿using Prism.Commands;
+using Prism.Mvvm;
+using Prism.Services.Dialogs;
+using System;
+using System.Collections.Generic;
+using System.Collections.ObjectModel;
+using System.Linq;
+using YPA.Models;
+
+namespace YPA.Dialogs
+{
+
+    public class Etapa
+    {
+        string dia { get; set; }
+        string poblacion { get; set; }
+        string distancia { get; set; }
+
+        public Etapa(string _dia, string _poblacion, string _distancia)
+        {
+            dia = _dia;
+            poblacion = _poblacion;
+            distancia = _distancia;
+        }
+    }
+    public class DialogoMiCaminoViewModel : BindableBase, IDialogAware
+    {
+
+        private ObservableCollection<Etapa> _listaEtapas;
+        public ObservableCollection<Etapa> listaEtapas
+        {
+            get { return _listaEtapas; }
+            set { SetProperty(ref _listaEtapas, value); }
+        }
+
+        private string _message;
+        public string Message
+        {
+            get { return _message; }
+            set { SetProperty(ref _message, value); }
+        }
+
+        private string _etapas;
+        public string etapas
+        {
+            get { return _etapas; }
+            set { SetProperty(ref _etapas, value); }
+        }
+
+        private int _alturaLabel;
+        public int alturaLabel
+        {
+            get { return _alturaLabel; }
+            set { SetProperty(ref _alturaLabel, value); }
+        }
+
+        private DelegateCommand _closeCommand;
+        public DelegateCommand CloseCommand =>
+            _closeCommand ?? (_closeCommand = new DelegateCommand(ExecuteCloseCommand));
+
+        void ExecuteCloseCommand()
+        {
+            RequestClose(null);
+        }
+        public DialogoMiCaminoViewModel()
+        {
+
+        }
+
+        public event Action<IDialogParameters> RequestClose;
+
+        public bool CanCloseDialog() => true;
+
+        public void OnDialogClosed()
+        {
+            //throw new NotImplementedException();
+        }
+
+        public void OnDialogOpened(IDialogParameters parameters)
+        {
+            //throw new NotImplementedException();
+            Console.WriteLine("DEBUG - DialogoMiCaminoVM - OnDialogOpened");
+
+            Message =  parameters.GetValue<string>("message");
+            List<TablaBaseCaminos> miLista = parameters.GetValue<List<TablaBaseCaminos>>("lista");
+            String fechaInicio = parameters.GetValue<string>("fechaInicio");
+
+            etapas = "";
+            alturaLabel = 15;
+
+            if (fechaInicio == null)
+                fechaInicio = System.DateTime.Today.ToString("yyyy-MM-dd");
+
+            var fecha = DateTime.Parse(fechaInicio);
+            TimeSpan ts = new TimeSpan(1, 0, 0, 0);
+
+            listaEtapas = new ObservableCollection<Etapa>();
+
+
+            if (miLista == null)
+            {
+                Console.WriteLine("DEBUG - DialogoMiCaminoVM - OnDialogOpened   miLista es null");
+                etapas = "No se ha recibido ninguna lista de etapas.";                
+            }
+            else
+            {
+                String[] diaDeLaSemana = new String[]{ "Domingo", "Lunes", "Martes", "Miércoles", "Jueves", "Viernes", "Sábado" };                    
+               
+                foreach (var item in miLista)
+                {
+                    if (item.esEtapa && item.esVisible)
+                    {
+                        /*
+                        alturaLabel += 15;
+                        string nombrePoblacion = item.nombrePoblacion.Substring(0, item.nombrePoblacion.Length > 20 ? 20 : item.nombrePoblacion.Length);
+                        etapas = etapas + String.Format("{0,-26}", fecha.ToString("yyyy-MM-dd") + " (" + diaDeLaSemana[(int)fecha.DayOfWeek] + "):") +
+                                 String.Format("{0,-22}", nombrePoblacion + ":") + String.Format("{0,10:0.0}", item.acumuladoEtapa) + " km\n";
+                        fecha = fecha + ts;
+                        */
+                        string dia = fecha.ToString("yyyy-MM-dd") + " (" + diaDeLaSemana[(int)fecha.DayOfWeek] + ")";
+
+                        Etapa etapa = new Etapa(dia, item.nombrePoblacion, String.Format("{0:0.0}", item.acumuladoEtapa) + " km");
+                        listaEtapas.Add(etapa);
+                    }
+                }
+            }
+
+        }
+    }
+}

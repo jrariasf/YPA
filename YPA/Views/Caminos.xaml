@@ -25,8 +25,10 @@
             </DataTemplate>
         </ListView.ItemTemplate>
     </ListView>
--->
-    <StackLayout BackgroundColor="Red" >
+-->    
+    
+    <StackLayout BackgroundColor="Red"  Orientation="Vertical">
+        <!-- <Label Text="{Binding miTexto}"  WidthRequest="300" HeightRequest="60" FontSize="14"/> -->
         <ListView x:Name="listView"
               ItemsSource="{Binding listaCaminos, Mode=TwoWay}"
               IsGroupingEnabled="False" 

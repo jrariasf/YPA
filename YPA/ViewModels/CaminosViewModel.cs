@@ -5,6 +5,7 @@ using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.ComponentModel;
+using System.Globalization;
 using System.Linq;
 using Xamarin.Forms;
 using YPA.Models;
@@ -36,6 +37,15 @@ namespace YPA.ViewModels
                 RaisePropertyChanged(nameof(listaCaminos));
             }
         }
+
+        /*
+        private string _miTexto;
+        public string miTexto
+        {
+            get { return _miTexto; }
+            set { SetProperty(ref _miTexto, value); }
+        }
+        */
 
 
         private DelegateCommand<string> _AddCaminoClicked;
@@ -95,6 +105,31 @@ namespace YPA.ViewModels
             _navigationService = navigationService;
 
             CargarCaminosAsync();
+
+            /*
+            NumberFormatInfo nfi = CultureInfo.CurrentCulture.NumberFormat;
+            string SeparadorDecimal = nfi.NumberDecimalSeparator;
+            string separadorDeMiles = nfi.NumberGroupSeparator;
+            string signoNegativo = nfi.NegativeSign;
+
+            miTexto = "CultureInfo:" + CultureInfo.CurrentCulture.Name + "  Decimal:<" + SeparadorDecimal + ">   Miles:<" + separadorDeMiles + ">   Negativo:<" + signoNegativo + ">";
+           
+            string uno = "3.5";
+            string dos = "1.3";
+
+            double resultado1 = double.Parse(uno) + double.Parse(dos);
+
+            Console.WriteLine("DEBUG - CaminosVM - Constructor res:{0}", resultado1);
+
+            CultureInfo culture = new CultureInfo("es-ES");
+            double resultado2 = double.Parse(uno, culture) + double.Parse(dos, culture);
+            Console.WriteLine("DEBUG - CaminosVM - Constructor es-ES res:{0}", resultado2);
+            miTexto = miTexto + "res1:" + resultado1 + "   res2:" + resultado2;
+
+            Console.WriteLine("DEBUG - CaminosVM - Constructor miTexto:{0}", miTexto);
+            */
+
+
         }
     }
 }

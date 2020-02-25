@@ -1,0 +1,86 @@
+﻿<?xml version="1.0" encoding="UTF-8"?>
+<StackLayout xmlns="http://xamarin.com/schemas/2014/forms" 
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             xmlns:d="http://xamarin.com/schemas/2014/forms/design"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+             mc:Ignorable="d"
+             BackgroundColor="#F8EDED"
+             HeightRequest="400" WidthRequest="350"
+             VerticalOptions="Center"
+             x:Class="YPA.Dialogs.DialogoMiCamino">
+
+    <!-- ItemsSource="{Binding listaEtapas, Mode=TwoWay}" -->
+
+    <Label Text="{Binding Message, FallbackValue=Sin mensaje}" BackgroundColor="Yellow" TextColor="Red" FontSize="Caption" FontAttributes="Bold" />
+    
+    <ListView x:Name="listView1"      
+              ItemsSource="{Binding listaEtapas, Mode=TwoWay}"
+              IsGroupingEnabled="False" 
+              RowHeight="25" SeparatorVisibility="None" BackgroundColor="#90F5EB" Margin="6,0,0,0" >
+
+        <ListView.ItemTemplate>
+            <DataTemplate>
+                <ViewCell>
+                    <ViewCell.View>
+
+                        <Grid ColumnSpacing="0" BackgroundColor="#F4F7AE" >
+                            <Grid.RowDefinitions>
+                                <RowDefinition Height="25" />
+                                </Grid.RowDefinitions>
+                            <Grid.ColumnDefinitions >
+                                <ColumnDefinition Width="2*" />
+                                <ColumnDefinition Width="3*" />
+                                <ColumnDefinition Width="*" />
+                            </Grid.ColumnDefinitions>
+                    
+                    
+                            
+                            <Label Text="{Binding dia}" Grid.Column="0"
+                                   FontSize="Micro" TextColor="Red" 
+                                   Margin="0" Padding="0" 
+                                   HorizontalOptions="EndAndExpand" VerticalOptions="Center"  
+                                   VerticalTextAlignment="Center" />
+
+                            <Label Text="{Binding poblacion}" Grid.Column="1" />
+                            <Label Text="{Binding distancia,FallbackValue=No encontrado}" Grid.Column="2" />
+                            
+                            <!--
+                            <Label Text="una" Grid.Column="0" />
+                            <Label Text="una" Grid.Column="1" />
+                            <Label Text="una" Grid.Column="2" />
+                            -->
+
+                        </Grid>
+                    </ViewCell.View>
+                </ViewCell>
+            </DataTemplate>
+        </ListView.ItemTemplate>
+    </ListView>
+    
+    <Button Text="Close" HorizontalOptions="Center"
+            Command="{Binding CloseCommand}" />
+    
+</StackLayout>
+
+
+<!--
+<StackLayout xmlns="http://xamarin.com/schemas/2014/forms" 
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             xmlns:d="http://xamarin.com/schemas/2014/forms/design"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+             mc:Ignorable="d"
+             BackgroundColor="#F8EDED"
+             HeightRequest="400" WidthRequest="350"
+             VerticalOptions="Center"
+             x:Class="YPA.Dialogs.DialogoMiCamino">
+    
+    <Label Text="{Binding Message}" BackgroundColor="Yellow" TextColor="Red" FontSize="Caption" FontAttributes="Bold" />
+    <Label Text="{Binding etapas}"  BackgroundColor="#F4F7AE" 
+           MaxLines="15" FontSize="Caption"
+           MinimumHeightRequest="50" HeightRequest="{Binding alturaLabel}"
+           HorizontalOptions="FillAndExpand" LineBreakMode="NoWrap"  />
+    <Button Text="Close" HorizontalOptions="Center"
+            Command="{Binding CloseCommand}" />
+</StackLayout>
+    
+    -->
