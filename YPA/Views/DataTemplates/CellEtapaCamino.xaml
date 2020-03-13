@@ -5,138 +5,38 @@
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
              xmlns:prism="http://prismlibrary.com"
              xmlns:converter="clr-namespace:YPA.ViewModels"
-             xmlns:viewModels="clr-namespace:YPA.ViewModels"
+             xmlns:viewModels="clr-namespace:YPA.ViewModels"             
              mc:Ignorable="d"
              x:Class="YPA.Views.DataTemplates.CellEtapaCamino">
-
-
+    
     <ViewCell.View>
-        <Grid ColumnSpacing="0" BackgroundColor="#F4F7AE"  
-              IsVisible="{Binding esVisible}"
-              IsEnabled="{Binding esVisible}" >
-        <Grid.RowDefinitions>
+        <Grid ColumnSpacing="0" BackgroundColor="#F4F7AE" >
+            <Grid.RowDefinitions>
                 <RowDefinition Height="35" />
             </Grid.RowDefinitions>
             <Grid.ColumnDefinitions >
-                <ColumnDefinition Width="25" />
+                <ColumnDefinition Width="2*" />
+                <ColumnDefinition Width="3*" />
                 <ColumnDefinition Width="*" />
-                <ColumnDefinition Width="6*" />
-                <ColumnDefinition Width="2*" />
-                <ColumnDefinition Width="2*" />
-                <ColumnDefinition Width="2*" />
-                <ColumnDefinition Width="2*" />
-                <ColumnDefinition Width="2*" />
-                <ColumnDefinition Width="2*" />
             </Grid.ColumnDefinitions>
-            <Grid.Resources>
-                <ResourceDictionary>
-                    <converter:IntToColorStringConverter x:Key="intToColorString" />
-                    <converter:SustituirPorCadenaVaciaConverter x:Key="sustituirPorCadenaVacia" />
-                    <!--
-                    <converter:Acumulado x:Key="acumulado" />
-                    <converter:PoblacionVisible x:Key="poblacionVisible" />
-                    -->
-                </ResourceDictionary>
-            </Grid.Resources>
 
-            <!--
-            <CheckBox x:Name="etapaCheck" IsChecked="{Binding esEtapa}"  Scale="0.6" Grid.Column="0"  Color="Black" >
-                <CheckBox.GestureRecognizers>
-                    <TapGestureRecognizer
-                        Command="{Binding Source={RelativeSource AncestorType={x:Type viewModels:VerCaminoViewModel}}, Path=LabelPulsada}"                        
-                        CommandParameter="MiCheck" />
-                </CheckBox.GestureRecognizers>
-            </CheckBox>
-            -->
+            <Label Text="{Binding dia,FallbackValue=No dia}" Grid.Column="0"
+                                   FontSize="Micro" TextColor="Red" 
+                                   Margin="0" Padding="0" 
+                                   HorizontalOptions="StartAndExpand" VerticalOptions="Center"  
+                                   VerticalTextAlignment="Center" />
 
-            <AbsoluteLayout Grid.Column="0">
-                <ContentView VerticalOptions="Center"
-                                        HorizontalOptions="FillAndExpand"
-                                        AbsoluteLayout.LayoutFlags="All"
-                                        AbsoluteLayout.LayoutBounds="0,0,1,1">
-                    <CheckBox WidthRequest="20" Scale="0.5"  Color="Black"                             
-                              IsChecked="{Binding esEtapa}"
-                              IsEnabled="true"
-                              IsVisible="true" />
-                </ContentView>
-                <Button HeightRequest="80"
-                                        TextColor="White"
-                                        VerticalOptions="Center"
-                                        BackgroundColor="Transparent"
-                                        CommandParameter="{Binding id, StringFormat='{0}'}"
-                                        Command="{Binding Source={RelativeSource AncestorType={x:Type viewModels:VerCaminoViewModel}}, Path=CheckPulsado}"
-                                        AbsoluteLayout.LayoutFlags="All"
-                                        AbsoluteLayout.LayoutBounds="0,0,1,1" />
-            </AbsoluteLayout>
+            <Label Text="{Binding poblacion,FallbackValue=No pob}" Grid.Column="1" 
+                                   FontSize="Caption" TextColor="Black" 
+                                   Margin="0" Padding="0" 
+                                   HorizontalOptions="StartAndExpand" VerticalOptions="Center"  
+                                   VerticalTextAlignment="Center" />
+            <Label Text="{Binding distancia,FallbackValue=No dis}" Grid.Column="2"
+                                   FontSize="Caption" TextColor="Black" 
+                                   Margin="0" Padding="0" 
+                                   HorizontalOptions="StartAndExpand" VerticalOptions="Center"  
+                                   VerticalTextAlignment="Center" />
             
-
-            <Label Text="{Binding id}" Grid.Column="1"
-                   FontSize="Micro" 
-                   TextColor="Red" 
-                   Margin="0" Padding="0" HorizontalOptions="EndAndExpand" VerticalOptions="Center"  AnchorX="10" VerticalTextAlignment="Center"
-                   BackgroundColor="{Binding IniBifurcacion,  Converter={StaticResource intToColorString}}" />
-
-
-            <Label x:Name="poblacionChecked"  Text="{Binding nombrePoblacion}" Grid.Column="2" 
-                   FontSize="Caption" HorizontalOptions="Start" VerticalTextAlignment="Center"
-                   FontAttributes="Bold" MinimumWidthRequest="200" TextColor="#000000" Padding="6,0,0,0" >
-                <Label.GestureRecognizers>
-                    <TapGestureRecognizer
-                        Command="{Binding Source={RelativeSource AncestorType={x:Type viewModels:VerCaminoViewModel}}, Path=LabelPulsada}"                        
-                        CommandParameter="{Binding .}" />
-                </Label.GestureRecognizers>
-            </Label>
-
-
-            <!-- <Label Text="{Binding acumuladoEtapa, StringFormat='{0:0.0} km'}" Grid.Column="3"  -->
-            <Label Text="{Binding acumuladoEtapa, Converter={StaticResource sustituirPorCadenaVacia}}" Grid.Column="3"                         
-                   TextColor="#000000" AnchorX="30" FontSize="Caption" FontAttributes="Bold"
-                   HorizontalOptions="EndAndExpand" VerticalTextAlignment="Center"  Padding="0,0,4,0" />
-
-            <!--
-                <Label.Triggers>
-                    <DataTrigger Binding="{Binding acumuladoEtapa}" Value="0.0" >
-                        <Setter Property="Text" Value="" />
-                    </DataTrigger>
-                </Label.Triggers>
-
-            <Label Text="{Binding acumuladoEtapa, StringFormat='{0:0.0} km'}" Grid.Column="3" 
-                   Style="{StaticResource MyLabelStyle}"
-                   AnchorX="30" HorizontalOptions="EndAndExpand" VerticalTextAlignment="Center" FontSize="Micro" >
-            
-            
-                <Label.Style>
-                    <Style TargetType="TextBox" >
-                        <Style.Triggers>
-                            <DataTrigger Binding="{Binding acumuladoEtapa}" Value="0.0" >
-                                <Setter Property="Text" Value="" />
-                            </DataTrigger>
-                        </Style.Triggers>
-                    </Style>
-                </Label.Style>
-                -->
-
-
-            <Label Text="{Binding distanciaNodosSiguientes, StringFormat='{0}'}" Grid.Column="4" 
-                   AnchorX="30" HorizontalOptions="EndAndExpand" VerticalTextAlignment="Center" FontSize="Caption"/>
-            <Label Text="{Binding distanciaAlFinal, StringFormat='{0:0.0}'}" Grid.Column="5"
-                   AnchorX="30" HorizontalOptions="EndAndExpand" VerticalTextAlignment="Center" FontSize="Caption" Padding="2,0" />
-            <Label Text="{Binding acumulado, StringFormat='{0:0.0}'}" Grid.Column="6"
-                   HorizontalOptions="EndAndExpand" VerticalTextAlignment="Center" FontSize="Caption" Padding="2,0" />
-
-            <Button Text="VER" Grid.Column="7"
-                    Command="{Binding Source={RelativeSource AncestorType={x:Type viewModels:VerCaminoViewModel}}, Path=VerPoblacion}" 
-                    CommandParameter="{Binding Text, Source={x:Reference poblacionChecked}}"
-                    FontSize="Micro" FontAttributes="Bold" HeightRequest="20" BackgroundColor="#A8EFF7" Padding="2,0"
-                    CornerRadius="10" />
-            <Button Text="ALB" Grid.Column="8" IsVisible="{Binding tieneAlbergue}"
-                    Command="{Binding Source={RelativeSource AncestorType={x:Type viewModels:VerCaminoViewModel}}, Path=VerAlbergues}" 
-                    CommandParameter="{Binding Text, Source={x:Reference poblacionChecked}}"
-                    FontSize="Micro" FontAttributes="Bold" HeightRequest="20" BackgroundColor="#E87B7B" Padding="2,0"
-                    CornerRadius="10"/>
-
-
         </Grid>
-                
     </ViewCell.View>
 </ViewCell>

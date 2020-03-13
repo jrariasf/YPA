@@ -306,7 +306,6 @@ namespace YPA.ViewModels
 
             camino.esEtapa = !camino.esEtapa;
 
-
         }
 
 
@@ -370,46 +369,7 @@ namespace YPA.ViewModels
             //List<TablaBaseCaminos> miLista = await App.Database.GetPuntosDePasoCamino(caminoActual);
             back_listaPuntosDePaso = new ObservableCollection<TablaBaseCaminos>(miLista);
 
-            /*
-            if (caminoActual == "CaminoDeMadrid")
-            {
-                Console.WriteLine("DEBUG - VerCaminoVM - RellenarLista()  CaminoDeMadrid");
-                List<TablaCaminoDeMadrid> miLista = null;
-                miLista = await App.Database.GetCaminoDeMadridAsync();
-                if (miLista == null)
-                    Console.WriteLine("ERROR - VerCaminoVM - RellenarLista()  miLista es null !!");
-                else
-                    Console.WriteLine("DEBUG3 - VerCaminoVM - RellenarLista()  miLista NOO es null !!");
-                back_listaPuntosDePaso = new ObservableCollection<TablaBaseCaminos>(miLista);
-                if (back_listaPuntosDePaso == null)
-                    Console.WriteLine("ERROR - VerCaminoVM - RellenarLista()  back_listaPuntosDePaso es null !!");
-                else
-                    Console.WriteLine("DEBUG3 - VerCaminoVM - RellenarLista()  back_listaPuntosDePaso NOO es null !!");
-            }
-            else if (caminoActual == "SanSalvador")
-            {
-                Console.WriteLine("DEBUG - VerCaminoVM - RellenarLista()  SanSalvador");
-                List<TablaSanSalvador> miLista = null;
-                miLista = await App.Database.GetCaminoSanSalvadorAsync();
-                if (miLista == null)
-                    Console.WriteLine("ERROR - VerCaminoVM - RellenarLista()  miLista es null !!");
-                else
-                    Console.WriteLine("DEBUG3 - VerCaminoVM - RellenarLista()  miLista NOO es null !!");
-                back_listaPuntosDePaso = new ObservableCollection<TablaBaseCaminos>(miLista);
-                if (back_listaPuntosDePaso == null)
-                    Console.WriteLine("ERROR - VerCaminoVM - RellenarLista()  back_listaPuntosDePaso es null !!");
-                else
-                    Console.WriteLine("DEBUG3 - VerCaminoVM - RellenarLista()  back_listaPuntosDePaso NOO es null !!");
-
-            }
-            else
-            {
-                Console.WriteLine("DEBUG - VerCaminoVM - RellenarLista()  Camino no contemplado");
-                return false;
-            }
-            */
-
-                    return true;
+            return true;
         }
 
 
@@ -419,6 +379,8 @@ namespace YPA.ViewModels
             double acumulado = 0;
             double distanciaTotal;
             string siguienteNodo;
+
+            bool esPrimeraEtapa = true;
 
             Console.WriteLine("DEBUG - VerCaminoVM - MasajearLista(): cambiarBifurcacionEn:{0}", 
                     cambiarBifurcacionEn == null ? "NULL" : cambiarBifurcacionEn);
@@ -543,8 +505,17 @@ namespace YPA.ViewModels
 
                     if (dataItem.esEtapa) // || dataItem.nodosSiguientes == "FIN_CAMINO")
                     {
-                        dataItem.acumuladoEtapa = acumulado - acumuladoEtapa;
-                        acumuladoEtapa = acumulado;
+                        if (esPrimeraEtapa)
+                        {
+                            dataItem.acumuladoEtapa = 0;
+                            esPrimeraEtapa = false;
+                        }
+                        else
+                        {
+                            dataItem.acumuladoEtapa = acumulado - acumuladoEtapa;
+                        }
+
+                        acumuladoEtapa = acumulado;                      
                     }
 
                     dataItem.acumulado = acumulado;

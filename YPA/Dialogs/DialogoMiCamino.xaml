@@ -1,23 +1,34 @@
 ﻿<?xml version="1.0" encoding="UTF-8"?>
-<StackLayout xmlns="http://xamarin.com/schemas/2014/forms" 
+<Frame xmlns="http://xamarin.com/schemas/2014/forms" 
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
              xmlns:d="http://xamarin.com/schemas/2014/forms/design"
+             xmlns:prism="http://prismlibrary.com"
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
              mc:Ignorable="d"
-             BackgroundColor="#F8EDED"
-             HeightRequest="400" WidthRequest="350"
-             VerticalOptions="Center"
+             xmlns:local="clr-namespace:YPA.Views.DataTemplates"
              x:Class="YPA.Dialogs.DialogoMiCamino">
 
     <!-- ItemsSource="{Binding listaEtapas, Mode=TwoWay}" -->
 
-    <Label Text="{Binding Message, FallbackValue=Sin mensaje}" BackgroundColor="Yellow" TextColor="Red" FontSize="Caption" FontAttributes="Bold" />
+    <StackLayout Orientation="Vertical"
+                 BackgroundColor="#F8EDED" HeightRequest="400" WidthRequest="350" VerticalOptions="Center" >
+
+        
+        <Label Text="{Binding Message, FallbackValue=Sin MEN}"      
+               BackgroundColor="Yellow" TextColor="Red" HeightRequest="20"
+               FontSize="Caption" FontAttributes="Bold" Margin="4,0" />
     
-    <ListView x:Name="listView1"      
+        <ListView x:Name="listView1"      
               ItemsSource="{Binding listaEtapas, Mode=TwoWay}"
               IsGroupingEnabled="False" 
-              RowHeight="25" SeparatorVisibility="None" BackgroundColor="#90F5EB" Margin="6,0,0,0" >
+              RowHeight="35" SeparatorVisibility="Default" BackgroundColor="#EAFAF8" Margin="4,0" >
+            <ListView.ItemTemplate>
+                <DataTemplate>
+                    <local:CellEtapaCamino/>
+                </DataTemplate>
+            </ListView.ItemTemplate>
 
+        <!--
         <ListView.ItemTemplate>
             <DataTemplate>
                 <ViewCell>
@@ -25,16 +36,14 @@
 
                         <Grid ColumnSpacing="0" BackgroundColor="#F4F7AE" >
                             <Grid.RowDefinitions>
-                                <RowDefinition Height="25" />
+                                <RowDefinition Height="35" />
                                 </Grid.RowDefinitions>
                             <Grid.ColumnDefinitions >
-                                <ColumnDefinition Width="2*" />
-                                <ColumnDefinition Width="3*" />
+                                <ColumnDefinition Width="*" />
+                                <ColumnDefinition Width="*" />
                                 <ColumnDefinition Width="*" />
                             </Grid.ColumnDefinitions>
-                    
-                    
-                            
+
                             <Label Text="{Binding dia}" Grid.Column="0"
                                    FontSize="Micro" TextColor="Red" 
                                    Margin="0" Padding="0" 
@@ -42,25 +51,22 @@
                                    VerticalTextAlignment="Center" />
 
                             <Label Text="{Binding poblacion}" Grid.Column="1" />
-                            <Label Text="{Binding distancia,FallbackValue=No encontrado}" Grid.Column="2" />
-                            
-                            <!--
-                            <Label Text="una" Grid.Column="0" />
-                            <Label Text="una" Grid.Column="1" />
-                            <Label Text="una" Grid.Column="2" />
-                            -->
-
+                            <Label Text="{Binding distancia,FallbackValue=No encontrado}" Grid.Column="2" />                                                            
                         </Grid>
                     </ViewCell.View>
                 </ViewCell>
             </DataTemplate>
         </ListView.ItemTemplate>
-    </ListView>
+        -->
     
-    <Button Text="Close" HorizontalOptions="Center"
-            Command="{Binding CloseCommand}" />
+        </ListView>
     
-</StackLayout>
+        <Button Text="Close" HorizontalOptions="Center"  Command="{Binding CloseCommand}" />
+        <Button Text="Print" HorizontalOptions="Center"  Command="{Binding PrintCommand}" />
+        
+    </StackLayout>
+
+</Frame>
 
 
 <!--

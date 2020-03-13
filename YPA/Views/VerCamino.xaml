@@ -74,7 +74,7 @@
 
             <ListView.ItemTemplate>
                 <DataTemplate>
-                    <local:CellEtapaCamino/>
+                    <local:CellNodoCamino/>
                 </DataTemplate>
             </ListView.ItemTemplate>
         </ListView>
