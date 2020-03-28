@@ -12,7 +12,9 @@
                 <Button Text="Poblaciones" Command="{Binding NavigateCommand}" CommandParameter="NavigationPage/Poblaciones" />
                 <Button Text="Alojamientos" Command="{Binding NavigateCommand}" CommandParameter="NavigationPage/Alojamientos" />
                 <Button Text="Caminos" Command="{Binding NavigateCommand}" CommandParameter="NavigationPage/Caminos" />
+                <Button Text="Mis Caminos" Command="{Binding NavigateCommand}" CommandParameter="NavigationPage/MisCaminos" />
                 <Button Text="Ver" Command="{Binding NavigateCommand}" CommandParameter="NavigationPage/Ver" />
+                
                 <!--
                 <Button Text="Prueba-1" Command="{Binding NavigateCommand}" CommandParameter="NavigationPage/PruebaUno" />
                 <Button Text="Prueba-2" Command="{Binding NavigateCommand}" CommandParameter="NavigationPage/Formulario.PruebaUno" />

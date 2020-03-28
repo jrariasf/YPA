@@ -1,0 +1,64 @@
+﻿<?xml version="1.0" encoding="UTF-8"?>
+<ViewCell xmlns="http://xamarin.com/schemas/2014/forms" 
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             xmlns:d="http://xamarin.com/schemas/2014/forms/design"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+             xmlns:viewModels="clr-namespace:YPA.ViewModels"
+             mc:Ignorable="d"
+             x:Class="YPA.Views.DataTemplates.CellMiCamino">
+    
+  <ViewCell.View>
+
+        <Grid ColumnSpacing="0" BackgroundColor="#F5FF0D" Margin="10,0,0,0" VerticalOptions="Center" >
+            <Grid.RowDefinitions>
+                <RowDefinition Height="Auto" />
+                <RowDefinition Height="Auto" />
+                <RowDefinition Height="Auto" />
+            </Grid.RowDefinitions>
+            <Grid.ColumnDefinitions >
+                <ColumnDefinition Width="Auto" />
+            </Grid.ColumnDefinitions>
+
+            <StackLayout Orientation="Horizontal" Grid.Row="0" >
+                <Label x:Name="id" Text="{Binding id}" />
+                <Label Text="{Binding miNombreCamino}" 
+                   FontSize="Small" FontAttributes="Bold" TextColor="#2028F5" 
+                   Margin="0" Padding="0" VerticalOptions="Center"/>
+                <Label Text="{Binding caminoBase}" />
+                <Label Text="{Binding dia}" />
+            </StackLayout>
+
+            <StackLayout Orientation="Vertical" Grid.Row="1" >
+                <Label Text="{Binding descripcion}" />
+                <!-- <Label Text="{Binding longitud, StringFormat='{0}km'}" Grid.Column="1"
+                       FontSize="Small" VerticalOptions="Center" /> -->
+
+                <Label Text="{Binding bifurcaciones}" />
+                <Label Text="{Binding etapas}" />
+            </StackLayout>
+            
+            <StackLayout Orientation="Horizontal" HeightRequest="50" Grid.Row="2" >
+                
+                <Button Text="Etapas"
+                    Command="{Binding Source={RelativeSource AncestorType={x:Type viewModels:MisCaminosViewModel}}, Path=VerEtapasMiCamino}" 
+                    CommandParameter="{Binding Text, Source={x:Reference id}}" 
+                    FontSize="Medium" Padding="0" Margin="0" WidthRequest="120" HeightRequest="20"
+                    BackgroundColor="Red" BorderColor="Brown" BorderWidth="2" />
+                
+                <Button Text="Ampliar"
+                    Command="{Binding Source={RelativeSource AncestorType={x:Type viewModels:MisCaminosViewModel}}, Path=AmpliarMiCamino}" 
+                    CommandParameter="{Binding Text, Source={x:Reference id}}" 
+                    FontSize="Medium" Padding="0" Margin="0" WidthRequest="120" HeightRequest="20"
+                    BackgroundColor="Red" BorderColor="Brown" BorderWidth="2" />
+                
+                <Button Text="Borrar"
+                    Command="{Binding Source={RelativeSource AncestorType={x:Type viewModels:MisCaminosViewModel}}, Path=BorrarMiCamino}" 
+                    CommandParameter="{Binding Text, Source={x:Reference id}}" 
+                    FontSize="Medium" Padding="0" Margin="0" WidthRequest="120" HeightRequest="20"
+                    BackgroundColor="Red" BorderColor="Brown" BorderWidth="2" />
+            </StackLayout>
+
+        </Grid>
+      
+    </ViewCell.View>
+</ViewCell>

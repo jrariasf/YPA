@@ -1,0 +1,37 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             xmlns:prism="http://prismlibrary.com"
+             prism:ViewModelLocator.AutowireViewModel="True"
+             xmlns:local="clr-namespace:YPA.Views.DataTemplates"
+             x:Class="YPA.Views.VerEtapas">
+
+    <ContentPage.ToolbarItems>
+        <!-- <ToolbarItem Text="+"  Clicked="OnNoteAddedClicked" CommandParameter="prueba" /> -->
+        <ToolbarItem Text="+"  Command="{Binding AddMiCaminoClicked,FallbackValue=Funcion no definida}"
+                               CommandParameter="NO ESTA CONFIGURADO!!!!!" />
+    </ContentPage.ToolbarItems>
+
+
+    <StackLayout BackgroundColor="Red"  Orientation="Vertical">
+        <!-- <Label Text="{Binding miTexto}"  WidthRequest="300" HeightRequest="60" FontSize="14"/> -->
+        <ListView x:Name="listView"
+            ItemsSource="{Binding listaMisEtapas, Mode=TwoWay}"
+            IsGroupingEnabled="False" RowHeight="170"
+            SeparatorVisibility="None" BackgroundColor="White">
+
+            <ListView.Behaviors>
+                <prism:EventToCommandBehavior EventName="ItemTapped"
+                                          Command="{Binding ItemTappedCommand}"
+                                          EventArgsParameterPath="Item" />
+            </ListView.Behaviors>
+
+            <ListView.ItemTemplate>
+                <DataTemplate>
+                    <local:CellMisEtapas />
+                </DataTemplate>
+            </ListView.ItemTemplate>
+        </ListView>
+    </StackLayout>
+    
+</ContentPage>

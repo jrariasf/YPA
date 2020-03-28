@@ -33,13 +33,29 @@
 
 
 
-    <StackLayout Orientation="Vertical" >
-        <StackLayout Orientation="Horizontal">
-            <Button Text="Guardar" 
-                    Command="{Binding GuardarCamino}" />
-            <Button Text="Resumen"
-                    Command="{Binding VerResumenCamino}" />
-            <DatePicker VerticalOptions="CenterAndExpand"  Date="{Binding Path=fechaInicio, TargetNullValue={x:Static sys:DateTime.Now}}" >
+    <StackLayout Orientation="Vertical" Margin="6,0" BackgroundColor="#E1FAF9" >
+
+        <Grid ColumnSpacing="0"  BackgroundColor="#F5FF0D" VerticalOptions="Center" RowSpacing="1" Margin="0" >
+            <Grid.RowDefinitions>
+                <RowDefinition Height="20" />
+                <RowDefinition Height="35" />
+            </Grid.RowDefinitions>
+            <Grid.ColumnDefinitions >
+                <ColumnDefinition Width="2*" />
+                <ColumnDefinition Width="3*" />
+                <ColumnDefinition Width="*" />
+            </Grid.ColumnDefinitions>
+
+            <Label Text="Nombre:" FontSize="Caption" Grid.Row="0" Grid.Column="0"  BackgroundColor="#91F2E8" TextColor="Black" VerticalTextAlignment="End" />
+            <Entry Text="{Binding miNombreCamino}" FontSize="Caption" Grid.Row="1" Grid.Column="0" 
+                   BackgroundColor="#F0F5A2" TextColor="Black" HeightRequest="30" HorizontalTextAlignment="Start"/>
+
+            <Label Text="Descripción:" FontSize="Caption" Grid.Row="0" Grid.Column="1" BackgroundColor="#91F2E8" TextColor="Black" VerticalTextAlignment="End" />
+            <Entry Text="{Binding descripcion}" FontSize="Caption" Grid.Row="1" Grid.Column="1" BackgroundColor="#F0F5A2" TextColor="Black" HeightRequest="30" />
+
+            <Label Text="Día:" FontSize="Caption" Grid.Row="0" Grid.Column="2" BackgroundColor="#91F2E8" TextColor="Black" VerticalTextAlignment="End" />
+            <DatePicker VerticalOptions="CenterAndExpand"  Grid.Row="1" Grid.Column="2" BackgroundColor="#F0F5A2" TextColor="Black" FontSize="Micro"
+                Date="{Binding Path=fechaInicio, TargetNullValue={x:Static sys:DateTime.Now}}" >
                 <DatePicker.Format>yyyy-MM-dd</DatePicker.Format>
                 <DatePicker.MinimumDate>
                     <sys:DateTime x:FactoryMethod="Parse">
@@ -56,14 +72,24 @@
                     </sys:DateTime>
                 </DatePicker.MaximumDate>
             </DatePicker>
+
+
+
+        </Grid>
+
+        <StackLayout Orientation="Horizontal" HeightRequest="35" BackgroundColor="#FFE1FAF9"  >
+            <Button Text="Guardar" Grid.Row="0" Grid.Column="3" HeightRequest="35"
+                    Command="{Binding GuardarCamino}" FontSize="Micro" />
+            <Button Text="Resumen" Grid.Row="1" Grid.Column="3" HeightRequest="35"
+                    Command="{Binding VerResumenCamino}" FontSize="Micro" />
+            <Label Text="{Binding resumen}" HeightRequest="30" BackgroundColor="Yellow"
+                   HorizontalTextAlignment="End"  VerticalTextAlignment="Center"  HorizontalOptions="EndAndExpand" />
         </StackLayout>
-
-
 
         <ListView x:Name="listView"   
               ItemsSource="{Binding listaPuntosDePaso, Mode=TwoWay}"
               IsGroupingEnabled="False" 
-              RowHeight="35" SeparatorVisibility="None" BackgroundColor="#90F5EB" Margin="6,0,0,0" >
+              RowHeight="35" SeparatorVisibility="None" BackgroundColor="#90F5EB" >
             <!--
             <ListView.Behaviors>
                 <prism:EventToCommandBehavior EventName="ItemTapped"

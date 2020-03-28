@@ -21,12 +21,15 @@ namespace YPA.ViewModels
         public static CultureInfo culture;
         private IDialogService _dialogService { get; }
 
-        public static char separador = ';';
+        //_xx_ public static char[] separador = { ';' };
+        //_xx_ public static char[] separadorDePares = { '#' };
 
         string caminoActual = null;
         string caminoAnterior = null;
 
-        List<string> poblacionesConAlbergue = null;
+        //List<string> poblacionesConAlbergue = null;
+
+        //_xx_ int numEtapas = 0;
 
         Dictionary<string, string> bifurcaciones = null; // new Dictionary<string, string>();
         
@@ -38,7 +41,21 @@ namespace YPA.ViewModels
             PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));
         }
 
-        List<TablaBaseCaminos> miLista = null;
+        public List<TablaBaseCaminos> miLista;
+        /*_xx_
+        private List<TablaBaseCaminos> _miLista;
+        public List<TablaBaseCaminos> miLista {
+            get { return _miLista; }            
+            set
+            {
+                Console.WriteLine("DEBUG3 - VerCaminoVM - Cambio en miLista !!!");
+                if (_miLista == value)
+                    return;
+                SetProperty(ref _miLista, value);
+                RaisePropertyChanged(nameof(miLista));
+            }
+        }
+        */
 
         private ObservableCollection<TablaBaseCaminos> _listaPuntosDePaso;
         public ObservableCollection<TablaBaseCaminos> listaPuntosDePaso
@@ -54,30 +71,143 @@ namespace YPA.ViewModels
             }
         }
 
-        ObservableCollection<TablaBaseCaminos> back_listaPuntosDePaso;
+        //_xx_ ObservableCollection<TablaBaseCaminos> back_listaPuntosDePaso;
 
 
         private string _fechaInicio;
         public string fechaInicio
         {
             get { return _fechaInicio; }
-            set { SetProperty(ref _fechaInicio, value); }
+            set
+            { 
+                SetProperty(ref _fechaInicio, value);
+                RaisePropertyChanged(nameof(fechaInicio));
+            }
         }
 
+        private string _miNombreCamino;
+        public string miNombreCamino
+        {
+            get { return _miNombreCamino; }
+            set
+            { 
+                SetProperty(ref _miNombreCamino, value);
+                RaisePropertyChanged(nameof(miNombreCamino));
+            }
+        }
+
+        private string _descripcion;
+        public string descripcion
+        {
+            get { return _descripcion; }
+            set
+            {
+                SetProperty(ref _descripcion, value);
+                RaisePropertyChanged(nameof(descripcion));
+            }
+        }
+
+        private string _resumen;
+        public string resumen
+        {
+            get { return _resumen; }
+            set
+            {
+                SetProperty(ref _resumen, value);
+                RaisePropertyChanged(nameof(resumen));
+            }
+        }
 
 
         private DelegateCommand _GuardarCamino;
         public DelegateCommand GuardarCamino =>
             _GuardarCamino ?? (_GuardarCamino = new DelegateCommand(ExecuteGuardarCamino));
 
-        void ExecuteGuardarCamino()
+        async void ExecuteGuardarCamino()
         {
             Console.WriteLine("DEBUG - VerCaminoVM - ExecuteGuardarCamino()");
+            /*
             _dialogService.ShowDialog("DialogoMiCamino", new DialogParameters
             {
                 { "message", "Hello from hell !!" }
             });
+            */
+
+            string listadoEtapas = Global.DameListaEtapas(ref miLista);
+            string listadoBifurcaciones = Global.DameCadenaBifurcaciones(ref bifurcaciones);
+
+            Console.WriteLine("DEBUG - VerCaminoVM - ExecuteGuardarCamino() miNombreCamino:{0}", miNombreCamino );
+            Console.WriteLine("DEBUG - VerCaminoVM - ExecuteGuardarCamino() descripcion:{0}", descripcion);
+            Console.WriteLine("DEBUG - VerCaminoVM - ExecuteGuardarCamino() caminoBase:{0}", caminoActual);
+            Console.WriteLine("DEBUG - VerCaminoVM - ExecuteGuardarCamino() fechaInicio:{0}", fechaInicio);
+            Console.WriteLine("DEBUG - VerCaminoVM - ExecuteGuardarCamino() bifurcaciones:{0}", listadoBifurcaciones);    
+            Console.WriteLine("DEBUG - VerCaminoVM - ExecuteGuardarCamino() etapas:{0}", listadoEtapas);
+
+            TablaMisCaminos tmc = new TablaMisCaminos(miNombreCamino, descripcion, caminoActual, fechaInicio, listadoBifurcaciones, listadoEtapas);
+
+            await App.Database.SaveMiCaminoAsync(tmc);
         }
+
+        /* Estas funciones pasan al Global:
+        string DameListaEtapas()
+        {
+            string listado = "";
+            foreach (var item in miLista)
+            {
+                if (item.esEtapa && item.esVisible)
+                {
+                    listado += item.nombrePoblacion;
+                    listado += VerCaminoViewModel.separador[0]; // ";";
+                }
+            }
+            return listado;
+        }
+        void SetEtapasInLista(string listadoEtapas)  // listado es una secuencia de poblaciones separadas por ";". Obligatorio que acabe en ";" !!!
+        {
+            //string[] etapas = listado.Split(VerCaminoViewModel.separador);
+            foreach (var item in miLista)    //  <<<<<<<<<<<<<<<<<<<<<<<< MIRAR A VER POR QUÉ miLista ES NULL !!!!!!!!
+            {
+                if (listadoEtapas.Contains(item.nombrePoblacion + ";"))
+                    item.esEtapa = true;
+                else
+                    item.esEtapa = false;
+            }
+        }
+
+        string DameCadenaBifurcaciones()
+        {
+            string listadoBifurcaciones = "";
+            foreach (KeyValuePair<string, string> kvp in bifurcaciones)
+            {
+                //Console.WriteLine("DEBUG3 - VerCaminoVM - DameCadenaBifurcaciones: bifurcaciones: Key = {0}, Value = {1}", kvp.Key, kvp.Value);
+                listadoBifurcaciones += kvp.Key;
+                listadoBifurcaciones += VerCaminoViewModel.separadorDePares[0]; // "#"
+                listadoBifurcaciones += kvp.Value;
+                listadoBifurcaciones += VerCaminoViewModel.separador[0]; // ";"
+            }
+            return listadoBifurcaciones;
+        }
+        void SetBifurcaciones(string listadoBifurcaciones)
+        {            
+            if (bifurcaciones == null)
+                bifurcaciones = new Dictionary<string, string>();
+            //else
+            //    bifurcaciones.Clear();
+
+            if (listadoBifurcaciones != null)
+            {
+                Console.WriteLine("DEBUG3 - VerCaminoVM - SetBifurcaciones listadoBifurcaciones:<{0}>", listadoBifurcaciones);
+                bifurcaciones.Clear();
+                string[] arrayBifurcaciones = listadoBifurcaciones.Split(VerCaminoViewModel.separador, StringSplitOptions.RemoveEmptyEntries);
+                foreach (var bifurcacion in arrayBifurcaciones)
+                {
+                    string[] par = bifurcacion.Split(VerCaminoViewModel.separadorDePares);
+                    bifurcaciones.Add(par[0], par[1]);
+                }
+            }
+        }
+        */
+
 
         private DelegateCommand _VerResumenCamino;
         public DelegateCommand VerResumenCamino =>
@@ -92,8 +222,13 @@ namespace YPA.ViewModels
             p.Add("message", "Listado de etapas:");
             p.Add("lista", miLista);
             p.Add("fechaInicio", fechaInicio);
+            p.Add("resumen", resumen); // Es una cadena con el número de etapas y los kilómetros totales
 
             _dialogService.ShowDialog("DialogoMiCamino", p);
+
+            int valor;
+            int res = Global.FuncionGlobal(21, out valor);
+            Console.WriteLine("DEBUG - VerCaminoVM - ExecuteVerResumenCamino()  res:{0}   valor:{0}", res, valor);
 
             /*
             _dialogService.ShowDialog("DialogoMiCamino", new DialogParameters
@@ -165,7 +300,11 @@ namespace YPA.ViewModels
                 camino.nombrePoblacion, camino.esVisible, camino.esEtapa);
 
             if (camino.IniBifurcacion)
-                MasajearLista(camino.nombrePoblacion);
+            {
+                string _resumen;
+                listaPuntosDePaso = Global.MasajearLista(ref miLista, ref bifurcaciones, ref caminoActual, ref caminoAnterior, out _resumen, camino.nombrePoblacion);
+                resumen = _resumen;
+            }
             else
                 Console.WriteLine("DEBUG - VerCaminoVM - ExecuteLabelPulsada()  No hacemos nada porque NO es una bifurcación");
 
@@ -277,8 +416,9 @@ namespace YPA.ViewModels
                 item.acumuladoEtapa = 0;
             }
 
+            //_xx_ resumen = "[ " + numEtapas.ToString() + " etapas, " + distanciaTotal.ToString(CultureInfo.CreateSpecificCulture("es-ES")) + " km ]";
 
-            
+
         }
 
         private DelegateCommand<TablaBaseCaminos> _ItemTappedCommand;
@@ -300,9 +440,9 @@ namespace YPA.ViewModels
             //MasajearLista(camino.nombrePoblacion);
 
             if (camino.esEtapa == true)
-                Console.WriteLine("DEBUG - VerCaminoVM - ExecuteItemTappedCommand() esEtapa estaba a TRUE. La fonemos a false");
+                Console.WriteLine("DEBUG - VerCaminoVM - ExecuteItemTappedCommand() esEtapa estaba a TRUE. La ponemos a false");
             else
-                Console.WriteLine("DEBUG - VerCaminoVM - ExecuteItemTappedCommand() esEtapa estaba a FALSE. La fonemos a true");
+                Console.WriteLine("DEBUG - VerCaminoVM - ExecuteItemTappedCommand() esEtapa estaba a FALSE. La ponemos a true");
 
             camino.esEtapa = !camino.esEtapa;
 
@@ -322,7 +462,7 @@ namespace YPA.ViewModels
             Console.WriteLine("DEBUG2 - PoblacionesVM - OnNavigatedFrom()  navigationMode:{0}", navigationMode);
         }
 
-        async public void OnNavigatedTo(INavigationParameters parameters)
+        public void OnNavigatedTo(INavigationParameters parameters)
         {
             //throw new NotImplementedException();
             var navigationMode = parameters.GetNavigationMode();
@@ -338,10 +478,45 @@ namespace YPA.ViewModels
 
             caminoActual = parameters.GetValue<string>("camino");
 
-            MasajearLista(null);
+            TablaMisCaminos tmc = parameters.GetValue<TablaMisCaminos>("tmc");
+
+            if (caminoActual != null)
+            {
+                Console.WriteLine("DEBUG2 - VerCaminoVM - OnNavigatedTo: Llegamos normalmente, desde el menú CAMINOS");
+                //_xx_ listaPuntosDePaso = MasajearLista();
+                string _resumen;
+                listaPuntosDePaso = Global.MasajearLista(ref miLista, ref bifurcaciones, ref caminoActual, ref caminoAnterior, out _resumen);
+                resumen = _resumen;
+            } else if (tmc != null)
+            {
+                Console.WriteLine("DEBUG2 - VerCaminoVM - OnNavigatedTo: Venimos de MisCaminos con tmc");
+                caminoActual = tmc.caminoBase;
+                fechaInicio = tmc.dia.ToString("yyyy-MM-dd");
+                miNombreCamino = tmc.miNombreCamino;
+                descripcion = tmc.descripcion;
+                Console.WriteLine("DEBUG2 - VerCaminoVM - OnNavigatedTo: tmc.bifurcaciones:{0}", tmc.bifurcaciones);
+                //SetBifurcaciones(tmc.bifurcaciones);
+                //_xx_ listaPuntosDePaso = MasajearLista(null, tmc.bifurcaciones, tmc.etapas);
+                string _resumen;
+                listaPuntosDePaso = Global.MasajearLista(ref miLista, ref bifurcaciones, ref caminoActual, ref caminoAnterior, out _resumen, null, tmc.bifurcaciones, tmc.etapas);
+                resumen = _resumen;
+                //SetEtapasInLista(tmc.etapas);               
+            } else
+            {
+                Console.WriteLine("ERROR - VerCaminoVM - OnNavigatedTo: OPCIÓN NO CONTEMPLADA");
+            }
+
+            
         }
 
+
+        /*
         public async Task<bool> RellenarLista()
+        {
+            return await RellenarLista(null);
+        }
+
+        public async Task<bool> RellenarLista(string listadoEtapas=null)
         {
             Console.WriteLine("DEBUG2 - VerCaminoVM - RellenarLista   caminoActual:{0}  caminoAnterior:{1}",
                 caminoActual == null ? "NULL" : caminoActual, caminoAnterior == null ? "NULL" : caminoAnterior);
@@ -354,54 +529,64 @@ namespace YPA.ViewModels
 
             if (caminoAnterior == null || caminoAnterior != caminoActual )
             {
-                miLista = await App.Database.GetPoblacionesCamino(caminoActual);
+                miLista = await App.Database.GetPoblacionesCaminoAsync(caminoActual);
                 caminoAnterior = caminoActual;
                 // Ahora tengo que mirar en qué poblaciones hay albergue:
+                List<string> poblacionesConAlbergue = null;
                 poblacionesConAlbergue = App.Database.GetPoblacionesConAlbergue(caminoActual);
                 for (int i=0; i<miLista.Count; i++)
                 {
                     //Console.WriteLine("DEBUG2 - VerCaminoVM - RellenarLista  esEtapa:{0}", miLista[i].esEtapa);
                     if (poblacionesConAlbergue.Contains(miLista[i].nombrePoblacion))
                         miLista[i].tieneAlbergue = true;
+
+                    if (listadoEtapas != null)
+                        if (listadoEtapas.Contains(miLista[i].nombrePoblacion + ";"))
+                            miLista[i].esEtapa = true;
+                        else
+                            miLista[i].esEtapa = false;
                 }
             }
-
-            //List<TablaBaseCaminos> miLista = await App.Database.GetPuntosDePasoCamino(caminoActual);
+            
             back_listaPuntosDePaso = new ObservableCollection<TablaBaseCaminos>(miLista);
 
             return true;
         }
+        */
 
 
-        async void MasajearLista(string cambiarBifurcacionEn=null)
+        /*
+        async void MasajearLista()
+        {
+            await MasajearLista(null, null, null);
+        }
+        async Task MasajearLista(string cambiarBifurcacionEn=null, string listadoBifurcaciones=null, string listadoEtapas=null)
         {
             bool estamosEnBifurcacion = false;
             double acumulado = 0;
             double distanciaTotal;
-            string siguienteNodo;
+            string siguienteNodo;            
 
             bool esPrimeraEtapa = true;
+            int numEtapas = 0;        
 
             Console.WriteLine("DEBUG - VerCaminoVM - MasajearLista(): cambiarBifurcacionEn:{0}", 
                     cambiarBifurcacionEn == null ? "NULL" : cambiarBifurcacionEn);
-            /*
-            if (listaPuntosDePaso == null)
-            {
-                Console.WriteLine("ERROR - VerCaminoVM - MasajearLista(): listaPuntosDePaso es null !!");
-                return;
-            }
-            */
 
             //Primero rellenamos de nuevo el respaldo de listaPuntosDePaso con todos los nodos:
 
             bool resp;
-            resp = await RellenarLista();
-
+            ObservableCollection<TablaBaseCaminos> back_listaPuntosDePaso;
+            //resp = await  RellenarLista(listadoEtapas); // Cambio esta línea por las siguientes:
+            resp = Global.RellenarLista(ref miLista, ref caminoActual, ref caminoAnterior, listadoEtapas);
             if (resp == false)
-            { //if (listaPuntosDePaso == null)
+            {
                 Console.WriteLine("ERROR - ###########----------#######    VerCaminoVM - MasajearLista(): RellenarLista devolvió false !!");
                 return;
             }
+            back_listaPuntosDePaso = new ObservableCollection<TablaBaseCaminos>(miLista);
+
+            
             siguienteNodo = back_listaPuntosDePaso[0].nombrePoblacion; // Lo inicializamos con el nombre de la primera población.
 
             Console.WriteLine("DEBUG - VerCaminoVM - MasajearLista() entrar  El primer nodo será siguienteNodo:{0}", siguienteNodo);
@@ -409,9 +594,8 @@ namespace YPA.ViewModels
             // Lista que contendrá los nodos que habrá que eliminar de "listaPuntosDePaso" para no mostrarlos en la ListView:
             List<TablaBaseCaminos> borrar = new List<TablaBaseCaminos>();
 
-                      
-            if (bifurcaciones == null)
-                bifurcaciones = new Dictionary<string, string>();
+
+            Global.SetBifurcaciones(ref bifurcaciones, listadoBifurcaciones);
 
             double acumuladoEtapa = 0;
 
@@ -452,8 +636,8 @@ namespace YPA.ViewModels
                 if (dataItem.esVisible == true)
                 {
                     int indice = 0;
-                    string[] distancias = dataItem.distanciaNodosSiguientes.Split(VerCaminoViewModel.separador);
-                    string[] nodosSiguientes = dataItem.nodosSiguientes.Split(VerCaminoViewModel.separador);
+                    string[] distancias = dataItem.distanciaNodosSiguientes.Split(Global.separador);
+                    string[] nodosSiguientes = dataItem.nodosSiguientes.Split(Global.separador);
 
                     Console.WriteLine("DEBUG - VerCaminoVM - MasajearLista - #distancias:{0}  #nodosSiguientes:{1}",
                                 distancias.Count(), nodosSiguientes.Count());
@@ -502,6 +686,7 @@ namespace YPA.ViewModels
                         }                       
 
                     }
+                    
 
                     if (dataItem.esEtapa) // || dataItem.nodosSiguientes == "FIN_CAMINO")
                     {
@@ -509,13 +694,15 @@ namespace YPA.ViewModels
                         {
                             dataItem.acumuladoEtapa = 0;
                             esPrimeraEtapa = false;
+                            numEtapas = 0;
                         }
                         else
                         {
                             dataItem.acumuladoEtapa = acumulado - acumuladoEtapa;
+                            numEtapas++;
                         }
 
-                        acumuladoEtapa = acumulado;                      
+                        acumuladoEtapa = acumulado;                        
                     }
 
                     dataItem.acumulado = acumulado;
@@ -533,8 +720,11 @@ namespace YPA.ViewModels
                 Console.WriteLine("DEBUG3 - VerCaminoVM - MasajearLista: bifurcaciones: Key = {0}, Value = {1}", kvp.Key, kvp.Value);
             }
 
+            
             //Ahora relleno el campo "distanciaAlFinal" que es el que dice los kms que restan hasta el final:
             distanciaTotal = acumulado;
+            resumen = "[ " + numEtapas.ToString() + " etapas, " + distanciaTotal.ToString(CultureInfo.CreateSpecificCulture("es-ES")) + " km ]";
+
             foreach (var item in back_listaPuntosDePaso)
             {
                 var dataItem = (TablaBaseCaminos)item;
@@ -565,9 +755,10 @@ namespace YPA.ViewModels
 
             listaPuntosDePaso = back_listaPuntosDePaso;
         }
+        */
 
 
-     
+
 
         public VerCaminoViewModel(INavigationService navigationService, IDialogService dialogService)
         {
@@ -589,116 +780,13 @@ namespace YPA.ViewModels
 
             fechaInicio = hoy.ToString("yyyy-MM-dd");
 
+            miLista = null;
+
         }
 
     }
 
-    /*
-        public string CalculaSiguientePoblacion(string poblacion)
-        {
-            int posicion;
-
-            
-            foreach (var item in listaPuntosDePaso)
-            {
-                // cast the item
-                var dataItem = (TablaBaseCaminos)item;
-                
-                Console.WriteLine("DEBUG - VerCaminoVM - CalculaSiguientePoblacion():  id: {0}   Población: {1}", dataItem.id, dataItem.nombrePoblacion);
-                if (poblacion == "")
-                {
-                    PoblacionVisible.siguientePoblacion = dataItem.nombrePoblacion;
-                    break;
-                }
-                else if (dataItem.nombrePoblacion == poblacion)
-                {
-                    posicion = ((string)dataItem.nodosSiguientes).IndexOf(VerCaminoViewModel.separador);
-                    if (posicion == -1)
-                        PoblacionVisible.siguientePoblacion = dataItem.nodosSiguientes;
-                    else
-                        PoblacionVisible.siguientePoblacion = (dataItem.nodosSiguientes).Substring(0, posicion);
-                    break;
-                }
-            }
-
-            return PoblacionVisible.siguientePoblacion;
-        }
-
-    public class Acumulado : IValueConverter
-    {
-        public static double acumulado = 0;
-        //public static bool esCaminoAlternativo = false;
-
-        public object Convert(object value, Type targetType, object parameter, CultureInfo culture)
-        {
-            Console.WriteLine("DEBUG - VerCaminosVM - Acumulado:Convert  value: {0}", value);
-            string primeraDistancia;
-            if (PoblacionVisible.esRutaPrincipal == true)
-            {
-                int posicion = ((string)value).IndexOf(VerCaminoViewModel.separador);
-                if (posicion == -1)
-                    primeraDistancia = (string)value;
-                else
-                    primeraDistancia = ((string)value).Substring(0, posicion);
-                acumulado += double.Parse((string)primeraDistancia);
-            }
-            Console.WriteLine("DEBUG - VerCaminosVM - Acumulado:Convert  salir... acumulado: {0}", acumulado);
-            return acumulado;
-        }
-
-        public object ConvertBack(object value, Type targetType, object parameter, CultureInfo culture)
-        {
-            throw new NotImplementedException();
-        }
-    }
-    public class PoblacionVisible : IValueConverter
-    {
-        public static string siguientePoblacion = "";
-        public static VerCaminoViewModel miVerCamino;
-        public static bool esRutaPrincipal = true;
-        public object Convert(object value, Type targetType, object parameter, CultureInfo culture)
-        {
-            //Console.WriteLine("DEBUG - PoblacionVisible:Convert  value: {0}   parameter: {1}  siguientePoblacion: {2}",
-            //                  value, parameter == null ? "null" : parameter, siguientePoblacion);
-            string primeraPoblacion;
-            int posicion = ((string)value).IndexOf(VerCaminoViewModel.separador);
-            if (posicion == -1)
-                primeraPoblacion = (string)value;
-            else
-                primeraPoblacion = ((string)value).Substring(0, posicion);
-
-            if (siguientePoblacion == "")
-            {
-                Console.WriteLine("DEBUG - VerCaminosVM - PoblacionVisible:Convert Inicializamos siguientePoblacion con {0}", primeraPoblacion);
-                siguientePoblacion = primeraPoblacion;
-            }
-
-            if (primeraPoblacion == siguientePoblacion)
-            {
-                //Calculamos la nueva siguientePoblacion:                
-                miVerCamino.CalculaSiguientePoblacion(primeraPoblacion);
-                esRutaPrincipal = true;
-                //return true;
-            }
-            else
-                esRutaPrincipal = false;
-
-            Console.WriteLine("DEBUG2 - VerCaminosVM - PoblacionVisible:Convert  value: {0}   parameter: {1}  siguientePoblacion: {2}   devuelve:{3}",
-                              value, parameter == null ? "null" : parameter, siguientePoblacion, esRutaPrincipal);
-            //return false;
-            return esRutaPrincipal;
-        }
-
-
-        public object ConvertBack(object value, Type targetType, object parameter, CultureInfo culture)
-        {
-            throw new NotImplementedException();
-        }
-
-    }
-    */
-
-
+  
     public class IntToColorStringConverter : IValueConverter
     {
         public object Convert(object value, Type targetType, object parameter, CultureInfo culture)

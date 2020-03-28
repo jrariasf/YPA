@@ -3,12 +3,10 @@
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
              xmlns:d="http://xamarin.com/schemas/2014/forms/design"
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
-             xmlns:prism="http://prismlibrary.com"
-             xmlns:converter="clr-namespace:YPA.ViewModels"
-             xmlns:viewModels="clr-namespace:YPA.ViewModels"             
              mc:Ignorable="d"
-             x:Class="YPA.Views.DataTemplates.CellEtapaCamino">
+             x:Class="YPA.Views.DataTemplates.CellMisEtapas">
     
+    <!-- Copiado de CellEtapaCamino.xaml -->
     <ViewCell.View>
         <Grid ColumnSpacing="0" BackgroundColor="#F4F7AE" >
             <Grid.RowDefinitions>
@@ -42,7 +40,8 @@
                                    Margin="0" Padding="0" 
                                    HorizontalOptions="StartAndExpand" VerticalOptions="Center"  
                                    VerticalTextAlignment="Center" />
-            
+
         </Grid>
     </ViewCell.View>
+    
 </ViewCell>

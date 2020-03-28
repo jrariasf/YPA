@@ -11,59 +11,48 @@
     <!-- ItemsSource="{Binding listaEtapas, Mode=TwoWay}" -->
 
     <StackLayout Orientation="Vertical"
-                 BackgroundColor="#F8EDED" HeightRequest="400" WidthRequest="350" VerticalOptions="Center" >
+                 BackgroundColor="#F8EDED" HeightRequest="400" WidthRequest="350"
+                 VerticalOptions="Center" Padding="4,0" Spacing="0">
 
         
         <Label Text="{Binding Message, FallbackValue=Sin MEN}"      
                BackgroundColor="Yellow" TextColor="Red" HeightRequest="20"
-               FontSize="Caption" FontAttributes="Bold" Margin="4,0" />
+               FontSize="Caption" FontAttributes="Bold"  />
+        
+        <Grid ColumnSpacing="0" BackgroundColor="#F4F7AE" >
+            <Grid.RowDefinitions>
+                <RowDefinition Height="16" />
+            </Grid.RowDefinitions>
+            <Grid.ColumnDefinitions >
+                <ColumnDefinition Width="*" />
+                <ColumnDefinition Width="2*" />
+                <ColumnDefinition Width="2*" />
+                <ColumnDefinition Width="*" />
+            </Grid.ColumnDefinitions>
+
+            <Label Text="Día" Grid.Column="0" FontSize="Micro" />
+            <Label Text="Salida" Grid.Column="1" FontSize="Micro" />
+            <Label Text="Llegada" Grid.Column="2" FontSize="Micro" />
+            <Label Text="Distancia" Grid.Column="3" FontSize="Micro" />
+
+        </Grid>
     
         <ListView x:Name="listView1"      
               ItemsSource="{Binding listaEtapas, Mode=TwoWay}"
               IsGroupingEnabled="False" 
-              RowHeight="35" SeparatorVisibility="Default" BackgroundColor="#EAFAF8" Margin="4,0" >
+              RowHeight="35" SeparatorVisibility="Default" BackgroundColor="#EAFAF8" >
             <ListView.ItemTemplate>
                 <DataTemplate>
                     <local:CellEtapaCamino/>
                 </DataTemplate>
             </ListView.ItemTemplate>
-
-        <!--
-        <ListView.ItemTemplate>
-            <DataTemplate>
-                <ViewCell>
-                    <ViewCell.View>
-
-                        <Grid ColumnSpacing="0" BackgroundColor="#F4F7AE" >
-                            <Grid.RowDefinitions>
-                                <RowDefinition Height="35" />
-                                </Grid.RowDefinitions>
-                            <Grid.ColumnDefinitions >
-                                <ColumnDefinition Width="*" />
-                                <ColumnDefinition Width="*" />
-                                <ColumnDefinition Width="*" />
-                            </Grid.ColumnDefinitions>
-
-                            <Label Text="{Binding dia}" Grid.Column="0"
-                                   FontSize="Micro" TextColor="Red" 
-                                   Margin="0" Padding="0" 
-                                   HorizontalOptions="EndAndExpand" VerticalOptions="Center"  
-                                   VerticalTextAlignment="Center" />
-
-                            <Label Text="{Binding poblacion}" Grid.Column="1" />
-                            <Label Text="{Binding distancia,FallbackValue=No encontrado}" Grid.Column="2" />                                                            
-                        </Grid>
-                    </ViewCell.View>
-                </ViewCell>
-            </DataTemplate>
-        </ListView.ItemTemplate>
-        -->
-    
         </ListView>
-    
-        <Button Text="Close" HorizontalOptions="Center"  Command="{Binding CloseCommand}" />
-        <Button Text="Print" HorizontalOptions="Center"  Command="{Binding PrintCommand}" />
-        
+
+        <StackLayout Orientation="Horizontal">
+            <Button Text="Close" HorizontalOptions="Center"  Command="{Binding CloseCommand}" />
+            <Button Text="Print" HorizontalOptions="Center"  Command="{Binding PrintCommand}" />
+        </StackLayout>
+
     </StackLayout>
 
 </Frame>

@@ -21,14 +21,23 @@ namespace YPA.Data
             _database.CreateTableAsync<TablaCAMINOS>().Wait();
             _database.CreateTableAsync<TablaPOBLACIONES>().Wait();
             _database.CreateTableAsync<TablaALOJAMIENTOS>().Wait();
+
             _database.CreateTableAsync<TablaCaminoDeMadrid>().Wait();
             _database.CreateTableAsync<TablaSanSalvador>().Wait();
             _database.CreateTableAsync<TablaSanabres>().Wait();
             _database.CreateTableAsync<TablaFinisterre>().Wait();
+
+            _database.CreateTableAsync<TablaMisCaminos>().Wait();
         }
 
 
-        public Task<List<TablaBaseCaminos>> GetPoblacionesCamino(string camino)
+        public List<TablaBaseCaminos> GetPoblacionesCamino(string camino)
+        {
+            string sql = "select * from Tabla" + camino;
+
+            return _db.Query<TablaBaseCaminos>(sql);
+        }
+        public Task<List<TablaBaseCaminos>> GetPoblacionesCaminoAsync(string camino)
         {
             string sql = "select * from Tabla" + camino;
 
@@ -215,6 +224,54 @@ namespace YPA.Data
         public Task<int> DeleteAlojamientosAsync(TablaALOJAMIENTOS note)
         {
             return _database.DeleteAsync(note);
+        }
+
+        //MisCaminos:
+        public Task<List<TablaMisCaminos>> GetMisCaminosAsync()
+        {
+            return _database.Table<TablaMisCaminos>().ToListAsync();
+        }
+        public Task<TablaMisCaminos> GetMisCaminosAsync(int id) => _database.Table<TablaMisCaminos>()
+                            .Where(i => i.id == id)
+                            .FirstOrDefaultAsync();
+
+        async public Task<int> SaveMiCaminoAsync(TablaMisCaminos note)
+        {
+            if (note.id != 0)
+            {
+                return await _database.UpdateAsync(note);
+            }
+            else
+            {
+                //Vamos a ver si ya hay un camino con ese nombre:
+                TablaMisCaminos reg = await _database.Table<TablaMisCaminos>().Where(i => i.miNombreCamino == note.miNombreCamino).FirstOrDefaultAsync();
+                if (reg != null)
+                {
+                    Console.WriteLine("DEBUG - Database - SaveMiCaminoAsync UPDATE del registro con nombre <{0}> en TablaMisCaminos", note.miNombreCamino);
+                    note.id = reg.id; // recordemos que id era 0 al entrar en SaveMiCaminoAsync(). Igual hay que avisar de que se va a sobreescribir ?? _xx_PENDIENTE
+                    return await _database.UpdateAsync(note);
+                }
+                return await _database.InsertAsync(note);
+            }
+        }
+
+        public Task<int> DeleteMiCaminoAsync(TablaMisCaminos note)
+        {
+            return _database.DeleteAsync(note);
+        }
+
+        async public Task<int> DeleteMiCaminoAsync(int id)
+        {
+            Console.WriteLine("DEBUG - Database - DeleteMiCaminoAsync id:{0}", id);
+            // Buscar primero el registro con ese id y luego borrarlo:
+            TablaMisCaminos reg  = await _database.Table<TablaMisCaminos>().Where(i => i.id == id).FirstOrDefaultAsync();
+            if (reg == null)
+            {
+                Console.WriteLine("DEBUG - Database - DeleteMiCaminoAsync NO encontrado el registro con ese id <{0}> en TablaMisCaminos", id);
+                return 0;
+            }
+            Console.WriteLine("DEBUG - Database - DeleteMiCaminoAsync Despues de buscar el id: {0}", id);
+            return await _database.DeleteAsync(reg);
         }
     }
 }

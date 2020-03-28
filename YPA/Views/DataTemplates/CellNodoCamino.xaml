@@ -11,7 +11,7 @@
 
 
     <ViewCell.View>
-        <Grid ColumnSpacing="0" BackgroundColor="#F4F7AE"  
+        <Grid ColumnSpacing="1" BackgroundColor="#F4F7AE"  
               IsVisible="{Binding esVisible}"
               IsEnabled="{Binding esVisible}" >
         <Grid.RowDefinitions>

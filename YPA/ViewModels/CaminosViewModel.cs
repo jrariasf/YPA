@@ -18,7 +18,7 @@ namespace YPA.ViewModels
         INavigationService _navigationService;
 
         public event PropertyChangedEventHandler PropertyChanged;
-        private void RaisePropertyChanged(string propertyName = null)
+        private new void RaisePropertyChanged(string propertyName = null)
         {
             //Console.WriteLine("DEBUG3 - CaminosVM - RaisePropertyChanged{0}", propertyName);
             PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));

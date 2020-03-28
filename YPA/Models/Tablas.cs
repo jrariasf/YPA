@@ -157,23 +157,62 @@ namespace YPA.Models
         public DateTime fecUltMod { get; set; }
     }
 
-    // Tabla donde cada usuario de la aplicación guardará sus caminos, es decir, las etapas de su camino para saber dónde dormir cada día, si hacer día de descanso, etc...
-    public class TablaMisCaminos
+    // Tabla donde cada usuario de la aplicación guardará la información básica de sus caminos, es decir, un nombre identificativo,
+    // el camino base del que se parte, un comentario general, las bifurcaciones definidas, las etapas establecidas.
+    // Tengo que ver si la fecha de inicio y el inicio y fin de etapa se ponen también aquí. También podría ser opcional el número de kms total.  
+    public class TablaMisCaminos: IEquatable<TablaMisCaminos>
     {
         [PrimaryKey, AutoIncrement]
         public int id { get; set; }
-        [NotNull, Indexed]   // Podriamos ordenar por este campo a la hora de visualizar esta tabla. Pero un cambio en una fecha de un registro obliga a cambiar el resto de fechas en los restantes registros posteriores.
-        public DateTime dia { get; set; } // Fecha en la que se sale de "inicioEtapa". O también, fecha en la que se hace noche en finEtapa.
-        [NotNull, MaxLength(30)]
-        public string caminoBase { get; set; } // Podemos utilizar la nomenclatura "nombreCortoCamino". Si mi camino abarca varios caminos (por ejemplo Camino de Madrid y camino francés), poder identificar a qué camino pertenece esa etapa.
-        [MaxLength(30)]
-        public string inicioEtapa { get; set; } // contiene el nombrePoblacion desde donde comenzamos ese día.
-        [MaxLength(30)]
-        public string finEtapa { get; set; } // contiene el nombrePoblacion donde terminamos ese día.
-        [MaxLength(200)]
-        public string bifurcaciones { get; set; } // Contiene pares inicioBifurcacion#poblacionSiguiente separados por ";". Hay un par por cada bifurcación existente en esa etapa.
+                [NotNull, MaxLength(30)]
+        public string miNombreCamino { get; set; }
         [MaxLength(100)]
-        public string comentarios { get; set; } // Campo para poner comentarios como: día de descanso, visitar ruinas de tal, comer en no sé dónde, etc...
+        public string descripcion { get; set; } // Pequeña descripción de mi camino.
+        [NotNull, MaxLength(20)]
+        public string caminoBase { get; set; } // Podemos utilizar la nomenclatura "nombreCortoCamino". Si mi camino abarca varios caminos (por ejemplo Camino de Madrid y camino francés), poder identificar a qué camino pertenece esa etapa.
+        [NotNull, Indexed]   
+        public DateTime dia { get; set; } // Fecha en la que se iniciaría este camino.
+        [MaxLength(500)]
+        public string bifurcaciones { get; set; } // Contiene pares inicioBifurcacion#poblacionSiguiente separados por ";". En caso de coger la bifurcación por defecto, no hace falta contemplarla aquí.
+        [MaxLength(1000)]
+        public string etapas { get; set; } // Contiene una cadena o listado de poblaciones en las que se hace noche separadas por punto y coma. Además, entre corchetes se podría poner algún comentario.
+
+        public bool Equals(TablaMisCaminos other)
+        {
+            //throw new NotImplementedException();
+            Console.WriteLine("DEBUG - Tablas - TablaMisCaminos - Equals this.id:{0}", this.id);
+            if (other is null)
+                return false;
+
+            if (other.id == this.id)
+                return true;
+
+            return false;
+
+        }
+
+        public TablaMisCaminos() { }
+        public TablaMisCaminos(int _id)
+        {
+            id = _id;
+        }
+        public TablaMisCaminos(string _miNombreCamino, string _descripcion, string _caminoBase, string _dia, string _bifurcaciones, string _etapas)
+        {
+            miNombreCamino = _miNombreCamino;
+            descripcion = _descripcion;
+            caminoBase = _caminoBase;
+            try
+            {
+                dia = Convert.ToDateTime(_dia);
+            } catch (InvalidCastException e)
+            {
+                Console.WriteLine("DEBUG3 - Tablas - TablaMisCaminos() Ha saltado la excepción al hacer el ToDateTime de {0}", _dia);
+                dia = System.DateTime.Today;
+            }
+            bifurcaciones = _bifurcaciones;
+            etapas = _etapas;
+
+        }
     }
 
     public class TablaBaseCaminos : INotifyPropertyChanged, IEquatable<TablaBaseCaminos>

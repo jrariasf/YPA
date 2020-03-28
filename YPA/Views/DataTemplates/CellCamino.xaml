@@ -6,7 +6,9 @@
              xmlns:viewModels="clr-namespace:YPA.ViewModels"
              mc:Ignorable="d"
              x:Class="YPA.Views.DataTemplates.CellCamino">
+    
     <ViewCell.View>
+        
         <Grid ColumnSpacing="0" BackgroundColor="#F5FF0D" Margin="10,0,0,0" VerticalOptions="Center" >
             <Grid.RowDefinitions>
                 <RowDefinition Height="30" />
@@ -50,38 +52,6 @@
             </Button>
 
         </Grid>
-        
-        <!--
-        <StackLayout Orientation="Horizontal" Padding="0" Margin="10,0,0,0">
-            <Label Text="{Binding nombreLargoCamino}" FontAttributes="Bold" TextColor="#2028F5" Margin="0" Padding="0" VerticalOptions="Center"/>
-            <Label x:Name="nombreCorto" Text="{Binding nombreCortoCamino}" IsVisible="False" FontAttributes="Bold" TextColor="#2028F5" Margin="0" Padding="0" />
-            <Label Text="{Binding longitud, StringFormat='{0}km'}" VerticalOptions="Center" />
-            <Button Text="Ver Etapas" Command="{Binding Source={RelativeSource AncestorType={x:Type viewModels:CaminosViewModel}}, Path=VerEtapasCamino}" 
-                        CommandParameter="{Binding Text, Source={x:Reference nombreCorto}}" 
-                        FontSize="14" Padding="0" Margin="0" WidthRequest="120" HeightRequest="14"
-                        BackgroundColor="Red" BorderColor="Brown" BorderWidth="2">
-           
-                <VisualStateManager.VisualStateGroups>
-                    <VisualStateGroup x:Name="CommonStates">
-                        <VisualState x:Name="Normal">
-                            <VisualState.Setters>
-                                <Setter Property="Scale"
-                            Value="1" />
-                            </VisualState.Setters>
-                        </VisualState>
 
-                        <VisualState x:Name="Pressed">
-                            <VisualState.Setters>
-                                <Setter Property="Scale"
-                            Value="0.8" />
-                            </VisualState.Setters>
-                        </VisualState>
-
-                    </VisualStateGroup>
-                </VisualStateManager.VisualStateGroups>
-            </Button>
-        </StackLayout>
-        -->
-        
     </ViewCell.View>
 </ViewCell>    
