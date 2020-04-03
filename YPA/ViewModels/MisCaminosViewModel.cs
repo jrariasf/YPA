@@ -59,6 +59,7 @@ namespace YPA.ViewModels
             _navigationService.NavigateAsync("EntryCAMINOS", navigationParams);
         }
 
+        /*_xx_ esto sobra. Ha debido quedar aquí suelto:
         private DelegateCommand<string> _VerEtapasCamino;
         public DelegateCommand<string> VerEtapasCamino =>
             _VerEtapasCamino ?? (_VerEtapasCamino = new DelegateCommand<string>(ExecuteVerEtapasCamino));
@@ -69,7 +70,7 @@ namespace YPA.ViewModels
             Console.WriteLine("DEBUG - MisCaminosVM - ExecuteVerEtapasCamino  UriPath: {0}", _navigationService.GetNavigationUriPath());
             _navigationService.NavigateAsync("VerCamino?camino=" + camino);
         }
-      
+*/      
 
         private DelegateCommand<string> _BorrarMiCamino;
         public DelegateCommand<string> BorrarMiCamino =>

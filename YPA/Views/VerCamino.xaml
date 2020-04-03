@@ -47,15 +47,15 @@
             </Grid.ColumnDefinitions>
 
             <Label Text="Nombre:" FontSize="Caption" Grid.Row="0" Grid.Column="0"  BackgroundColor="#91F2E8" TextColor="Black" VerticalTextAlignment="End" />
-            <Entry Text="{Binding miNombreCamino}" FontSize="Caption" Grid.Row="1" Grid.Column="0" 
+            <Entry Text="{Binding miCamino.miNombreCamino,FallbackValue=NO NOMBRE}" FontSize="Caption" Grid.Row="1" Grid.Column="0" 
                    BackgroundColor="#F0F5A2" TextColor="Black" HeightRequest="30" HorizontalTextAlignment="Start"/>
 
             <Label Text="Descripción:" FontSize="Caption" Grid.Row="0" Grid.Column="1" BackgroundColor="#91F2E8" TextColor="Black" VerticalTextAlignment="End" />
-            <Entry Text="{Binding descripcion}" FontSize="Caption" Grid.Row="1" Grid.Column="1" BackgroundColor="#F0F5A2" TextColor="Black" HeightRequest="30" />
+            <Entry Text="{Binding miCamino.descripcion,FallbackValue=NO DESCRIP}" FontSize="Caption" Grid.Row="1" Grid.Column="1" BackgroundColor="#F0F5A2" TextColor="Black" HeightRequest="30" />
 
             <Label Text="Día:" FontSize="Caption" Grid.Row="0" Grid.Column="2" BackgroundColor="#91F2E8" TextColor="Black" VerticalTextAlignment="End" />
             <DatePicker VerticalOptions="CenterAndExpand"  Grid.Row="1" Grid.Column="2" BackgroundColor="#F0F5A2" TextColor="Black" FontSize="Micro"
-                Date="{Binding Path=fechaInicio, TargetNullValue={x:Static sys:DateTime.Now}}" >
+                Date="{Binding Path=miCamino.fechaInicio, TargetNullValue={x:Static sys:DateTime.Now}}" >
                 <DatePicker.Format>yyyy-MM-dd</DatePicker.Format>
                 <DatePicker.MinimumDate>
                     <sys:DateTime x:FactoryMethod="Parse">
@@ -82,8 +82,9 @@
                     Command="{Binding GuardarCamino}" FontSize="Micro" />
             <Button Text="Resumen" Grid.Row="1" Grid.Column="3" HeightRequest="35"
                     Command="{Binding VerResumenCamino}" FontSize="Micro" />
-            <Label Text="{Binding resumen}" HeightRequest="30" BackgroundColor="Yellow"
-                   HorizontalTextAlignment="End"  VerticalTextAlignment="Center"  HorizontalOptions="EndAndExpand" />
+            <Label Text="{Binding miCamino.resumen,FallbackValue=NO RESUMEN}" HeightRequest="35" BackgroundColor="Yellow"
+                   HorizontalTextAlignment="End"  VerticalTextAlignment="Center"  HorizontalOptions="EndAndExpand" 
+                   WidthRequest="200" />
         </StackLayout>
 
         <ListView x:Name="listView"   

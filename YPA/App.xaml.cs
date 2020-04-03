@@ -51,7 +51,8 @@ namespace YPA
 
             //await NavigationService.NavigateAsync("MainMasterDetail/NavigationPage/Poblaciones");
             //await NavigationService.NavigateAsync("MainMasterDetail/NavigationPage/Ver?listado=albergues&idPoblacion=100");
-            await NavigationService.NavigateAsync("MainMasterDetail/NavigationPage/Caminos/VerCamino?camino=Sanabres");
+            //await NavigationService.NavigateAsync("MainMasterDetail/NavigationPage/Caminos/VerCamino?camino=Sanabres");
+            await NavigationService.NavigateAsync("MainMasterDetail/NavigationPage/MisCaminos");
         }
 
         public async void IrA(string page)

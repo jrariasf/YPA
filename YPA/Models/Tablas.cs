@@ -175,7 +175,10 @@ namespace YPA.Models
         [MaxLength(500)]
         public string bifurcaciones { get; set; } // Contiene pares inicioBifurcacion#poblacionSiguiente separados por ";". En caso de coger la bifurcación por defecto, no hace falta contemplarla aquí.
         [MaxLength(1000)]
-        public string etapas { get; set; } // Contiene una cadena o listado de poblaciones en las que se hace noche separadas por punto y coma. Además, entre corchetes se podría poner algún comentario.
+        public string etapas { get; set; } // Contiene una cadena o listado de poblaciones en las que se hace noche, separadas por punto y coma.
+                                           // Además, entre corchetes se podría poner algún comentario. O incluso además del comentario podría ponerse el número de días de esa etapa.
+                                           // En ese caso podríamos usar el "#" como separador. Por ejemplo: Tábara#2#Vuelta por la Sierra de la Culebra;Rionegro;Requejo
+                                           // Con eso indicaría que en Tábara me quedo un día y al día siguiente saldría hacia Rionegro que sería la siguiente etapa. Y al día siguiente hasta Requejo.
 
         public bool Equals(TablaMisCaminos other)
         {
@@ -284,6 +287,8 @@ namespace YPA.Models
         public bool tieneAlbergue { get; set; }
         [Ignore]
         public bool esEtapa   // Para el checbox que sirve para establecer las etapas
+                              //_xx_ETAPAS Podría ser un entero de forma que si es > 0 inicaría el número de días.
+                              // Ej: si esEtapa vale 2 significaría que el primer día te quedas ahí y el siguiente sales hacia la siguiente etapa.
         {
             get { return _esEtapa; }
             set
@@ -300,40 +305,12 @@ namespace YPA.Models
 
     public class TablaCaminoDeMadrid : TablaBaseCaminos
     {
-        /*
-        [PrimaryKey, AutoIncrement]
-        public int id { get; set; }
-        [Indexed, MaxLength(30)]
-        public string nombrePoblacion { get; set; }
-        public bool IniBifurcacion { get; set; }
-        public bool FinBifurcacion { get; set; }
-        [MaxLength(100)]
-        public string nodosAnteriores { get; set; }
-        [MaxLength(100)]
-        public string nodosSiguientes { get; set; }
-        [MaxLength(25)]
-        public string distanciaNodosSiguientes { get; set; }
-        //public DateTime fecUltMod { get; set; }
-        */
+        
     }
 
     public class TablaSanSalvador : TablaBaseCaminos
     {
-        /*
-        [PrimaryKey, AutoIncrement]
-        public int id { get; set; }
-        [Indexed, MaxLength(30)]
-        public string nombrePoblacion { get; set; }
-        public bool IniBifurcacion { get; set; }
-        public bool FinBifurcacion { get; set; }
-        [MaxLength(100)]
-        public string nodosAnteriores { get; set; }
-        [MaxLength(100)]
-        public string nodosSiguientes { get; set; }
-        [MaxLength(25)]
-        public string distanciaNodosSiguientes { get; set; }
-        //public DateTime fecUltMod { get; set; }
-        */
+        
     }
 
     public class TablaSanabres : TablaBaseCaminos

@@ -16,7 +16,7 @@
     <StackLayout BackgroundColor="Red"  Orientation="Vertical">
         <!-- <Label Text="{Binding miTexto}"  WidthRequest="300" HeightRequest="60" FontSize="14"/> -->
         <ListView x:Name="listView"
-            ItemsSource="{Binding listaMisEtapas, Mode=TwoWay}"
+            ItemsSource="{Binding listaEtapas, Mode=TwoWay}"    
             IsGroupingEnabled="False" RowHeight="170"
             SeparatorVisibility="None" BackgroundColor="White">
 

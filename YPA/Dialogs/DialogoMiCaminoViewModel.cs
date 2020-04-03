@@ -47,7 +47,6 @@ namespace YPA.Dialogs
                 SetProperty(ref _listaEtapas, value);
                 RaisePropertyChanged(nameof(listaEtapas));
             }
-            //set { SetProperty(ref _listaEtapas, value); }
         }
 
         private string _message;

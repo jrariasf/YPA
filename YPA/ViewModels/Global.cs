@@ -15,6 +15,7 @@ namespace YPA.ViewModels
         public static char[] separador = { ';' };
         public static char[] separadorDePares = { '#' };
         public static CultureInfo culture = new CultureInfo("en-US");
+        public static String[] diaDeLaSemana = new String[] { "Domingo", "Lunes", "Martes", "Miércoles", "Jueves", "Viernes", "Sábado" };
         public Global()
         {
 
@@ -26,6 +27,7 @@ namespace YPA.ViewModels
             return resultado * 2;
         }
 
+/*
         public static string DameListaEtapas(ref List<TablaBaseCaminos> miLista)
         {
             string listado = "";
@@ -80,6 +82,48 @@ namespace YPA.ViewModels
                     bifurcaciones.Add(par[0], par[1]);
                 }
             }
+        }
+
+        public static bool RellenarLista(ref MiCamino miCamino)
+        {
+            return RellenarLista(ref miCamino, null);
+        }
+
+        public static bool RellenarLista(ref MiCamino miCamino, string listadoEtapas = null)
+        {
+            Console.WriteLine("DEBUG2 - Global - RellenarLista");
+
+            if (miCamino.caminoActual == null)
+            {
+                Console.WriteLine("ERROR - Global - RellenarLista()  caminoActual es null !!!");
+                return false;
+            }
+
+            if (miCamino.caminoAnterior == null || miCamino.caminoAnterior != miCamino.caminoActual)
+            {
+                miCamino.miLista = App.Database.GetPoblacionesCamino(miCamino.caminoActual);
+                miCamino.caminoAnterior = miCamino.caminoActual;
+                // Ahora tengo que mirar en qué poblaciones hay albergue:
+                List<string> poblacionesConAlbergue = null;
+                poblacionesConAlbergue = App.Database.GetPoblacionesConAlbergue(miCamino.caminoActual);
+                for (int i = 0; i < miCamino.miLista.Count; i++)
+                {
+                    //Console.WriteLine("DEBUG2 - VerCaminoVM - RellenarLista  esEtapa:{0}", miLista[i].esEtapa);
+                    if (poblacionesConAlbergue.Contains(miCamino.miLista[i].nombrePoblacion))
+                        miCamino.miLista[i].tieneAlbergue = true;
+
+                    if (listadoEtapas != null)
+                        if (listadoEtapas.Contains(miCamino.miLista[i].nombrePoblacion + ";"))
+                            miCamino.miLista[i].esEtapa = true;
+                        else
+                            miCamino.miLista[i].esEtapa = false;
+                }
+            }
+
+            // Esto lo tengo que sacar fuera de la función:
+            //back_listaPuntosDePaso = new ObservableCollection<TablaBaseCaminos>(miLista);
+
+            return true;
         }
 
 
@@ -334,7 +378,7 @@ namespace YPA.ViewModels
             // listaPuntosDePaso = back_listaPuntosDePaso;
             return back_listaPuntosDePaso;
         }
-
+*/
 
 
     }

@@ -3,6 +3,7 @@ using Prism.Mvvm;
 using Prism.Navigation;
 using System;
 using System.Collections.Generic;
+using System.Collections.ObjectModel;
 using System.ComponentModel;
 using System.Linq;
 using YPA.Models;
@@ -19,9 +20,38 @@ namespace YPA.ViewModels
             PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));
         }
 
+        /*
+        private ObservableCollection<Etapa> _listaEtapas;
+        public ObservableCollection<Etapa> listaEtapas
+        {
+            get { return _listaEtapas; }
+            set
+            {
+                if (_listaEtapas == value)
+                    return;
+                SetProperty(ref _listaEtapas, value);
+                RaisePropertyChanged(nameof(listaEtapas));
+            }            
+        }
+        */
+
+        private ObservableCollection<TablaBaseCaminos> _listaEtapas;
+        public ObservableCollection<TablaBaseCaminos> listaEtapas
+        {
+            get { return _listaEtapas; }
+            ///set { SetProperty(ref _listaPoblaciones, value); }
+            set
+            {
+                if (_listaEtapas == value)
+                    return;
+                SetProperty(ref _listaEtapas, value);
+                RaisePropertyChanged(nameof(listaEtapas));
+            }
+        }
+
         public VerEtapasViewModel()
         {
-
+            Console.WriteLine("DEBUG - VerEtapasVM - CONSTRUCTOR");
         }
 
         public void OnNavigatedFrom(INavigationParameters parameters)
@@ -49,18 +79,9 @@ namespace YPA.ViewModels
 
             if (tmc != null)
             {
-                Console.WriteLine("DEBUG2 - VerEtapasVM - OnNavigatedTo: Venimos de MisCaminos con tmc");
-                /*
-                caminoActual = tmc.caminoBase;
-                fechaInicio = tmc.dia.ToString("yyyy-MM-dd");
-                miNombreCamino = tmc.miNombreCamino;
-                descripcion = tmc.descripcion;
-                Console.WriteLine("DEBUG2 - VerEtapasVM - OnNavigatedTo: tmc.bifurcaciones:{0}", tmc.bifurcaciones);
-                //SetBifurcaciones(tmc.bifurcaciones);
-                MasajearLista(null, tmc.bifurcaciones, tmc.etapas);
-                */
-
-                //SetEtapasInLista(tmc.etapas);               
+                Console.WriteLine("DEBUG2 - VerEtapasVM - OnNavigatedTo: Venimos de MisCaminos con tmc");                
+                //miCamino.Init(tmc);
+                //miCamino.MasajearLista();
             }
             else
             {
