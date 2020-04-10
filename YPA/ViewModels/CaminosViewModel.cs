@@ -79,7 +79,7 @@ namespace YPA.ViewModels
         {
             Console.WriteLine("DEBUG - CaminosVM - ExecuteVerEtapasCamino({0})", camino);
             Console.WriteLine("DEBUG - CaminosVM - ExecuteVerEtapasCamino  UriPath: {0}", _navigationService.GetNavigationUriPath());
-            _navigationService.NavigateAsync("VerCamino?camino=" + camino);
+            _navigationService.NavigateAsync("VerCamino?option=1&camino=" + camino);
         }
 
         public void OnNavigatedFrom(INavigationParameters parameters)

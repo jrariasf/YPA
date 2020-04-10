@@ -236,7 +236,7 @@ namespace YPA.Models
             if (other is null)
                 return false;
 
-            if (other.id == this.id)
+            if (other.id == this.id || other.nombrePoblacion == this.nombrePoblacion)
                 return true;
 
             return false;
@@ -248,6 +248,12 @@ namespace YPA.Models
         public TablaBaseCaminos(int _id)
         {
             id = _id;
+            nombrePoblacion = "";
+        }
+        public TablaBaseCaminos(string nodo)
+        {
+            nombrePoblacion = nodo;
+            id = -1;
         }
 
         [PrimaryKey, AutoIncrement]

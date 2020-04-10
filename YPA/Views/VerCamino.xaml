@@ -35,7 +35,7 @@
 
     <StackLayout Orientation="Vertical" Margin="6,0" BackgroundColor="#E1FAF9" >
 
-        <Grid ColumnSpacing="0"  BackgroundColor="#F5FF0D" VerticalOptions="Center" RowSpacing="1" Margin="0" >
+        <Grid ColumnSpacing="0"  BackgroundColor="#F5FF0D" VerticalOptions="Center" RowSpacing="1" Margin="0" IsVisible="{Binding mostrarCabecera}" >
             <Grid.RowDefinitions>
                 <RowDefinition Height="20" />
                 <RowDefinition Height="35" />
@@ -77,7 +77,7 @@
 
         </Grid>
 
-        <StackLayout Orientation="Horizontal" HeightRequest="35" BackgroundColor="#FFE1FAF9"  >
+        <StackLayout Orientation="Horizontal" HeightRequest="35" BackgroundColor="#FFE1FAF9" IsVisible="{Binding mostrarCabecera}"  >
             <Button Text="Guardar" Grid.Row="0" Grid.Column="3" HeightRequest="35"
                     Command="{Binding GuardarCamino}" FontSize="Micro" />
             <Button Text="Resumen" Grid.Row="1" Grid.Column="3" HeightRequest="35"

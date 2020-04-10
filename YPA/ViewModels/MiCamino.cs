@@ -157,7 +157,9 @@ namespace YPA.ViewModels
         }
 
         public void Init()
-        { 
+        {
+            miNombreCamino = null;
+            descripcion = null;
             caminoAnterior = null;
             bifurcaciones = null;
             str_bifurcaciones = null;
@@ -184,7 +186,7 @@ namespace YPA.ViewModels
             return numEtapas < 2 ? 0 : numEtapas - 1;
         }
 
-        public string DameListaEtapas()
+        public string DameStringListaEtapas()
         {
             string listado = "";
             numEtapas = 0;
@@ -248,7 +250,7 @@ namespace YPA.ViewModels
         }
 
 
-        public void DameListaEtapas(out ObservableCollection<Etapa> listaEtapas)
+        public ObservableCollection<Etapa> DameListaEtapas() //out ObservableCollection<Etapa> listaEtapas)
         {
             //String[] diaDeLaSemana = new String[] { "Domingo", "Lunes", "Martes", "Miércoles", "Jueves", "Viernes", "Sábado" };
             bool esPrimeraEtapa = true;
@@ -257,7 +259,7 @@ namespace YPA.ViewModels
             var fecha = DateTime.Parse(fechaInicio);
             TimeSpan ts = new TimeSpan(1, 0, 0, 0);
 
-            listaEtapas = new ObservableCollection<Etapa>();
+            ObservableCollection<Etapa> listaEtapas = new ObservableCollection<Etapa>();
 
             foreach (var item in miLista)
             {
@@ -279,7 +281,8 @@ namespace YPA.ViewModels
                     }
                     string dia = fecha.ToString("dd-MM-yy") + " (" + Global.diaDeLaSemana[(int)fecha.DayOfWeek].Substring(0, 3) + ")";
 
-                    Etapa etapa = new Etapa(dia, poblacion_INI, item.nombrePoblacion, String.Format("{0:0.0}", item.acumuladoEtapa) + " km");
+                    // Etapa etapa = new Etapa(dia, poblacion_INI, item.nombrePoblacion, String.Format("{0:0.0}", item.acumuladoEtapa) + " km");
+                    Etapa etapa = new Etapa(dia, poblacion_INI, item.nombrePoblacion, item.acumuladoEtapa);
                     listaEtapas.Add(etapa);
 
                     poblacion_INI = item.nombrePoblacion; // Guarda la población inicio de etapa para la próxima.
@@ -287,13 +290,16 @@ namespace YPA.ViewModels
                 }
             }
 
+            return listaEtapas;
+
         }
         
 
 
-        public bool RellenarLista()
+        public bool RellenarLista(string _nodoInicial=null, string _nodoFinal=null)
         {
-            Console.WriteLine("DEBUG2 - MiCamino - RellenarLista");
+            Console.WriteLine("DEBUG2 - MiCamino - RellenarLista   caminoActual:{0}  caminoAnterior:{1}",
+                caminoActual == null ? "NULL" : caminoActual, caminoAnterior == null ? "NULL" : caminoAnterior);
 
             if (caminoActual == null)
             {
@@ -305,7 +311,28 @@ namespace YPA.ViewModels
             {
                 Console.WriteLine("DEBUG - MiCamino - RellenarLista  caminoAnterior == null || caminoAnterior != caminoActual");
                 miLista = App.Database.GetPoblacionesCamino(caminoActual);
+                Console.WriteLine("DEBUG - MiCamino - RellenarLista   miLista.Count:{0}", miLista.Count);
                 caminoAnterior = caminoActual;
+
+                if (_nodoInicial != null && _nodoFinal != null)
+                {
+                    Console.WriteLine("DEBUG - MiCamino - RellenarLista _nodoInicial:{0}   _nodoFinal:{1}", _nodoInicial, _nodoFinal);
+                    int indiceInicial, indiceFinal;
+                    TablaBaseCaminos nodoInicial = new TablaBaseCaminos(_nodoInicial);
+                    TablaBaseCaminos nodoFinal = new TablaBaseCaminos(_nodoFinal);
+                    indiceInicial = miLista.IndexOf(nodoInicial);
+                    indiceFinal = miLista.IndexOf(nodoFinal);
+                    Console.WriteLine("DEBUG - MiCamino - RellenarLista   sindiceInicial:{0}   indiceFinal:{1}", indiceInicial, indiceFinal);
+
+                    if (indiceFinal < miLista.Count)
+                        miLista.RemoveRange(indiceFinal + 1, miLista.Count - indiceFinal - 1);
+                    if (indiceInicial > 0)
+                        miLista.RemoveRange(0, indiceInicial);
+
+                    Console.WriteLine("DEBUG - MiCamino - RellenarLista  Despues de RemoveRange miLista.Count:{0}", miLista.Count);
+                }
+
+
                 // Ahora tengo que mirar en qué poblaciones hay albergue:
                 List<string> poblacionesConAlbergue = null;
                 poblacionesConAlbergue = App.Database.GetPoblacionesConAlbergue(caminoActual);
@@ -322,14 +349,13 @@ namespace YPA.ViewModels
                             miLista[i].esEtapa = false;
                 }
             }
-
-            // Esto lo tengo que sacar fuera de la función:
-            //back_listaPuntosDePaso = new ObservableCollection<TablaBaseCaminos>(miLista);
+            else
+                Console.WriteLine("DEBUG3 - MiCamino - RellenarLista  #### NO SE HACE NADA NUEVO !!! ####");
 
             return true;
         }
 
-        public ObservableCollection<TablaBaseCaminos> MasajearLista(string cambiarBifurcacionEn = null)
+        public ObservableCollection<TablaBaseCaminos> MasajearLista(string cambiarBifurcacionEn = null, string primerNodoEtapa=null, string ultimoNodoEtapa=null)
             //ref List<TablaBaseCaminos> miLista, ref Dictionary<string, string> bifurcaciones,
             //ref string caminoActual, ref string caminoAnterior, out string resumen,
             //string cambiarBifurcacionEn = null, string listadoBifurcaciones = null, string listadoEtapas = null)
@@ -343,8 +369,10 @@ namespace YPA.ViewModels
 
             bool esPrimeraEtapa = true;          
 
-            Console.WriteLine("DEBUG - MiCamino - MasajearLista(): cambiarBifurcacionEn:{0}",
-                    cambiarBifurcacionEn == null ? "NULL" : cambiarBifurcacionEn);
+            Console.WriteLine("DEBUG - MiCamino - MasajearLista(): cambiarBifurcacionEn:{0}  primerNodoEtapa:{1}  ultimoNodoEtapa:{2}",
+                    cambiarBifurcacionEn == null ? "NULL" : cambiarBifurcacionEn,
+                    primerNodoEtapa == null ? "NULL" : primerNodoEtapa,
+                    ultimoNodoEtapa == null ? "NULL" : ultimoNodoEtapa);
 
             //Primero rellenamos de nuevo el respaldo de listaPuntosDePaso con todos los nodos:
 
@@ -352,7 +380,7 @@ namespace YPA.ViewModels
             ObservableCollection<TablaBaseCaminos> back_listaPuntosDePaso;
 
             //_xx_ resp = Global.RellenarLista(listadoEtapas);
-            resp = RellenarLista();
+            resp = RellenarLista(primerNodoEtapa, ultimoNodoEtapa);
             if (resp == false)
             {
                 Console.WriteLine("ERROR - ###########----------#######    MiCamino - MasajearLista(): RellenarLista devolvió false !!");
@@ -383,11 +411,34 @@ namespace YPA.ViewModels
 
                 if (!estamosEnBifurcacion)
                 {
+                    /*
                     dataItem.esVisible = true;
                     // Si no estamos en bifurcación, el nombre de la población debería coincidir con el que hay en siguienteNodo:
                     if (dataItem.nombrePoblacion != siguienteNodo)
                         Console.WriteLine("ERROR - MiCamino - MasajearLista: Se esperaba {0} y estamos en {1}",
                             siguienteNodo, dataItem.nombrePoblacion);
+                    */
+                    if (dataItem.nombrePoblacion != siguienteNodo)
+                    {
+                        // He descubierto un caso en el que sucede esto y es cuando se visualizan los nodos de una etapa concreta
+                        // (por ejemplo entre Laza y Ourense en el camino sanabrés) y resulta que se ha iniciado una bifurcación
+                        // antes de empezar esa etapa y todavía no se ha cerrado la bifurcación:
+                        Console.WriteLine("ERROR - MiCamino - MasajearLista: Al parecer NO estamos en bifurcación y el siguienteNodo no coincide con el nombrePoblacion");
+                        dataItem.esVisible = false;
+                        borrar.Add(dataItem);
+                        // Quizás para poner las cosas en su sitio podría ser bueno poner estamosEnBifurcacion a true:
+                        if (primerNodoEtapa != null && ultimoNodoEtapa == null)
+                        {
+                            Console.WriteLine("DEBUG - MiCamino - MasajearLista: Hemos FORZADO el poner estamosEnBifurcacion a true");
+                            estamosEnBifurcacion = true;
+                        }
+
+                    }
+                    else
+                    {
+                        dataItem.esVisible = true;
+                    }
+
                 }
                 else
                 {
@@ -471,14 +522,12 @@ namespace YPA.ViewModels
                         if (esPrimeraEtapa)
                         {
                             dataItem.acumuladoEtapa = 0;
-                            esPrimeraEtapa = false;
-                            //_xx_ETAPAS numEtapas = 0;
+                            esPrimeraEtapa = false;                            
                             distanciaAlInicioPrimeraEtapa = acumulado;
                         }
                         else
                         {
                             dataItem.acumuladoEtapa = acumulado - acumuladoEtapa;
-                            //_xx_ETAPAS numEtapas++;
                         }
 
                         acumuladoEtapa = acumulado;
@@ -529,15 +578,15 @@ namespace YPA.ViewModels
 
             Console.WriteLine("DEBUG - MiCamino - MasajearLista: Número de nodos final en back_listaPuntosDePaso:{0}", back_listaPuntosDePaso.Count);
 
+            /*
             int i = 0;
             foreach (var b in back_listaPuntosDePaso)
             {
                 Console.WriteLine("DEBUG - MiCamino - MasajearLista: i: {0}  id: {1}  nombre: {2}  tieneAlbergue: {3}",
                     i++, b.id, b.nombrePoblacion, b.tieneAlbergue);
             }
+            */
 
-            //_xx_ Lo siguiente lo tengo que hacer desde fuera de este método:
-            // listaPuntosDePaso = back_listaPuntosDePaso;
             return back_listaPuntosDePaso;
         }
 

@@ -17,7 +17,7 @@
         <!-- <Label Text="{Binding miTexto}"  WidthRequest="300" HeightRequest="60" FontSize="14"/> -->
         <ListView x:Name="listView"
             ItemsSource="{Binding listaEtapas, Mode=TwoWay}"    
-            IsGroupingEnabled="False" RowHeight="170"
+            IsGroupingEnabled="False" RowHeight="30"
             SeparatorVisibility="None" BackgroundColor="White">
 
             <ListView.Behaviors>
@@ -25,6 +25,7 @@
                                           Command="{Binding ItemTappedCommand}"
                                           EventArgsParameterPath="Item" />
             </ListView.Behaviors>
+            
 
             <ListView.ItemTemplate>
                 <DataTemplate>

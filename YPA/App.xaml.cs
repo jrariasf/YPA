@@ -74,7 +74,10 @@ namespace YPA
             containerRegistry.RegisterForNavigation<Views.Formularios.EntryPOBLACIONES, ViewModels.Formularios.EntryPOBLACIONESViewModel>();
             containerRegistry.RegisterForNavigation<Views.Formularios.EntryCAMINOS, ViewModels.Formularios.EntryCAMINOSViewModel>();
             containerRegistry.RegisterForNavigation<Views.Formularios.PruebaUno, PruebaUnoViewModel>();
+
             containerRegistry.RegisterDialog<Dialogs.DialogoMiCamino, Dialogs.DialogoMiCaminoViewModel>();
+            containerRegistry.RegisterDialog<Dialogs.MenuMisEtapas , Dialogs.MenuMisEtapasViewModel>();
+
             containerRegistry.RegisterForNavigation<MisCaminos, MisCaminosViewModel>();
             containerRegistry.RegisterForNavigation<VerEtapas, VerEtapasViewModel>();
         }

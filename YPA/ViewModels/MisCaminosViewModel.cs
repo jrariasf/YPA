@@ -109,7 +109,7 @@ namespace YPA.ViewModels
                 return;
             }
 
-
+            navigationParams.Add("option", 2);
             navigationParams.Add("tmc", tmc);
             _navigationService.NavigateAsync("VerCamino", navigationParams);            
         }
@@ -133,7 +133,7 @@ namespace YPA.ViewModels
 
 
             navigationParams.Add("tmc", tmc);
-            _navigationService.NavigateAsync("VerEtapas", navigationParams);
+            await _navigationService.NavigateAsync("VerEtapas", navigationParams);
         }
 
         public void OnNavigatedFrom(INavigationParameters parameters)

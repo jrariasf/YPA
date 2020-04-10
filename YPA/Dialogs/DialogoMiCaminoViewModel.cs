@@ -7,25 +7,11 @@ using System.Collections.ObjectModel;
 using System.ComponentModel;
 using System.Linq;
 using YPA.Models;
+using YPA.ViewModels;
 
 namespace YPA.Dialogs
 {
 
-    public class Etapa
-    {
-        public string dia { get; set; }
-        public string poblacion_inicio_etapa { get; set; }
-        public string poblacion_fin_etapa { get; set; }
-        public string distancia { get; set; }
-
-        public Etapa(string _dia, string _poblacion_INI, string _poblacion_FIN, string _distancia)
-        {
-            dia = _dia;
-            poblacion_inicio_etapa = _poblacion_INI;
-            poblacion_fin_etapa = _poblacion_FIN;
-            distancia = _distancia;
-        }
-    }
     public class DialogoMiCaminoViewModel : BindableBase, IDialogAware, INotifyPropertyChanged
     {
 
@@ -161,7 +147,8 @@ namespace YPA.Dialogs
                         }
                         string dia = fecha.ToString("dd-MM-yy") + " (" + diaDeLaSemana[(int)fecha.DayOfWeek].Substring(0,3) + ")";
 
-                        Etapa etapa = new Etapa(dia, poblacion_INI, item.nombrePoblacion, String.Format("{0:0.0}", item.acumuladoEtapa) + " km");
+                        //Etapa etapa = new Etapa(dia, poblacion_INI, item.nombrePoblacion, String.Format("{0:0.0}", item.acumuladoEtapa) + " km");
+                        Etapa etapa = new Etapa(dia, poblacion_INI, item.nombrePoblacion, item.acumuladoEtapa);
                         listaEtapas.Add(etapa);
 
                         poblacion_INI = item.nombrePoblacion; // Guarda la población inicio de etapa para la próxima.

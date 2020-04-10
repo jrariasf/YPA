@@ -37,7 +37,7 @@
                                    Margin="0" Padding="0" 
                                    HorizontalOptions="StartAndExpand" VerticalOptions="Center"  
                                    VerticalTextAlignment="Center" />
-            <Label Text="{Binding distancia,FallbackValue=No dis}" Grid.Column="3"
+            <Label Text="{Binding distancia,FallbackValue=No dis, StringFormat='{0:0.0} km'}" Grid.Column="3"
                                    FontSize="Caption" TextColor="Black" 
                                    Margin="0" Padding="0" 
                                    HorizontalOptions="StartAndExpand" VerticalOptions="Center"  

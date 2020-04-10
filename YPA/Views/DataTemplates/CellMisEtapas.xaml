@@ -3,6 +3,7 @@
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
              xmlns:d="http://xamarin.com/schemas/2014/forms/design"
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+             xmlns:viewModels="clr-namespace:YPA.ViewModels"
              mc:Ignorable="d"
              x:Class="YPA.Views.DataTemplates.CellMisEtapas">
     
@@ -10,12 +11,13 @@
     <ViewCell.View>
         <Grid ColumnSpacing="0" BackgroundColor="#F4F7AE" >
             <Grid.RowDefinitions>
-                <RowDefinition Height="35" />
+                <RowDefinition Height="25" />
             </Grid.RowDefinitions>
             <Grid.ColumnDefinitions >
                 <ColumnDefinition Width="*" />
                 <ColumnDefinition Width="2*" />
                 <ColumnDefinition Width="2*" />
+                <ColumnDefinition Width="*" />
                 <ColumnDefinition Width="*" />
             </Grid.ColumnDefinitions>
 
@@ -35,11 +37,15 @@
                                    Margin="0" Padding="0" 
                                    HorizontalOptions="StartAndExpand" VerticalOptions="Center"  
                                    VerticalTextAlignment="Center" />
-            <Label Text="{Binding distancia,FallbackValue=No dis}" Grid.Column="3"
+            <Label Text="{Binding distancia,FallbackValue=No dis, StringFormat='{0:0.0} km'}" Grid.Column="3"
                                    FontSize="Caption" TextColor="Black" 
                                    Margin="0" Padding="0" 
                                    HorizontalOptions="StartAndExpand" VerticalOptions="Center"  
-                                   VerticalTextAlignment="Center" />
+                                   VerticalTextAlignment="Center" HorizontalTextAlignment="End" />
+            <Button Text="+" HorizontalOptions="Center" WidthRequest="35" TextColor="Blue" BackgroundColor="Red"   Grid.Column="4"
+                    Command="{Binding Source={RelativeSource AncestorType={x:Type viewModels:VerEtapasViewModel}}, Path=OpcionesSobreEtapaCommand}"
+                    CommandParameter="{Binding .}" />
+            
 
         </Grid>
     </ViewCell.View>
