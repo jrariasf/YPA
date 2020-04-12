@@ -10,9 +10,9 @@ using Xamarin.Forms.Xaml;
 namespace YPA.Views.DataTemplates
 {
     [XamlCompilation(XamlCompilationOptions.Compile)]
-    public partial class CellMiCamino : ViewCell
+    public partial class CellMisCaminos : ViewCell
     {
-        public CellMiCamino()
+        public CellMisCaminos()
         {
             InitializeComponent();
         }

@@ -5,9 +5,9 @@
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
              xmlns:viewModels="clr-namespace:YPA.ViewModels"
              mc:Ignorable="d"
-             x:Class="YPA.Views.DataTemplates.CellMiCamino">
-    
-  <ViewCell.View>
+             x:Class="YPA.Views.DataTemplates.CellMisCaminos">
+
+    <ViewCell.View>
 
         <Grid ColumnSpacing="0" BackgroundColor="#F5FF0D" Margin="10,0,0,0" VerticalOptions="Center" >
             <Grid.RowDefinitions>
@@ -36,21 +36,21 @@
                 <Label Text="{Binding bifurcaciones}" />
                 <Label Text="{Binding etapas}" />
             </StackLayout>
-            
+
             <StackLayout Orientation="Horizontal" HeightRequest="50" Grid.Row="2" >
-                
+
                 <Button Text="Etapas"
                     Command="{Binding Source={RelativeSource AncestorType={x:Type viewModels:MisCaminosViewModel}}, Path=VerEtapasMiCamino}" 
                     CommandParameter="{Binding Text, Source={x:Reference id}}" 
                     FontSize="Medium" Padding="0" Margin="0" WidthRequest="120" HeightRequest="20"
                     BackgroundColor="Red" BorderColor="Brown" BorderWidth="2" />
-                
+
                 <Button Text="Ampliar"
                     Command="{Binding Source={RelativeSource AncestorType={x:Type viewModels:MisCaminosViewModel}}, Path=AmpliarMiCamino}" 
                     CommandParameter="{Binding Text, Source={x:Reference id}}" 
                     FontSize="Medium" Padding="0" Margin="0" WidthRequest="120" HeightRequest="20"
                     BackgroundColor="Red" BorderColor="Brown" BorderWidth="2" />
-                
+
                 <Button Text="Borrar"
                     Command="{Binding Source={RelativeSource AncestorType={x:Type viewModels:MisCaminosViewModel}}, Path=BorrarMiCamino}" 
                     CommandParameter="{Binding Text, Source={x:Reference id}}" 
@@ -59,6 +59,6 @@
             </StackLayout>
 
         </Grid>
-      
+
     </ViewCell.View>
-</ViewCell>
+</ViewCell>    

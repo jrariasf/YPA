@@ -45,6 +45,12 @@ namespace YPA.ViewModels
             set { SetProperty(ref _miCamino, value); }
         }
 
+        private TablaMisCaminos _miTMC;
+        public TablaMisCaminos miTMC
+        {
+            get { return _miTMC; }
+            set { SetProperty(ref _miTMC, value); }
+        }
 
         public VerEtapasViewModel(INavigationService navigationService, IDialogService dialogService)
         {
@@ -88,11 +94,44 @@ namespace YPA.ViewModels
         public DelegateCommand<Etapa> OpcionesSobreEtapaCommand =>
             _OpcionesSobreEtapaCommand ?? (_OpcionesSobreEtapaCommand = new DelegateCommand<Etapa>(ExecuteOpcionesSobreEtapaCommand));
 
-        void ExecuteOpcionesSobreEtapaCommand(Etapa parameter)
+        void ExecuteOpcionesSobreEtapaCommand(Etapa etapa)
         {
-            Console.WriteLine("DEBUG - MenuMisEtapasVM - ExecuteOpcionesSobreEtapaCommand");
+            Console.WriteLine("DEBUG - VerEtapasVM - ExecuteOpcionesSobreEtapaCommand");
 
-            _dialogService.ShowDialog("MenuMisEtapas");
+            if (miCamino != null)
+            {
+                //Console.WriteLine("DEBUG - MenuMisEtapasVM - ExecuteOpcionesSobreEtapaCommand  nombreCamino <{0}>  etapas <{1}>"
+                //    miCamino.miNombreCamino, 
+            }
+            DialogParameters param = new DialogParameters();
+            param.Add("etapa", etapa);
+            param.Add("listaEtapas", miTMC.etapas);  //_xx_ETAPAS  También podría mandarle aquí lo de miCamino.etapas
+
+            Console.WriteLine("DEBUG - VerEtapasVM - ExecuteOpcionesSobreEtapaCommand  miTMC.etapas <{0}>", miTMC.etapas);
+            Console.WriteLine("DEBUG - VerEtapasVM - ExecuteOpcionesSobreEtapaCommand miCamino.etapas <{0}>", miCamino.etapas);
+
+            _dialogService.ShowDialog("MenuMisEtapas", param, CloseDialogCallback);
+        }
+
+        private void CloseDialogCallback(IDialogResult obj)
+        {
+            //throw new NotImplementedException();
+            Console.WriteLine("DEBUG - VerEtapasVM - CloseDialogCallback  obj<{0}>", obj == null ? "NULL" : obj.ToString());
+
+            bool hayCambios = obj.Parameters.GetValue<bool>("hayCambios");
+           
+
+            string nuevaListaEtapas = obj.Parameters.GetValue<string>("listaEtapas");
+
+            Console.WriteLine("DEBUG - VerEtapasVM - CloseDialogCallback  nuevaListaEtapas <{0}>",
+                nuevaListaEtapas == null ? "NULL" : nuevaListaEtapas);
+
+            miTMC.etapas = nuevaListaEtapas; //_xx_ETAPAS
+            miCamino.SetEtapasInLista(nuevaListaEtapas);
+            miCamino.caminoAnterior = miCamino.caminoActual; //_xx_ETAPAS Lo hago para que no se llame a GetPoblacionesCamino() desde RellenarLista() en MiCamino:
+            miCamino.MasajearLista();
+            listaEtapas = miCamino.DameListaEtapas();
+
         }
 
         public void OnNavigatedFrom(INavigationParameters parameters)
@@ -122,7 +161,10 @@ namespace YPA.ViewModels
                 return;
             }
 
-            Console.WriteLine("DEBUG2 - VerEtapasVM - OnNavigatedTo: Venimos de MisCaminos con tmc");
+            miTMC = tmc;
+
+            Console.WriteLine("DEBUG2 - VerEtapasVM - OnNavigatedTo: Venimos de MisCaminos con tmc  etapas <{0}>", tmc.etapas);
+            Global.nombreFicheroDeMiCamino = tmc.miNombreCamino;
             miCamino.Init(tmc);
             miCamino.MasajearLista();
 

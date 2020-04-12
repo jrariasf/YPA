@@ -164,7 +164,7 @@ namespace YPA.Models
     {
         [PrimaryKey, AutoIncrement]
         public int id { get; set; }
-                [NotNull, MaxLength(30)]
+        [NotNull, MaxLength(30)]
         public string miNombreCamino { get; set; }
         [MaxLength(100)]
         public string descripcion { get; set; } // Pequeña descripción de mi camino.

@@ -40,7 +40,7 @@
     <EmbeddedResource Update="Views\DataTemplates\CellEtapaCamino.xaml">
       <Generator>MSBuild:UpdateDesignTimeXaml</Generator>
     </EmbeddedResource>
-    <EmbeddedResource Update="Views\DataTemplates\CellMiCamino.xaml">
+    <EmbeddedResource Update="Views\DataTemplates\CellMisCaminos.xaml">
       <Generator>MSBuild:UpdateDesignTimeXaml</Generator>
     </EmbeddedResource>
     <EmbeddedResource Update="Views\DataTemplates\CellMisEtapas.xaml">

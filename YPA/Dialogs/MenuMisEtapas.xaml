@@ -1,20 +1,4 @@
 ﻿<?xml version="1.0" encoding="utf-8" ?>
-<!--
-<ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
-             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
-             xmlns:d="http://xamarin.com/schemas/2014/forms/design"
-             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
-             mc:Ignorable="d"
-             x:Class="YPA.Dialogs.MenuMisEtapas">
-    <ContentPage.Content>
-        <StackLayout>
-            <Label Text="Welcome to Xamarin.Forms!"
-                VerticalOptions="CenterAndExpand" 
-                HorizontalOptions="CenterAndExpand" />
-        </StackLayout>
-    </ContentPage.Content>
-</ContentPage>
--->
 
 <Frame xmlns="http://xamarin.com/schemas/2014/forms" 
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
@@ -29,10 +13,10 @@
                  BackgroundColor="#F8EDED" HeightRequest="300" WidthRequest="250"
                  VerticalOptions="Center" Padding="4,0" Spacing="0">
 
-        <Button Text="Insertar día al inicio" HorizontalOptions="Center"  Command="{Binding CloseCommand}" />
-        <Button Text="Añadir día al final" HorizontalOptions="Center"  Command="{Binding PrintCommand}" />
+        <Button Text="Insertar día al inicio" HorizontalOptions="Center"  Command="{Binding InsertarDiaAlInicio}" />
+        <Button Text="Añadir día al final" HorizontalOptions="Center"  Command="{Binding CloseCommand}" />
         <Button Text="Dividir esta etapa en varias" HorizontalOptions="Center"  Command="{Binding CloseCommand}" />
-        <Button Text="Unir esta etapa y la siguiente" HorizontalOptions="Center"  Command="{Binding PrintCommand}" />
+        <Button Text="Unir esta etapa y la siguiente" HorizontalOptions="Center"  Command="{Binding CloseCommand}" />
         <Button Text="CLOSE" HorizontalOptions="Center"  Command="{Binding CloseCommand}" />
 
     </StackLayout>

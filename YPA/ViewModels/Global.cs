@@ -16,6 +16,9 @@ namespace YPA.ViewModels
         public static char[] separadorDePares = { '#' };
         public static CultureInfo culture = new CultureInfo("en-US");
         public static String[] diaDeLaSemana = new String[] { "Domingo", "Lunes", "Martes", "Miércoles", "Jueves", "Viernes", "Sábado" };
+
+        public static string nombreFicheroDeMiCamino = null;
+
         public Global()
         {
 

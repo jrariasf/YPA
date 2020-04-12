@@ -29,7 +29,7 @@
 
             <ListView.ItemTemplate>
                 <DataTemplate>
-                    <local:CellMiCamino />
+                    <local:CellMisCaminos />
                 </DataTemplate>
             </ListView.ItemTemplate>
         </ListView>

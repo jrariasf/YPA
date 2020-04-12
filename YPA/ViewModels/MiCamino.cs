@@ -213,6 +213,7 @@ namespace YPA.ViewModels
                 else
                     item.esEtapa = false;
             }
+            etapas = listadoEtapas; //_xx_ETAPAS
         }
 
         public string DameCadenaBifurcaciones()
@@ -350,7 +351,19 @@ namespace YPA.ViewModels
                 }
             }
             else
-                Console.WriteLine("DEBUG3 - MiCamino - RellenarLista  #### NO SE HACE NADA NUEVO !!! ####");
+            {
+                Console.WriteLine("DEBUG3 - MiCamino - RellenarLista  #### NO SE HACE NADA NUEVO !!!  Sólo marcas los nodos que son etapas ####");
+                //_xx_ETAPAS: Voy a marcar las etapas por si desde el MenuMisEtapas hemos modificado algo:
+                for (int i = 0; i < miLista.Count; i++)
+                {
+                    if (etapas != null)
+                        if (etapas.Contains(miLista[i].nombrePoblacion + ";"))
+                            miLista[i].esEtapa = true;
+                        else
+                            miLista[i].esEtapa = false;
+                }
+
+            }
 
             return true;
         }

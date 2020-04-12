@@ -8,7 +8,7 @@
 
     <ContentPage.ToolbarItems>
         <!-- <ToolbarItem Text="+"  Clicked="OnNoteAddedClicked" CommandParameter="prueba" /> -->
-        <ToolbarItem Text="+"  Command="{Binding AddMiCaminoClicked,FallbackValue=Funcion no definida}"
+        <ToolbarItem Text="GUARDAR"  Command="{Binding AddMiCaminoClicked,FallbackValue=Funcion no definida}"
                                CommandParameter="NO ESTA CONFIGURADO!!!!!" />
     </ContentPage.ToolbarItems>
 
