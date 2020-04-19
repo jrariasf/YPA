@@ -32,10 +32,6 @@
                 <ResourceDictionary>
                     <converter:IntToColorStringConverter x:Key="intToColorString" />
                     <converter:SustituirPorCadenaVaciaConverter x:Key="sustituirPorCadenaVacia" />
-                    <!--
-                    <converter:Acumulado x:Key="acumulado" />
-                    <converter:PoblacionVisible x:Key="poblacionVisible" />
-                    -->
                 </ResourceDictionary>
             </Grid.Resources>
 
@@ -56,17 +52,22 @@
                                         AbsoluteLayout.LayoutBounds="0,0,1,1">
                     <CheckBox WidthRequest="20" Scale="0.5"  Color="Black"                             
                               IsChecked="{Binding esEtapa}"
-                              IsEnabled="true"
+                              IsEnabled="{Binding checkboxEnabled}"
                               IsVisible="true" />
+                    <!-- IsEnabled="{Binding checkboxEnabled, FallbackValue=NOOO}" -->
                 </ContentView>
-                <Button HeightRequest="80"
+
+                <Button HeightRequest="80" IsEnabled="{Binding checkboxEnabled}"
                                         TextColor="White"
                                         VerticalOptions="Center"
                                         BackgroundColor="Transparent"
-                                        CommandParameter="{Binding id, StringFormat='{0}'}"
-                                        Command="{Binding Source={RelativeSource AncestorType={x:Type viewModels:VerCaminoViewModel}}, Path=CheckPulsado}"
+                                        CommandParameter="{Binding .}"
+                                        Command="{Binding Source={RelativeSource AncestorType={x:Type viewModels:VerCaminoViewModel}}, Path=CheckPulsado}"                                        
                                         AbsoluteLayout.LayoutFlags="All"
                                         AbsoluteLayout.LayoutBounds="0,0,1,1" />
+                
+                <!-- CommandParameter="{Binding id, StringFormat='{0}'}" -->
+                
             </AbsoluteLayout>
             
 

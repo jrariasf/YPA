@@ -16,33 +16,40 @@
             <Grid.ColumnDefinitions >
                 <ColumnDefinition Width="*" />
                 <ColumnDefinition Width="2*" />
+                <ColumnDefinition Width="4*" />
+                <ColumnDefinition Width="4*" />
                 <ColumnDefinition Width="2*" />
-                <ColumnDefinition Width="*" />
-                <ColumnDefinition Width="*" />
+                <ColumnDefinition Width="2*" />
             </Grid.ColumnDefinitions>
 
-            <Label Text="{Binding dia,FallbackValue=No dia}" Grid.Column="0"
+            <Label Text="{Binding orden,FallbackValue=No orden}" Grid.Column="0"
+                                   FontSize="Micro" TextColor="Black" 
+                                   Margin="0" Padding="0" 
+                                   HorizontalOptions="StartAndExpand" VerticalOptions="Center"  
+                                   VerticalTextAlignment="Center" />
+            
+            <Label Text="{Binding dia,FallbackValue=No dia}" Grid.Column="1"
                                    FontSize="Micro" TextColor="Red" 
                                    Margin="0" Padding="0" 
                                    HorizontalOptions="StartAndExpand" VerticalOptions="Center"  
                                    VerticalTextAlignment="Center" />
 
-            <Label Text="{Binding poblacion_inicio_etapa,FallbackValue=No INI}" Grid.Column="1" 
+            <Label Text="{Binding poblacion_inicio_etapa,FallbackValue=No INI}" Grid.Column="2" 
                                    FontSize="Caption" TextColor="Black" 
                                    Margin="0" Padding="0" 
                                    HorizontalOptions="StartAndExpand" VerticalOptions="Center"  
                                    VerticalTextAlignment="Center" />
-            <Label Text="{Binding poblacion_fin_etapa,FallbackValue=No FIN}" Grid.Column="2" 
+            <Label Text="{Binding poblacion_fin_etapa,FallbackValue=No FIN}" Grid.Column="3" 
                                    FontSize="Caption" TextColor="Black" 
                                    Margin="0" Padding="0" 
                                    HorizontalOptions="StartAndExpand" VerticalOptions="Center"  
                                    VerticalTextAlignment="Center" />
-            <Label Text="{Binding distancia,FallbackValue=No dis, StringFormat='{0:0.0} km'}" Grid.Column="3"
+            <Label Text="{Binding distancia,FallbackValue=No dis, StringFormat='{0:0.0} km'}" Grid.Column="4"
                                    FontSize="Caption" TextColor="Black" 
                                    Margin="0" Padding="0" 
                                    HorizontalOptions="StartAndExpand" VerticalOptions="Center"  
                                    VerticalTextAlignment="Center" HorizontalTextAlignment="End" />
-            <Button Text="+" HorizontalOptions="Center" WidthRequest="35" TextColor="Blue" BackgroundColor="Red"   Grid.Column="4"
+            <Button Text="+" HorizontalOptions="Center" WidthRequest="35" TextColor="Blue" BackgroundColor="Red"   Grid.Column="5"
                     Command="{Binding Source={RelativeSource AncestorType={x:Type viewModels:VerEtapasViewModel}}, Path=OpcionesSobreEtapaCommand}"
                     CommandParameter="{Binding .}" />
             

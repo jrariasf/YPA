@@ -10,13 +10,13 @@
              x:Class="YPA.Dialogs.MenuMisEtapas">
 
     <StackLayout Orientation="Vertical"
-                 BackgroundColor="#F8EDED" HeightRequest="300" WidthRequest="250"
+                 BackgroundColor="#F8EDED" HeightRequest="{Binding alturaMenu}" WidthRequest="250"
                  VerticalOptions="Center" Padding="4,0" Spacing="0">
 
         <Button Text="Insertar día al inicio" HorizontalOptions="Center"  Command="{Binding InsertarDiaAlInicio}" />
-        <Button Text="Añadir día al final" HorizontalOptions="Center"  Command="{Binding CloseCommand}" />
+        <Button Text="Añadir día al final" HorizontalOptions="Center"  Command="{Binding InsertarDiaAlFinal}" />
         <Button Text="Dividir esta etapa en varias" HorizontalOptions="Center"  Command="{Binding CloseCommand}" />
-        <Button Text="Unir esta etapa y la siguiente" HorizontalOptions="Center"  Command="{Binding CloseCommand}" />
+        <Button Text="Unir esta etapa y la siguiente" HorizontalOptions="Center"  Command="{Binding UnirEtapas}"  IsVisible="{Binding botonUnirVisible}" />
         <Button Text="CLOSE" HorizontalOptions="Center"  Command="{Binding CloseCommand}" />
 
     </StackLayout>

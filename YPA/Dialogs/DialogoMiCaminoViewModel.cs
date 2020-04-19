@@ -101,20 +101,23 @@ namespace YPA.Dialogs
 
             Message = parameters.GetValue<string>("message") + "  " + resumen;
 
+            /*
             List<TablaBaseCaminos> miLista = parameters.GetValue<List<TablaBaseCaminos>>("lista");
             String fechaInicio = parameters.GetValue<string>("fechaInicio");
+            */
+            MiCamino miCamino = parameters.GetValue<MiCamino>("miCamino");
 
             etapas = "";
             alturaLabel = 15;
 
+            /*
             if (fechaInicio == null)
                 fechaInicio = System.DateTime.Today.ToString("yyyy-MM-dd");
 
             var fecha = DateTime.Parse(fechaInicio);
             TimeSpan ts = new TimeSpan(1, 0, 0, 0);
 
-            listaEtapas = new ObservableCollection<Etapa>();
-
+            listaEtapas = new ObservableCollection<Etapa>();            
 
             if (miLista == null)
             {
@@ -126,19 +129,12 @@ namespace YPA.Dialogs
                 String[] diaDeLaSemana = new String[]{ "Domingo", "Lunes", "Martes", "Miércoles", "Jueves", "Viernes", "Sábado" };
                 bool esPrimeraEtapa = true;
                 string poblacion_INI = "";
+                int orden = 0;
                
                 foreach (var item in miLista)
                 {
-                    if (item.esEtapa && item.esVisible)
+                    if (item.esEtapa > 0 && item.esVisible)
                     {
-                        /*
-                        alturaLabel += 15;
-                        string nombrePoblacion = item.nombrePoblacion.Substring(0, item.nombrePoblacion.Length > 20 ? 20 : item.nombrePoblacion.Length);
-                        etapas = etapas + String.Format("{0,-26}", fecha.ToString("yyyy-MM-dd") + " (" + diaDeLaSemana[(int)fecha.DayOfWeek] + "):") +
-                                 String.Format("{0,-22}", nombrePoblacion + ":") + String.Format("{0,10:0.0}", item.acumuladoEtapa) + " km\n";
-                        fecha = fecha + ts;
-                        */
-
                         if (esPrimeraEtapa)
                         {
                             esPrimeraEtapa = false;
@@ -148,7 +144,7 @@ namespace YPA.Dialogs
                         string dia = fecha.ToString("dd-MM-yy") + " (" + diaDeLaSemana[(int)fecha.DayOfWeek].Substring(0,3) + ")";
 
                         //Etapa etapa = new Etapa(dia, poblacion_INI, item.nombrePoblacion, String.Format("{0:0.0}", item.acumuladoEtapa) + " km");
-                        Etapa etapa = new Etapa(dia, poblacion_INI, item.nombrePoblacion, item.acumuladoEtapa);
+                        Etapa etapa = new Etapa(orden++, dia, poblacion_INI, item.nombrePoblacion, item.acumuladoEtapa);
                         listaEtapas.Add(etapa);
 
                         poblacion_INI = item.nombrePoblacion; // Guarda la población inicio de etapa para la próxima.
@@ -156,6 +152,9 @@ namespace YPA.Dialogs
                     }
                 }
             }
+            */
+
+            listaEtapas = miCamino.DameListaEtapas();
 
         }
     }

@@ -221,7 +221,7 @@ namespace YPA.Models
     public class TablaBaseCaminos : INotifyPropertyChanged, IEquatable<TablaBaseCaminos>
     {
         public event PropertyChangedEventHandler PropertyChanged;
-        bool _esEtapa;
+        byte _esEtapa;
         double _acumuladoEtapa;
         private void RaisePropertyChanged(string propertyName = null)
         {
@@ -244,16 +244,25 @@ namespace YPA.Models
         }
 
         public TablaBaseCaminos()
-        { }
+        {
+            Init();
+        }
         public TablaBaseCaminos(int _id)
         {
             id = _id;
             nombrePoblacion = "";
+            Init();
         }
         public TablaBaseCaminos(string nodo)
         {
             nombrePoblacion = nodo;
             id = -1;
+            Init();
+        }
+
+        public void Init()
+        {
+            checkboxEnabled = true;
         }
 
         [PrimaryKey, AutoIncrement]
@@ -292,7 +301,7 @@ namespace YPA.Models
         [Ignore]
         public bool tieneAlbergue { get; set; }
         [Ignore]
-        public bool esEtapa   // Para el checbox que sirve para establecer las etapas
+        public byte esEtapa   // Para el checbox que sirve para establecer las etapas
                               //_xx_ETAPAS Podría ser un entero de forma que si es > 0 inicaría el número de días.
                               // Ej: si esEtapa vale 2 significaría que el primer día te quedas ahí y el siguiente sales hacia la siguiente etapa.
         {
@@ -306,6 +315,10 @@ namespace YPA.Models
                 }
             }
         }
+        [Ignore]
+        public bool checkboxEnabled { get; set; }  // Se va a utilizar para no permitir modificar el checkbox que señala un nodo como etapa.
+                                                   // Por ejemplo, cuando se ven los nodos de una etapa, el primero y el último aparecerán marcados
+                                                   // y no se permitirá modificarlos (es decir, desactivarlos).
 
     }
 

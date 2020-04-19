@@ -83,12 +83,6 @@ namespace YPA.ViewModels
         async void ExecuteGuardarCamino()
         {
             Console.WriteLine("DEBUG - VerCaminoVM - ExecuteGuardarCamino()");
-            /*
-            _dialogService.ShowDialog("DialogoMiCamino", new DialogParameters
-            {
-                { "message", "Hello from hell !!" }
-            });
-            */
 
             string listadoEtapas = miCamino.DameStringListaEtapas();
             string listadoBifurcaciones = miCamino.DameCadenaBifurcaciones();
@@ -99,11 +93,10 @@ namespace YPA.ViewModels
                 {
                     App.Current.MainPage.DisplayAlert("Error", "Hay que dar un nombre a tu camino", "OK");
                 });
-                
-                //_dialogService.DisplayAlertAsync("Error", "Hay que dar un nombre a tu camino", "OK");
+
                 return;
             }
-            //_xx_PENDIENTE:  Mirar los campos de abajo como "fechaInicio" que igual hay que coger lo que tenemos en miCamino:
+            
             Console.WriteLine("DEBUG - VerCaminoVM - ExecuteGuardarCamino() miNombreCamino:{0}",
                               miCamino.miNombreCamino == null ? "NULL" : miCamino.miNombreCamino);
             Console.WriteLine("DEBUG - VerCaminoVM - ExecuteGuardarCamino() descripcion:{0}",
@@ -114,9 +107,21 @@ namespace YPA.ViewModels
                               miCamino.fechaInicio == null ? "NULL" : miCamino.fechaInicio);
             Console.WriteLine("DEBUG - VerCaminoVM - ExecuteGuardarCamino() bifurcaciones:{0}", listadoBifurcaciones);
             Console.WriteLine("DEBUG - VerCaminoVM - ExecuteGuardarCamino() etapas:{0}", listadoEtapas);
+            /*
+            Console.WriteLine("DEBUG - VerCaminoVM - ExecuteGuardarCamino() backupEtapas:{0}",
+                              miCamino.backupEtapas == null ? "NULL" : miCamino.backupEtapas);
+
+            if (miCamino.backupEtapas != null)
+            {
+                Console.WriteLine("DEBUG3 - VerCaminoVM - ExecuteGuardarCamino() USAMOS backupEtapas !!!! ######");
+                listadoEtapas = miCamino.backupEtapas;
+            }
+            */
 
             TablaMisCaminos tmc = new TablaMisCaminos(miCamino.miNombreCamino, miCamino.descripcion, miCamino.caminoActual,
                                                       miCamino.fechaInicio, listadoBifurcaciones, listadoEtapas);
+
+            Global.subetapasModificadas = listadoEtapas;
 
             await App.Database.SaveMiCaminoAsync(tmc);
 
@@ -134,8 +139,9 @@ namespace YPA.ViewModels
             DialogParameters p = new DialogParameters();
 
             p.Add("message", "Listado de etapas:");
-            p.Add("lista", miCamino.miLista); //_xx_
-            p.Add("fechaInicio", miCamino.fechaInicio);
+            p.Add("miCamino", miCamino);
+            //p.Add("lista", miCamino.miLista); //_xx_
+            //p.Add("fechaInicio", miCamino.fechaInicio);
             p.Add("resumen", resumen); // Es una cadena con el número de etapas y los kilómetros totales
 
             _dialogService.ShowDialog("DialogoMiCamino", p);
@@ -183,16 +189,17 @@ namespace YPA.ViewModels
         }
 
 
-        private DelegateCommand _addCommand;
-        public DelegateCommand AddCommand =>
-            _addCommand ?? (_addCommand = new DelegateCommand(ExecuteAddCommand, CanExecuteAddCommand));
+        private DelegateCommand _GuardarCambios;
+        public DelegateCommand GuardarCambios =>
+            _GuardarCambios ?? (_GuardarCambios = new DelegateCommand(ExecuteGuardarCambios, CanExecuteGuardarCambios));
 
-        void ExecuteAddCommand()
+        void ExecuteGuardarCambios()
         {
-            Console.WriteLine("DEBUG - VerCaminoVM - ExecuteAddCommand");
+            Console.WriteLine("DEBUG - VerCaminoVM - ExecuteGuardarCambios");
+
         }
 
-        bool CanExecuteAddCommand()
+        bool CanExecuteGuardarCambios()
         {
             return true;
         }
@@ -214,69 +221,32 @@ namespace YPA.ViewModels
             else
                 Console.WriteLine("DEBUG - VerCaminoVM - ExecuteLabelPulsada()  No hacemos nada porque NO es una bifurcación");
 
-            /*
-            if (camino.esEtapa == true)
-                Console.WriteLine("DEBUG - VerCaminoVM - ExecuteItemTappedCommand() esEtapa estaba a TRUE. La fonemos a false");
-            else
-                Console.WriteLine("DEBUG - VerCaminoVM - ExecuteItemTappedCommand() esEtapa estaba a FALSE. La fonemos a true");
-
-            camino.esEtapa = !camino.esEtapa;
-            */
         }
 
 
+        private DelegateCommand<TablaBaseCaminos> _CheckPulsado;
+        public DelegateCommand<TablaBaseCaminos> CheckPulsado =>
+            _CheckPulsado ?? (_CheckPulsado = new DelegateCommand<TablaBaseCaminos>(ExecuteCheckPulsado, CanExecuteCheckPulsado));
 
-        private DelegateCommand<string> _CheckPulsado;
-        public DelegateCommand<string> CheckPulsado =>
-            _CheckPulsado ?? (_CheckPulsado = new DelegateCommand<string>(ExecuteCheckPulsado));
-
-        void ExecuteCheckPulsado(string id)
+        void ExecuteCheckPulsado(TablaBaseCaminos tbc)
         {
-            Console.WriteLine("DEBUG - VerCaminoVM - ExecuteCheckPulsado({0})", id);
+            Console.WriteLine("DEBUG - VerCaminoVM - ExecuteCheckPulsado({0})", tbc.id);
 
-            miCamino.ExecuteCheckPulsado(id);
+            miCamino.ExecuteCheckPulsado(tbc.id);
 
         }
 
-        private DelegateCommand<TablaBaseCaminos> _ItemTappedCommand;
-        public DelegateCommand<TablaBaseCaminos> ItemTappedCommand =>
-            _ItemTappedCommand ?? (_ItemTappedCommand = new DelegateCommand<TablaBaseCaminos>(ExecuteItemTappedCommand));
-
-        void ExecuteItemTappedCommand(TablaBaseCaminos camino)
+        bool CanExecuteCheckPulsado(TablaBaseCaminos tbc)
         {
-            Console.WriteLine("DEBUG - VerCaminoVM - ExecuteItemTappedCommand({0})    caminoActual:{1}  entrar...", camino, miCamino.caminoActual);
-            //var navigationParams = new NavigationParameters();
-            //navigationParams.Add("camino", camino);
-            //_navigationService.NavigateAsync("EntryCAMINOS", navigationParams);
-
-            //listaPuntosDePaso.Remove(camino);
-
-            Console.WriteLine("DEBUG - VerCaminoVM - ExecuteItemTappedCommand()  nombre:{0}  esVisible:{1}  esEtapa:{2}", 
-                camino.nombrePoblacion, camino.esVisible, camino.esEtapa);
-
-            //MasajearLista(camino.nombrePoblacion);
-
-            if (camino.esEtapa == true)
-                Console.WriteLine("DEBUG - VerCaminoVM - ExecuteItemTappedCommand() esEtapa estaba a TRUE. La ponemos a false");
-            else
-                Console.WriteLine("DEBUG - VerCaminoVM - ExecuteItemTappedCommand() esEtapa estaba a FALSE. La ponemos a true");
-
-            camino.esEtapa = !camino.esEtapa;
-
+            return tbc.checkboxEnabled;
         }
 
-
-
-        bool CanExecuteItemTappedCommand()
-        {
-            return true;
-        }
 
         public void OnNavigatedFrom(INavigationParameters parameters)
         {
             //throw new NotImplementedException();
             var navigationMode = parameters.GetNavigationMode();
-            Console.WriteLine("DEBUG2 - PoblacionesVM - OnNavigatedFrom()  navigationMode:{0}", navigationMode);
+            Console.WriteLine("DEBUG2 - VerCaminoVM - OnNavigatedFrom()  navigationMode:{0}", navigationMode);
         }
 
         public void OnNavigatedTo(INavigationParameters parameters)
@@ -341,9 +311,10 @@ namespace YPA.ViewModels
                     Console.WriteLine("DEBUG - VerCaminoVM - OnNavigatedTo: option 3");
                     mostrarCabecera = false;
                     MiCamino miCam = parameters.GetValue<MiCamino>("miCamino");
-                    miCam.caminoAnterior = null; // Para forzar que al llamar a RellenarLista se recree el miLista.
+                    
                     if (miCam != null)
                     {
+                        miCam.caminoAnterior = null; // Para forzar que al llamar a RellenarLista se recree el miLista.
                         string primerNodoEtapa = null, ultimoNodoEtapa = null;
                         primerNodoEtapa = parameters.GetValue<string>("primerNodoEtapa");
                         ultimoNodoEtapa = parameters.GetValue<string>("ultimoNodoEtapa");
@@ -351,12 +322,13 @@ namespace YPA.ViewModels
                                           primerNodoEtapa == null ? "NULL" : primerNodoEtapa, ultimoNodoEtapa == null ? "NULL" : ultimoNodoEtapa);
                         //miCamino.Init(tmc);
                         miCamino = miCam;
+                        //miCamino.backupEtapas = miCamino.etapas; //_xx_ETAPAS: Guardamos las etapas del camino completo porque al llamar a MasajearLista se va a recrear la cadena de etapas con los nodos de esa etapa !!!
                         Console.WriteLine("DEBUG - VerCaminoVM - OnNavigatedTo: miCamino.bifurcaciones:{0}", miCamino.DameCadenaBifurcaciones());
                         listaPuntosDePaso = miCamino.MasajearLista(null, primerNodoEtapa, ultimoNodoEtapa);
                     }
                     else
                     {
-                        Console.WriteLine("DEBUG3 - VerCaminoVM - OnNavigatedTo: Error en las opciones pasadas, falta el miCamino");
+                        Console.WriteLine("ERROR - VerCaminoVM - OnNavigatedTo: Error en las opciones pasadas, falta el miCamino");
                         return;
                     }
                     break;
@@ -364,25 +336,7 @@ namespace YPA.ViewModels
                     Console.WriteLine("DEBUG3 - VerCaminoVM - OnNavigatedTo: OPCIÓN NO CONTEMPLADA");
                     break;
             }
-
-            /*
-            if (camino != null)
-            {
-                miCamino.caminoActual = camino;
-                Console.WriteLine("DEBUG2 - VerCaminoVM - OnNavigatedTo: Llegamos normalmente, desde el menú CAMINOS  camino:{0}", miCamino.caminoActual);
-                listaPuntosDePaso = miCamino.MasajearLista();
-            } else if (tmc != null)
-            {
-                Console.WriteLine("DEBUG2 - VerCaminoVM - OnNavigatedTo: Venimos de MisCaminos con tmc");
-                miCamino.Init(tmc);                
-                Console.WriteLine("DEBUG2 - VerCaminoVM - OnNavigatedTo: tmc.bifurcaciones:{0}", tmc.bifurcaciones);            
-                listaPuntosDePaso = miCamino.MasajearLista();           
-            } else
-            {
-                Console.WriteLine("ERROR - VerCaminoVM - OnNavigatedTo: OPCIÓN NO CONTEMPLADA");
-            }
-            */
-            
+         
         }
 
 

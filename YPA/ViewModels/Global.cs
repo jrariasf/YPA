@@ -18,6 +18,7 @@ namespace YPA.ViewModels
         public static String[] diaDeLaSemana = new String[] { "Domingo", "Lunes", "Martes", "Miércoles", "Jueves", "Viernes", "Sábado" };
 
         public static string nombreFicheroDeMiCamino = null;
+        public static string subetapasModificadas = null;
 
         public Global()
         {
@@ -34,14 +35,16 @@ namespace YPA.ViewModels
 
     public class Etapa
     {
+        public int orden { get; set; }
         public string dia { get; set; }
         public string poblacion_inicio_etapa { get; set; }
         public string poblacion_fin_etapa { get; set; }
         //public string distancia { get; set; }
         public double distancia { get; set; }
 
-        public Etapa(string _dia, string _poblacion_INI, string _poblacion_FIN, double _distancia)
+        public Etapa(int _orden, string _dia, string _poblacion_INI, string _poblacion_FIN, double _distancia)
         {
+            orden = _orden;
             dia = _dia;
             poblacion_inicio_etapa = _poblacion_INI;
             poblacion_fin_etapa = _poblacion_FIN;

@@ -13,8 +13,8 @@
 
     
     <ContentPage.ToolbarItems>
-        <ToolbarItem Name="Add"
-                 Command="{Binding AddCommand}"  >
+        <ToolbarItem Name="Guardar"
+                 Command="{Binding GuardarCamino}"  >
             <ToolbarItem.Icon>
                 <OnPlatform x:TypeArguments="FileImageSource"
                     Android="plus"

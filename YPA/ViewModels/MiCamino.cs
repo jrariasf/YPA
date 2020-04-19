@@ -99,6 +99,7 @@ namespace YPA.ViewModels
 
 
         public string etapas;
+        //public string backupEtapas;
 
 
         private int _numEtapas;
@@ -115,6 +116,8 @@ namespace YPA.ViewModels
                 RaisePropertyChanged(nameof(numEtapas));
             }
         }
+
+        public int numDias;
 
         private double _distanciaTotalMiCamino;
         public double distanciaTotalMiCamino
@@ -164,6 +167,7 @@ namespace YPA.ViewModels
             bifurcaciones = null;
             str_bifurcaciones = null;
             etapas = null;
+            //backupEtapas = null;
             resumen = "KAKA";
         }
 
@@ -188,30 +192,46 @@ namespace YPA.ViewModels
 
         public string DameStringListaEtapas()
         {
-            string listado = "";
+            string listado = "" + Global.separador[0];
             numEtapas = 0;
+            numDias = 0;
+
             foreach (var item in miLista)
             {
-                if (item.esEtapa && item.esVisible)
+                if (item.esEtapa > 0 && item.esVisible)
                 {
-                    listado += item.nombrePoblacion;
-                    listado += Global.separador[0]; // ";";
-                    numEtapas++;
+                    for (int i=0; i < item.esEtapa; i++)
+                    {
+                        listado += item.nombrePoblacion;
+                        listado += Global.separador[0]; // ";";
+                        numEtapas++;
+                    }
+                    numDias += item.esEtapa;
                 }
             }
-            //_xx_ETAPAS if (numEtapas > 0)
-            //_xx_ETAPAS     numEtapas--;
+
             return listado;
         }
-        public void SetEtapasInLista(string listadoEtapas)  // listado es una secuencia de poblaciones separadas por ";". Obligatorio que acabe en ";" !!!
+
+        public void SetEtapasInLista(string listadoEtapas)  // listado es una secuencia de poblaciones separadas por ";". Obligatorio que empiece y acabe en ";" !!!
         {
             //string[] etapas = listado.Split(VerCaminoViewModel.separador);
             foreach (var item in miLista)
             {
+                /*
                 if (listadoEtapas.Contains(item.nombrePoblacion + ";"))
-                    item.esEtapa = true;
+                    item.esEtapa = 1;
                 else
-                    item.esEtapa = false;
+                    item.esEtapa = 0;
+                */
+                int posicion = 0;
+                item.esEtapa = 0;
+                string buscar = Global.separador[0] + item.nombrePoblacion + Global.separador[0];
+                while ((posicion = listadoEtapas.IndexOf(buscar, posicion)) > -1)
+                {   //_xx_ETAPAS  Tenemos que contar cuantos días estamos en ese nodo o población:
+                    item.esEtapa++;
+                    posicion += (buscar.Length - 1);
+                }
             }
             etapas = listadoEtapas; //_xx_ETAPAS
         }
@@ -252,52 +272,62 @@ namespace YPA.ViewModels
 
 
         public ObservableCollection<Etapa> DameListaEtapas() //out ObservableCollection<Etapa> listaEtapas)
-        {
-            //String[] diaDeLaSemana = new String[] { "Domingo", "Lunes", "Martes", "Miércoles", "Jueves", "Viernes", "Sábado" };
+        {            
             bool esPrimeraEtapa = true;
             string poblacion_INI = "";
+            int orden = 0;
 
             var fecha = DateTime.Parse(fechaInicio);
             TimeSpan ts = new TimeSpan(1, 0, 0, 0);
 
-            ObservableCollection<Etapa> listaEtapas = new ObservableCollection<Etapa>();
+            ObservableCollection<Etapa> listaEtapas = new ObservableCollection<Etapa>();            
 
+            string dia;
+            Etapa etapa;
             foreach (var item in miLista)
             {
-                if (item.esEtapa && item.esVisible)
+                if (item.esEtapa > 0 && item.esVisible)
                 {
-                    /*
-                    alturaLabel += 15;
-                    string nombrePoblacion = item.nombrePoblacion.Substring(0, item.nombrePoblacion.Length > 20 ? 20 : item.nombrePoblacion.Length);
-                    etapas = etapas + String.Format("{0,-26}", fecha.ToString("yyyy-MM-dd") + " (" + diaDeLaSemana[(int)fecha.DayOfWeek] + "):") +
-                             String.Format("{0,-22}", nombrePoblacion + ":") + String.Format("{0,10:0.0}", item.acumuladoEtapa) + " km\n";
-                    fecha = fecha + ts;
-                    */
-
                     if (esPrimeraEtapa)
                     {
                         esPrimeraEtapa = false;
                         poblacion_INI = item.nombrePoblacion; // Guarda la población inicio de etapa.
-                        continue;
+                        if (item.esEtapa == 1)
+                            continue;
+
+                        for (int i = 0; i < item.esEtapa - 1; i++)
+                        {
+                            dia = fecha.ToString("dd-MM-yy") + " (" + Global.diaDeLaSemana[(int)fecha.DayOfWeek].Substring(0, 3) + ")";
+                            etapa = new Etapa(orden++, dia, poblacion_INI, poblacion_INI, 0);
+                            listaEtapas.Add(etapa);
+                            fecha = fecha + ts;
+                        }
                     }
-                    string dia = fecha.ToString("dd-MM-yy") + " (" + Global.diaDeLaSemana[(int)fecha.DayOfWeek].Substring(0, 3) + ")";
 
-                    // Etapa etapa = new Etapa(dia, poblacion_INI, item.nombrePoblacion, String.Format("{0:0.0}", item.acumuladoEtapa) + " km");
-                    Etapa etapa = new Etapa(dia, poblacion_INI, item.nombrePoblacion, item.acumuladoEtapa);
+
+                    dia = fecha.ToString("dd-MM-yy") + " (" + Global.diaDeLaSemana[(int)fecha.DayOfWeek].Substring(0, 3) + ")";
+                    etapa = new Etapa(orden++, dia, poblacion_INI, item.nombrePoblacion, item.acumuladoEtapa);
                     listaEtapas.Add(etapa);
-
-                    poblacion_INI = item.nombrePoblacion; // Guarda la población inicio de etapa para la próxima.
                     fecha = fecha + ts;
+                    poblacion_INI = item.nombrePoblacion; // Guarda la población inicio de etapa para la próxima.
+
+                    for (int i = 0; i < item.esEtapa - 1; i++)
+                    {
+                        dia = fecha.ToString("dd-MM-yy") + " (" + Global.diaDeLaSemana[(int)fecha.DayOfWeek].Substring(0, 3) + ")";
+                        etapa = new Etapa(orden++, dia, poblacion_INI, poblacion_INI, 0);
+                        listaEtapas.Add(etapa);
+                        fecha = fecha + ts;
+                    }
+
                 }
             }
 
             return listaEtapas;
-
         }
         
 
 
-        public bool RellenarLista(string _nodoInicial=null, string _nodoFinal=null)
+        public bool RellenarLista()
         {
             Console.WriteLine("DEBUG2 - MiCamino - RellenarLista   caminoActual:{0}  caminoAnterior:{1}",
                 caminoActual == null ? "NULL" : caminoActual, caminoAnterior == null ? "NULL" : caminoAnterior);
@@ -307,6 +337,7 @@ namespace YPA.ViewModels
                 Console.WriteLine("ERROR - MiCamino - RellenarLista()  caminoActual es null !!!");
                 return false;
             }
+            
 
             if (caminoAnterior == null || caminoAnterior != caminoActual)
             {
@@ -315,39 +346,27 @@ namespace YPA.ViewModels
                 Console.WriteLine("DEBUG - MiCamino - RellenarLista   miLista.Count:{0}", miLista.Count);
                 caminoAnterior = caminoActual;
 
-                if (_nodoInicial != null && _nodoFinal != null)
-                {
-                    Console.WriteLine("DEBUG - MiCamino - RellenarLista _nodoInicial:{0}   _nodoFinal:{1}", _nodoInicial, _nodoFinal);
-                    int indiceInicial, indiceFinal;
-                    TablaBaseCaminos nodoInicial = new TablaBaseCaminos(_nodoInicial);
-                    TablaBaseCaminos nodoFinal = new TablaBaseCaminos(_nodoFinal);
-                    indiceInicial = miLista.IndexOf(nodoInicial);
-                    indiceFinal = miLista.IndexOf(nodoFinal);
-                    Console.WriteLine("DEBUG - MiCamino - RellenarLista   sindiceInicial:{0}   indiceFinal:{1}", indiceInicial, indiceFinal);
-
-                    if (indiceFinal < miLista.Count)
-                        miLista.RemoveRange(indiceFinal + 1, miLista.Count - indiceFinal - 1);
-                    if (indiceInicial > 0)
-                        miLista.RemoveRange(0, indiceInicial);
-
-                    Console.WriteLine("DEBUG - MiCamino - RellenarLista  Despues de RemoveRange miLista.Count:{0}", miLista.Count);
-                }
-
-
                 // Ahora tengo que mirar en qué poblaciones hay albergue:
                 List<string> poblacionesConAlbergue = null;
                 poblacionesConAlbergue = App.Database.GetPoblacionesConAlbergue(caminoActual);
                 for (int i = 0; i < miLista.Count; i++)
                 {
                     //Console.WriteLine("DEBUG2 - VerCaminoVM - RellenarLista  esEtapa:{0}", miLista[i].esEtapa);
+                    // Esto podríamos hacerlo sólo entre los nodos que van del indiceInicial al indiceFinal:
                     if (poblacionesConAlbergue.Contains(miLista[i].nombrePoblacion))
                         miLista[i].tieneAlbergue = true;
 
+                    int posicion = 0;
+                    miLista[i].esEtapa = 0;
+                    string buscar = Global.separador[0] + miLista[i].nombrePoblacion + Global.separador[0];
                     if (etapas != null)
-                        if (etapas.Contains(miLista[i].nombrePoblacion + ";"))
-                            miLista[i].esEtapa = true;
-                        else
-                            miLista[i].esEtapa = false;
+                    {
+                        while ((posicion = etapas.IndexOf(buscar, posicion)) > -1)
+                        {   //_xx_ETAPAS  Tenemos que contar cuantos días estamos en ese nodo o población:
+                            miLista[i].esEtapa++;
+                            posicion += (buscar.Length - 1);
+                        }
+                    }
                 }
             }
             else
@@ -355,12 +374,18 @@ namespace YPA.ViewModels
                 Console.WriteLine("DEBUG3 - MiCamino - RellenarLista  #### NO SE HACE NADA NUEVO !!!  Sólo marcas los nodos que son etapas ####");
                 //_xx_ETAPAS: Voy a marcar las etapas por si desde el MenuMisEtapas hemos modificado algo:
                 for (int i = 0; i < miLista.Count; i++)
-                {
+                {                    
+                    int posicion = 0;
+                    miLista[i].esEtapa = 0;
+                    string buscar = Global.separador[0] + miLista[i].nombrePoblacion + Global.separador[0];
                     if (etapas != null)
-                        if (etapas.Contains(miLista[i].nombrePoblacion + ";"))
-                            miLista[i].esEtapa = true;
-                        else
-                            miLista[i].esEtapa = false;
+                    {
+                        while ((posicion = etapas.IndexOf(buscar, posicion)) > -1)
+                        {   //_xx_ETAPAS  Tenemos que contar cuantos días estamos en ese nodo o población:
+                            miLista[i].esEtapa++;
+                            posicion += (buscar.Length - 1);
+                        }
+                    }
                 }
 
             }
@@ -379,6 +404,8 @@ namespace YPA.ViewModels
             double distanciaAlInicioUltimaEtapa = 0;
             string siguienteNodo;
             int numEtapasLocal = 0;
+            int numDiasLocal = 0;
+            int indiceInicial=-1, indiceFinal=-1;
 
             bool esPrimeraEtapa = true;          
 
@@ -393,29 +420,67 @@ namespace YPA.ViewModels
             ObservableCollection<TablaBaseCaminos> back_listaPuntosDePaso;
 
             //_xx_ resp = Global.RellenarLista(listadoEtapas);
-            resp = RellenarLista(primerNodoEtapa, ultimoNodoEtapa);
+            resp = RellenarLista();
             if (resp == false)
             {
                 Console.WriteLine("ERROR - ###########----------#######    MiCamino - MasajearLista(): RellenarLista devolvió false !!");
                 //_xx_PENDIENTE  resumen = "";
                 return null;
             }
-            back_listaPuntosDePaso = new ObservableCollection<TablaBaseCaminos>(miLista);
 
 
-            siguienteNodo = back_listaPuntosDePaso[0].nombrePoblacion; // Lo inicializamos con el nombre de la primera población.
+            if (primerNodoEtapa != null && ultimoNodoEtapa != null)
+            {
+                Console.WriteLine("DEBUG - MiCamino - MasajearLista primerNodoEtapa:{0}   ultimoNodoEtapa:{1}", primerNodoEtapa, ultimoNodoEtapa);
+                
+                TablaBaseCaminos nodoInicial = new TablaBaseCaminos(primerNodoEtapa);
+                TablaBaseCaminos nodoFinal = new TablaBaseCaminos(ultimoNodoEtapa);
+                indiceInicial = miLista.IndexOf(nodoInicial);
+                indiceFinal = miLista.IndexOf(nodoFinal);
+                Console.WriteLine("DEBUG - MiCamino - RellenarLista   sindiceInicial:{0}   indiceFinal:{1}", indiceInicial, indiceFinal);
+
+                miLista[indiceInicial].checkboxEnabled = false;
+                miLista[indiceFinal].checkboxEnabled = false;
+
+                /* _xx_esVisible
+                int numNodos = indiceFinal - indiceInicial + 1;
+                TablaBaseCaminos[] array = new TablaBaseCaminos[numNodos];
+                miLista.CopyTo(indiceInicial, array, 0, numNodos);
+                List<TablaBaseCaminos> listaNodosDeEtapa = new List<TablaBaseCaminos>(array);
+                back_listaPuntosDePaso = new ObservableCollection<TablaBaseCaminos>(listaNodosDeEtapa);
+                */
+
+                /*
+                if (indiceFinal < miLista.Count)
+                    miLista.RemoveRange(indiceFinal + 1, miLista.Count - indiceFinal - 1);
+                if (indiceInicial > 0)
+                    miLista.RemoveRange(0, indiceInicial);
+
+                Console.WriteLine("DEBUG - MiCamino - RellenarLista  Despues de RemoveRange miLista.Count:{0}", miLista.Count);
+                */
+            }
+            /*_xx_esVisible
+            else
+            {
+                back_listaPuntosDePaso = new ObservableCollection<TablaBaseCaminos>(miLista);                
+            }
+            */
+
+            //_xx_esVisible  back_listaPuntosDePaso = new ObservableCollection<TablaBaseCaminos>(miLista);
+
+            //_xx_esVisible  siguienteNodo = back_listaPuntosDePaso[0].nombrePoblacion; // Lo inicializamos con el nombre de la primera población.
+
+            siguienteNodo = miLista[0].nombrePoblacion; // Lo inicializamos con el nombre de la primera población.
 
             Console.WriteLine("DEBUG - MiCamino - MasajearLista() entrar  El primer nodo será siguienteNodo:{0}", siguienteNodo);
 
             // Lista que contendrá los nodos que habrá que eliminar de "listaPuntosDePaso" para no mostrarlos en la ListView:
             List<TablaBaseCaminos> borrar = new List<TablaBaseCaminos>();
 
-
-            //Global.SetBifurcaciones(ref bifurcaciones, listadoBifurcaciones);
-
             double acumuladoEtapa = 0;
 
-            foreach (var item in back_listaPuntosDePaso)
+            //_xx_esVisible  foreach (var item in back_listaPuntosDePaso)
+            foreach (var item in miLista)
             {
                 var dataItem = (TablaBaseCaminos)item;
 
@@ -527,11 +592,13 @@ namespace YPA.ViewModels
                     }
 
 
-                    if (dataItem.esEtapa) // || dataItem.nodosSiguientes == "FIN_CAMINO")
+                    if (dataItem.esEtapa > 0) // || dataItem.nodosSiguientes == "FIN_CAMINO")
                     {
                         //_xx_ETAPAS:
                         //numEtapas++; // Lo comento y utilizo numEtapasLocal para que no se esté actualizando continuamente la información el "resumen" en la UI (User Interface)
                         numEtapasLocal++;
+                        numDiasLocal += dataItem.esEtapa;
+
                         if (esPrimeraEtapa)
                         {
                             dataItem.acumuladoEtapa = 0;
@@ -566,11 +633,13 @@ namespace YPA.ViewModels
             //Ahora relleno el campo "distanciaAlFinal" que es el que dice los kms que restan hasta el final:
             distanciaTotal = acumulado;
             numEtapas = numEtapasLocal;
-            //_xx_ETAPAS distanciaTotalMiCamino = numEtapas == 0 ? 0 : distanciaTotal - distanciaAlInicioPrimeraEtapa;
-            //_xx_ distanciaTotalMiCamino = NumEtapas() == 0 ? 0 : distanciaTotal - distanciaAlInicioPrimeraEtapa;
+
             distanciaTotalMiCamino = NumEtapas() == 0 ? 0 : distanciaAlInicioUltimaEtapa - distanciaAlInicioPrimeraEtapa;
 
-            foreach (var item in back_listaPuntosDePaso)
+            numDias = numDiasLocal;
+
+            //_xx_esVisible  foreach (var item in back_listaPuntosDePaso)
+            foreach (var item in miLista)
             {
                 var dataItem = (TablaBaseCaminos)item;
                 if (dataItem.esVisible == true)
@@ -579,6 +648,18 @@ namespace YPA.ViewModels
 
                 }
             }
+
+
+            //_xx_esVisible  Esto es ahora nuevo: (lo he movido aquí)
+            if (primerNodoEtapa != null && ultimoNodoEtapa != null)
+            {
+                int numNodos = indiceFinal - indiceInicial + 1;
+                TablaBaseCaminos[] array = new TablaBaseCaminos[numNodos];
+                miLista.CopyTo(indiceInicial, array, 0, numNodos);
+                List<TablaBaseCaminos> listaNodosDeEtapa = new List<TablaBaseCaminos>(array);
+                back_listaPuntosDePaso = new ObservableCollection<TablaBaseCaminos>(listaNodosDeEtapa);
+            } else
+                back_listaPuntosDePaso = new ObservableCollection<TablaBaseCaminos>(miLista);
 
 
             Console.WriteLine("DEBUG - MiCamino - MasajearLista: Número de nodos en back_listaPuntosDePaso:{0}", back_listaPuntosDePaso.Count);
@@ -591,28 +672,20 @@ namespace YPA.ViewModels
 
             Console.WriteLine("DEBUG - MiCamino - MasajearLista: Número de nodos final en back_listaPuntosDePaso:{0}", back_listaPuntosDePaso.Count);
 
-            /*
-            int i = 0;
-            foreach (var b in back_listaPuntosDePaso)
-            {
-                Console.WriteLine("DEBUG - MiCamino - MasajearLista: i: {0}  id: {1}  nombre: {2}  tieneAlbergue: {3}",
-                    i++, b.id, b.nombrePoblacion, b.tieneAlbergue);
-            }
-            */
 
             return back_listaPuntosDePaso;
         }
 
 
 
-        public void ExecuteCheckPulsado(string id)
+        public void ExecuteCheckPulsado(int id)
         {
             Console.WriteLine("DEBUG - MiCamino - ExecuteCheckPulsado({0})", id);
 
             int indice;
-            int id2int = int.Parse(id, Global.culture);
-
-            TablaBaseCaminos buscar = new TablaBaseCaminos(id2int);
+            //int id2int = int.Parse(id, Global.culture);
+            //TablaBaseCaminos buscar = new TablaBaseCaminos(id2int);
+            TablaBaseCaminos buscar = new TablaBaseCaminos(id);
 
             indice = miLista.IndexOf(buscar);
 
@@ -635,12 +708,15 @@ namespace YPA.ViewModels
             double incrementoKmsMiCamino = 0;
             bool etapaAnadidaEnLosExtremos = false;
 
-            if (item.esEtapa == false) // Se marca como etapa:
+            if (item.esEtapa == 0) // Se marca como etapa:
             {
                 Console.WriteLine("DEBUG - MiCamino - ExecuteCheckPulsado() esEtapa estaba a FALSE. indice:{0}", indice);
-                item.esEtapa = true;
+                item.esEtapa++;
                 if (item.esVisible)
+                {
                     numEtapas++;
+                    numDias++;
+                }
                 // Ahora calculamos el valor del kilometraje de la etapa.
                 if (indice == 0) // Hay que tratar el caso especial de que se haya marcado como etapa la primera de las poblaciones del camino:
                 {
@@ -651,7 +727,7 @@ namespace YPA.ViewModels
                 {
                     for (int i = indice - 1; i >= 0; i--)
                     {
-                        if (miLista[i].esEtapa == true)
+                        if (miLista[i].esEtapa > 0)
                         {
                             item.acumuladoEtapa = item.acumulado - miLista[i].acumulado;
                             Console.WriteLine("DEBUG - MiCamino - ExecuteCheckPulsado() Localizado inferior i:{0}  acumuladoEtapa:{1}  restamos:{2}",
@@ -679,7 +755,7 @@ namespace YPA.ViewModels
                 {
                     for (int i = indice + 1; i < max; i++)
                     {
-                        if (miLista[i].esEtapa == true) // || listaPuntosDePaso[i].nodosSiguientes == "FIN_CAMINO")
+                        if (miLista[i].esEtapa > 0) // || listaPuntosDePaso[i].nodosSiguientes == "FIN_CAMINO")
                         {
                             //listaPuntosDePaso[i].acumuladoEtapa = listaPuntosDePaso[i].acumuladoEtapa - item.acumuladoEtapa;
                             miLista[i].acumuladoEtapa = miLista[i].acumulado - item.acumulado;
@@ -705,9 +781,12 @@ namespace YPA.ViewModels
             else // Se desmarca esa etapa:
             {
                 Console.WriteLine("DEBUG - MiCamino - ExecuteCheckPulsado() esEtapa estaba a TRUE. La ponemos a false");
-                item.esEtapa = false;
+                item.esEtapa = 0; //_xx_ETAPAS: Se ponía a false. Ahora creo que basta con ponerla a 0 (Lo digo porque igual había que decrementar pero es que si no es etapa, pues no es etapa y punto).
                 if (item.esVisible)
+                {
                     numEtapas--;
+                    numDias--;
+                }
                 // Ahora recalculamos el valor del kilometraje de la siguiente etapa:            
 
                 // Primero miramos si la población actual era la primera etapa marcada:
@@ -729,7 +808,7 @@ namespace YPA.ViewModels
                 {
                     for (int i = indice + 1; i < max; i++)
                     {
-                        if (miLista[i].esEtapa == true)
+                        if (miLista[i].esEtapa > 0)
                         {
                             if (eraPrimeraEtapa)
                             {
