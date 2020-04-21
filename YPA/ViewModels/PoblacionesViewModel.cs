@@ -93,15 +93,7 @@ namespace YPA.ViewModels
         {
             //throw new NotImplementedException();
             var navigationMode = parameters.GetNavigationMode();
-            Console.WriteLine("DEBUG2 - PoblacionesVM - OnNavigatedTo()  navigationMode:{0}", navigationMode);
-            
-            /* Esto que viene ya no lo hago porque he conseguido que al cambiar algún campo de TablaALOJAMIENTOS, el UI se entere y actualice el valor:
-            if (navigationMode == NavigationMode.Back)
-            {
-                Console.WriteLine("DEBUG2 - PoblacionesVM - OnNavigatedTo() Vamos a recargar el listaPoblaciones...");
-                CargarPoblacionesAsync();
-            }
-            */
+            Console.WriteLine("DEBUG2 - PoblacionesVM - OnNavigatedTo()  navigationMode:{0}", navigationMode);                        
             
             string poblacion = parameters.GetValue<string>("poblacion");
             Console.WriteLine("DEBUG2 - PoblacionesVM - OnNavigatedTo(poblacion:{0})", poblacion);

@@ -16,15 +16,6 @@ namespace YPA.Views.DataTemplates
         {
             InitializeComponent();
         }
-        /*
-        public void TappedVerAlbergues(object sender, EventArgs e)
-        {
-            string pob = ((Label)sender).Text;
-            string idPob = id.Text;
-            Console.WriteLine("DEBUG - TappedVerAlbergues  idPob:{0}", idPob);
-            Console.WriteLine("DEBUG - TappedVerAlbergues  pob:{0}", pob);
-            ((YPA.App)(App.Current)).IrA("NavigationPage/Ver?listado=albergues&idPoblacion=" + idPob);
-        }
-        */
+        
     }
 }

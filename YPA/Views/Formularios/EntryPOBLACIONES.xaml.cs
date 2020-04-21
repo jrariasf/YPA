@@ -15,24 +15,6 @@ namespace YPA.Views.Formularios
             InitializeComponent();
             Console.WriteLine("DEBUG - EntryPOBLACIONES() salir...");
         }
-
-        /* Las hemos pasado al ViewModel:
-        async void OnSaveButtonClicked(object sender, EventArgs e)
-        {
-            Console.WriteLine("DEBUG - OnSaveButtonClicked()");
-            var note = (TablaPOBLACIONES)BindingContext;
-            note.fecUltMod = DateTime.UtcNow;
-            await App.Database.SavePoblacionesAsync(note);
-            await Navigation.PopAsync();
-        }
-
-        async void OnDeleteButtonClicked(object sender, EventArgs e)
-        {
-            Console.WriteLine("DEBUG - OnDeleteButtonClicked()");
-            var note = (TablaPOBLACIONES)BindingContext;
-            await App.Database.DeletePoblacionesAsync(note);
-            await Navigation.PopAsync();
-        }
-        */
+       
     }
 }

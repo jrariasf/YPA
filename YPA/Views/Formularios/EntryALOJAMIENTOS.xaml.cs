@@ -9,18 +9,7 @@ namespace YPA.Views.Formularios
 {
     [XamlCompilation(XamlCompilationOptions.Compile)]
     public partial class EntryALOJAMIENTOS : ContentPage
-    {
-        /*
-        public IList<string> listadoPoblaciones
-        {
-            get
-            {
-                return typeof(Color).GetRuntimeFields()
-                                    .Where(f => f.IsPublic && f.IsStatic)
-                                    .Select(f => f.Name).ToList();
-            }
-        }
-        */
+    {       
         public EntryALOJAMIENTOS()
         {
             InitializeComponent();

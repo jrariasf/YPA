@@ -78,33 +78,7 @@ namespace YPA.Dialogs
         {
             Console.WriteLine("DEBUG - MenuMisEtapasVM - ExecuteInsertarDiaAlInicio  etapa <{0}>  listaEtapas <{1}>",
                               etapa == null ? "NULL" : etapa.poblacion_inicio_etapa,
-                              listaSTR_Etapas == null ? "NULL" : listaSTR_Etapas);
-            /*
-            string listaEtapasNEW;
-            string buscar = Global.separador[0] + etapa.poblacion_inicio_etapa + Global.separador[0];
-            int posicion;
-            posicion = listaSTR_Etapas.IndexOf(buscar, 0);
-            if (posicion == 0)
-                listaEtapasNEW = buscar + listaSTR_Etapas;
-            else if (posicion > 0)
-            {
-                listaEtapasNEW = listaSTR_Etapas.Substring(0, posicion + 1);
-                listaEtapasNEW += buscar;
-                listaEtapasNEW += listaSTR_Etapas.Substring(posicion);
-            }
-            else // Es -1
-            {
-                Console.WriteLine("ERROR - MenuMisEtapasVM - ExecuteInsertarDiaAlInicio  No se ha localizado <{0}> en <{1}>",
-                       buscar, listaSTR_Etapas);
-                listaEtapasNEW = listaSTR_Etapas;
-            }
-
-            //listaSTR_Etapas = listaSTR_Etapas + "Deseiro;Aldrei;";
-            DialogParameters param = new DialogParameters();
-            param.Add("listaEtapas", listaEtapasNEW);
-
-            RequestClose(param);
-            */
+                              listaSTR_Etapas == null ? "NULL" : listaSTR_Etapas);           
 
             // Buscamos el ";" localizado en la posición indicada por etapa.orden:
             string listaEtapasNEW;
@@ -154,33 +128,7 @@ namespace YPA.Dialogs
         {
             Console.WriteLine("DEBUG - MenuMisEtapasVM - ExecuteInsertarDiaAlFinal  etapa <{0}>  listaEtapas <{1}>",
                               etapa == null ? "NULL" : etapa.poblacion_inicio_etapa,
-                              listaSTR_Etapas == null ? "NULL" : listaSTR_Etapas);
-            /*
-            string listaEtapasNEW;
-            string buscar = Global.separador[0] + etapa.poblacion_fin_etapa + Global.separador[0];
-            int posicion;
-            posicion = listaSTR_Etapas.IndexOf(buscar, 0);
-            if (posicion == 0)
-                listaEtapasNEW = buscar + listaSTR_Etapas;
-            else if (posicion > 0)
-            {
-                listaEtapasNEW = listaSTR_Etapas.Substring(0, posicion + 1);
-                listaEtapasNEW += buscar;
-                listaEtapasNEW += listaSTR_Etapas.Substring(posicion);
-            }
-            else // Es -1
-            {
-                Console.WriteLine("ERROR - MenuMisEtapasVM - ExecuteInsertarDiaAlFinal  No se ha localizado <{0}> en <{1}>",
-                       buscar, listaSTR_Etapas);
-                listaEtapasNEW = listaSTR_Etapas;
-            }
-
-            //listaSTR_Etapas = listaSTR_Etapas + "Deseiro;Aldrei;";
-            DialogParameters param = new DialogParameters();
-            param.Add("listaEtapas", listaEtapasNEW);
-
-            RequestClose(param);
-            */
+                              listaSTR_Etapas == null ? "NULL" : listaSTR_Etapas);            
 
             // Buscamos el ";" localizado en la posición indicada por etapa.orden:
             string listaEtapasNEW;
@@ -229,33 +177,7 @@ namespace YPA.Dialogs
             Console.WriteLine("DEBUG - MenuMisEtapasVM - ExecuteUnirEtapas  etapa ({0}, <{1}>)  listaEtapas <{2}>",
                               etapa == null ? -1 : etapa.orden,
                               etapa == null ? "NULL" : etapa.poblacion_inicio_etapa,
-                              listaSTR_Etapas == null ? "NULL" : listaSTR_Etapas);
-            /*
-            string listaEtapasNEW;
-            string buscar = Global.separador[0] + etapa.poblacion_inicio_etapa + Global.separador[0];
-            int posicion;
-            posicion = listaSTR_Etapas.IndexOf(buscar, 0);
-            if (posicion == 0)
-                listaEtapasNEW = buscar + listaSTR_Etapas;
-            else if (posicion > 0)
-            {
-                listaEtapasNEW = listaSTR_Etapas.Substring(0, posicion + 1);
-                listaEtapasNEW += buscar;
-                listaEtapasNEW += listaSTR_Etapas.Substring(posicion);
-            }
-            else // Es -1
-            {
-                Console.WriteLine("ERROR - MenuMisEtapasVM - ExecuteUnirEtapas  No se ha localizado <{0}> en <{1}>",
-                       buscar, listaSTR_Etapas);
-                listaEtapasNEW = listaSTR_Etapas;
-            }
-
-            //listaSTR_Etapas = listaSTR_Etapas + "Deseiro;Aldrei;";
-            DialogParameters param = new DialogParameters();
-            param.Add("listaEtapas", listaEtapasNEW);
-
-            RequestClose(param);
-            */
+                              listaSTR_Etapas == null ? "NULL" : listaSTR_Etapas);           
 
             // Buscamos el ";" localizado en la posición indicada por etapa.orden:
             string listaEtapasNEW;

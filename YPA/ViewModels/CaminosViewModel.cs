@@ -38,16 +38,6 @@ namespace YPA.ViewModels
             }
         }
 
-        /*
-        private string _miTexto;
-        public string miTexto
-        {
-            get { return _miTexto; }
-            set { SetProperty(ref _miTexto, value); }
-        }
-        */
-
-
         private DelegateCommand<string> _AddCaminoClicked;
         public DelegateCommand<string> AddCaminoClicked =>
             _AddCaminoClicked ?? (_AddCaminoClicked = new DelegateCommand<string>(ExecuteAddCaminoClicked));

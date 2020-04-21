@@ -9,7 +9,7 @@
 
     <ContentPage.ToolbarItems>
         <!-- <ToolbarItem Text="+"  Clicked="OnNoteAddedClicked" CommandParameter="prueba" /> -->
-        <ToolbarItem Text="GUARDAR"  Command="{Binding GuardarCamino,FallbackValue=Funcion no definida}"
+        <ToolbarItem Text="GUARDAR"  IconImageSource="ic_grabar.png" Command="{Binding GuardarCamino,FallbackValue=Funcion no definida}"
                                CommandParameter="NO ESTA CONFIGURADO!!!!!" />
     </ContentPage.ToolbarItems>
 

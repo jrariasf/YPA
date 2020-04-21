@@ -107,16 +107,7 @@ namespace YPA.ViewModels
                               miCamino.fechaInicio == null ? "NULL" : miCamino.fechaInicio);
             Console.WriteLine("DEBUG - VerCaminoVM - ExecuteGuardarCamino() bifurcaciones:{0}", listadoBifurcaciones);
             Console.WriteLine("DEBUG - VerCaminoVM - ExecuteGuardarCamino() etapas:{0}", listadoEtapas);
-            /*
-            Console.WriteLine("DEBUG - VerCaminoVM - ExecuteGuardarCamino() backupEtapas:{0}",
-                              miCamino.backupEtapas == null ? "NULL" : miCamino.backupEtapas);
-
-            if (miCamino.backupEtapas != null)
-            {
-                Console.WriteLine("DEBUG3 - VerCaminoVM - ExecuteGuardarCamino() USAMOS backupEtapas !!!! ######");
-                listadoEtapas = miCamino.backupEtapas;
-            }
-            */
+            
 
             TablaMisCaminos tmc = new TablaMisCaminos(miCamino.miNombreCamino, miCamino.descripcion, miCamino.caminoActual,
                                                       miCamino.fechaInicio, listadoBifurcaciones, listadoEtapas);
@@ -140,8 +131,6 @@ namespace YPA.ViewModels
 
             p.Add("message", "Listado de etapas:");
             p.Add("miCamino", miCamino);
-            //p.Add("lista", miCamino.miLista); //_xx_
-            //p.Add("fechaInicio", miCamino.fechaInicio);
             p.Add("resumen", resumen); // Es una cadena con el número de etapas y los kilómetros totales
 
             _dialogService.ShowDialog("DialogoMiCamino", p);
@@ -355,12 +344,7 @@ namespace YPA.ViewModels
             culture = new CultureInfo("en-US");
 
             DateTime hoy = System.DateTime.Today;
-            /*
-            DateTime mañana;
-            TimeSpan ts = new TimeSpan(1, 0, 0, 0);
-            mañana = hoy + ts;
-            fechaInicio = mañana.ToString("yyyy-MM-dd");
-            */
+
             mostrarCabecera = true;
 
             miCamino = new MiCamino();

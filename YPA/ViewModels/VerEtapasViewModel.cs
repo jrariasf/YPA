@@ -167,14 +167,6 @@ namespace YPA.ViewModels
 
             Console.WriteLine("DEBUG2 - VerEtapasVM - OnNavigatedTo");
 
-            /*
-            if (navigationMode == NavigationMode.Back)
-            {
-                Console.WriteLine("DEBUG2 - VerEtapasVM - OnNavigatedTo: Como estamos en BACK, retornamos sin masajear la lista");
-                return;
-            }
-            */
-
             if (navigationMode == NavigationMode.New)  // Esto solamente lo hacemos si llegamos de nuevas (no al volver hacia atrás):
             {
                 miCamino = new MiCamino();

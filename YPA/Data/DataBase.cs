@@ -140,23 +140,21 @@ namespace YPA.Data
             return _database.QueryAsync<TablaPOBLACIONES>(comando, poblacion);
 
         }
-        public Task<int> SavePoblacionesAsync(TablaPOBLACIONES note)
-        {
-            //if (note.NombrePoblacion != null && note.NombrePoblacion != "" && note.NombrePoblacion.Length > 0)
-            /*
+        public async Task<int> SavePoblacionesAsync(TablaPOBLACIONES note)
+        {           
             if (note == null)
             {
                 Console.WriteLine("DEBUG - SavePoblacionesAsync(null)  retornamos -1");
-                return; 
+                return -1; 
             }
-            */
+            
             if (note.id != 0)
             {
-                return _database.UpdateAsync(note);
+                return await _database.UpdateAsync(note);
             }
             else
             {
-                return _database.InsertAsync(note);
+                return await _database.InsertAsync(note);
             }
         }
 

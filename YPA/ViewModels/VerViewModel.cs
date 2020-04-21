@@ -124,11 +124,6 @@ namespace YPA.ViewModels
 #endif
 
 
-            /*
-            int entero = 0;
-            if (parameter.HasValue)
-                entero = parameter.Value;
-            */
             idPoblacionActual = parameter == null ? (SelectedPoblacion == null ? idPoblacionActual : SelectedPoblacion.idPoblacion) : parameter.idPoblacion;
             List<TablaALOJAMIENTOS> miLista = App.Database.GetAlojamientosByIdPoblacion(idPoblacionActual);
             listaAlojamientos = new ObservableCollection<TablaALOJAMIENTOS>(miLista);
@@ -230,26 +225,6 @@ namespace YPA.ViewModels
         //async IEnumerable<int> EjecutaQueryAsync(string query)
         async void CargarPoblacionesConAlojamientoQueryAsync()
         {
-            /*
-            string query = "select distinct(idPoblacion) from TablaALOJAMIENTOS"; 
-            List<RespPoblaciones> miLista = await App.Database._database.QueryAsync<RespPoblaciones>(query);
-            
-            foreach (RespPoblaciones reg in miLista)
-            {
-                poblacionesConAlojamiento.Add(reg.idPoblacion.ToString());
-            }
-            */
-
-            // Para el Picker que contiene el listado de poblaciones con albergue:
-            /*
-            poblacionesConAlojamiento = new ObservableCollection<RespPoblaciones>();
-            poblacionesConAlojamiento.Add("1");
-            poblacionesConAlojamiento.Add("37");
-            poblacionesConAlojamiento.Add("66");
-            poblacionesConAlojamiento.Add("100");
-            poblacionesConAlojamiento.Add("300");
-            */
-
             string query = "select distinct(idPoblacion), nombrePoblacion from TablaALOJAMIENTOS INNER JOIN TablaPOBLACIONES ON TablaPOBLACIONES.id = TablaALOJAMIENTOS.idPoblacion";
             List<RespPoblaciones> miLista = await App.Database._database.QueryAsync<RespPoblaciones>(query);
             poblacionesConAlojamiento = new ObservableCollection<RespPoblaciones>(miLista);

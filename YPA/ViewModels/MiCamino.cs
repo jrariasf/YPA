@@ -218,12 +218,6 @@ namespace YPA.ViewModels
             //string[] etapas = listado.Split(VerCaminoViewModel.separador);
             foreach (var item in miLista)
             {
-                /*
-                if (listadoEtapas.Contains(item.nombrePoblacion + ";"))
-                    item.esEtapa = 1;
-                else
-                    item.esEtapa = 0;
-                */
                 int posicion = 0;
                 item.esEtapa = 0;
                 string buscar = Global.separador[0] + item.nombrePoblacion + Global.separador[0];
@@ -440,35 +434,8 @@ namespace YPA.ViewModels
                 Console.WriteLine("DEBUG - MiCamino - RellenarLista   sindiceInicial:{0}   indiceFinal:{1}", indiceInicial, indiceFinal);
 
                 miLista[indiceInicial].checkboxEnabled = false;
-                miLista[indiceFinal].checkboxEnabled = false;
-
-                /* _xx_esVisible
-                int numNodos = indiceFinal - indiceInicial + 1;
-                TablaBaseCaminos[] array = new TablaBaseCaminos[numNodos];
-                miLista.CopyTo(indiceInicial, array, 0, numNodos);
-                List<TablaBaseCaminos> listaNodosDeEtapa = new List<TablaBaseCaminos>(array);
-                back_listaPuntosDePaso = new ObservableCollection<TablaBaseCaminos>(listaNodosDeEtapa);
-                */
-
-                /*
-                if (indiceFinal < miLista.Count)
-                    miLista.RemoveRange(indiceFinal + 1, miLista.Count - indiceFinal - 1);
-                if (indiceInicial > 0)
-                    miLista.RemoveRange(0, indiceInicial);
-
-                Console.WriteLine("DEBUG - MiCamino - RellenarLista  Despues de RemoveRange miLista.Count:{0}", miLista.Count);
-                */
-            }
-            /*_xx_esVisible
-            else
-            {
-                back_listaPuntosDePaso = new ObservableCollection<TablaBaseCaminos>(miLista);                
-            }
-            */
-
-            //_xx_esVisible  back_listaPuntosDePaso = new ObservableCollection<TablaBaseCaminos>(miLista);
-
-            //_xx_esVisible  siguienteNodo = back_listaPuntosDePaso[0].nombrePoblacion; // Lo inicializamos con el nombre de la primera población.
+                miLista[indiceFinal].checkboxEnabled = false;               
+            }            
 
             siguienteNodo = miLista[0].nombrePoblacion; // Lo inicializamos con el nombre de la primera población.
 
@@ -835,7 +802,7 @@ namespace YPA.ViewModels
                             listaPuntosDePaso[max - 1].acumuladoEtapa = listaPuntosDePaso[max - 1].acumulado - item.acumulado;
                         */
                     }
-                    //item.acumuladoEtapa = 0;
+                   
                 }
                 item.acumuladoEtapa = 0;
             }            

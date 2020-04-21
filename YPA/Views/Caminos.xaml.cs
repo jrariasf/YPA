@@ -28,8 +28,7 @@ namespace YPA.Views
 
             listView.ItemsSource = await App.Database.GetCaminosAsync();
         }
-        */
-/*        
+       
         async void OnNoteAddedClicked(object sender, EventArgs e)
         {
             Console.WriteLine("Caminos.xaml.cs:OnNoteAddedClicked");
@@ -51,8 +50,7 @@ namespace YPA.Views
                 });
             }
         }
-*/
-        /*
+
         private void OnVerEtapasButtonClicked(object sender, EventArgs e)        
         {
             // Aquí tengo que ver la forma de mostrar en pantalla todas las etapas de ese camino elegido.
@@ -60,8 +58,7 @@ namespace YPA.Views
             Console.WriteLine("DEBUG - {0}", "Estamos en OnVerEtapasButtonClicked");
           
         }
-        */
-        /*
+        
         async private void OnVerEtapasCamino(object sender, EventArgs e)
         {
             Console.WriteLine("DEBUG - Estamos en Caminos:OnVerEtapasCamino");

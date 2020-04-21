@@ -101,58 +101,10 @@ namespace YPA.Dialogs
 
             Message = parameters.GetValue<string>("message") + "  " + resumen;
 
-            /*
-            List<TablaBaseCaminos> miLista = parameters.GetValue<List<TablaBaseCaminos>>("lista");
-            String fechaInicio = parameters.GetValue<string>("fechaInicio");
-            */
             MiCamino miCamino = parameters.GetValue<MiCamino>("miCamino");
 
             etapas = "";
             alturaLabel = 15;
-
-            /*
-            if (fechaInicio == null)
-                fechaInicio = System.DateTime.Today.ToString("yyyy-MM-dd");
-
-            var fecha = DateTime.Parse(fechaInicio);
-            TimeSpan ts = new TimeSpan(1, 0, 0, 0);
-
-            listaEtapas = new ObservableCollection<Etapa>();            
-
-            if (miLista == null)
-            {
-                Console.WriteLine("DEBUG - DialogoMiCaminoVM - OnDialogOpened   miLista es null");
-                etapas = "No se ha recibido ninguna lista de etapas.";                
-            }
-            else
-            {
-                String[] diaDeLaSemana = new String[]{ "Domingo", "Lunes", "Martes", "Miércoles", "Jueves", "Viernes", "Sábado" };
-                bool esPrimeraEtapa = true;
-                string poblacion_INI = "";
-                int orden = 0;
-               
-                foreach (var item in miLista)
-                {
-                    if (item.esEtapa > 0 && item.esVisible)
-                    {
-                        if (esPrimeraEtapa)
-                        {
-                            esPrimeraEtapa = false;
-                            poblacion_INI = item.nombrePoblacion; // Guarda la población inicio de etapa.
-                            continue;
-                        }
-                        string dia = fecha.ToString("dd-MM-yy") + " (" + diaDeLaSemana[(int)fecha.DayOfWeek].Substring(0,3) + ")";
-
-                        //Etapa etapa = new Etapa(dia, poblacion_INI, item.nombrePoblacion, String.Format("{0:0.0}", item.acumuladoEtapa) + " km");
-                        Etapa etapa = new Etapa(orden++, dia, poblacion_INI, item.nombrePoblacion, item.acumuladoEtapa);
-                        listaEtapas.Add(etapa);
-
-                        poblacion_INI = item.nombrePoblacion; // Guarda la población inicio de etapa para la próxima.
-                        fecha = fecha + ts;
-                    }
-                }
-            }
-            */
 
             listaEtapas = miCamino.DameListaEtapas();
 
