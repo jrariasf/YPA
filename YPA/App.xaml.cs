@@ -7,6 +7,7 @@ using Xamarin.Forms.Xaml;
 using System;
 using YPA.Data;
 using System.IO;
+using System.Reflection;
 
 [assembly: XamlCompilation(XamlCompilationOptions.Compile)]
 namespace YPA
@@ -80,6 +81,27 @@ namespace YPA
 
             containerRegistry.RegisterForNavigation<MisCaminos, MisCaminosViewModel>();
             containerRegistry.RegisterForNavigation<VerEtapas, VerEtapasViewModel>();
+        }
+    }
+
+    [ContentProperty(nameof(Source))]
+    public class ImageResourceExtension : IMarkupExtension
+    {
+        public string Source { get; set; }
+
+        public object ProvideValue(IServiceProvider serviceProvider)
+        {
+            Console.WriteLine("DEBUG - ImageResourceExtension - ProvideValue  Source <{0}>", Source == null ? "NULL" : Source);
+
+            if (Source == null)
+            {
+                return null;
+            }
+
+            // Do your translation lookup here, using whatever method you require
+            var imageSource = ImageSource.FromResource(Source, typeof(ImageResourceExtension).GetTypeInfo().Assembly);
+
+            return imageSource;
         }
     }
 }

@@ -15,14 +15,6 @@
                 <Button Text="Mis Caminos" Command="{Binding NavigateCommand}" CommandParameter="NavigationPage/MisCaminos" />
                 <Button Text="Ver" Command="{Binding NavigateCommand}" CommandParameter="NavigationPage/Ver" />
                 
-                <!--
-                <Button Text="Prueba-1" Command="{Binding NavigateCommand}" CommandParameter="NavigationPage/PruebaUno" />
-                <Button Text="Prueba-2" Command="{Binding NavigateCommand}" CommandParameter="NavigationPage/Formulario.PruebaUno" />
-                <Button Text="Prueba-3" Command="{Binding NavigateCommand}" CommandParameter="NavigationPage/Views.Formulario.PruebaUno" />
-                <Button Text="Prueba-4" Command="{Binding NavigateCommand}" CommandParameter="NavigationPage/EntryPOBLACIONES" />
-                <Button Text="Prueba-5" Command="{Binding NavigateCommand}" CommandParameter="NavigationPage/Formulario.EntryPOBLACIONES" />
-                <Button Text="Prueba-6" Command="{Binding NavigateCommand}" CommandParameter="NavigationPage/Views.Formularios.EntryPOBLACIONES" />
-                -->
                 
             </StackLayout>
         </ContentPage>

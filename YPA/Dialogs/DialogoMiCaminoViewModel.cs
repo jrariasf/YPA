@@ -5,6 +5,7 @@ using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.ComponentModel;
+using System.Reflection;
 using System.Linq;
 using YPA.Models;
 using YPA.ViewModels;
@@ -76,6 +77,14 @@ namespace YPA.Dialogs
         {
             Console.WriteLine("DEBUG - DialogoMiCaminoVM - ExecutePrintCommand NumEtapas: {0}   Message: {1}",
                 listaEtapas == null ? 0 : listaEtapas.Count, Message == null ? "null" : Message);
+
+            Console.WriteLine("DEBUG - DialogoMiCaminoVM - ExecutePrintCommand  appName <{0}>   packageName <{1}> ", Global.appName, Global.packageName);
+
+            var assembly = typeof(ImageResourceExtension).GetTypeInfo().Assembly;
+            foreach (var res in assembly.GetManifestResourceNames())
+            {
+                Console.WriteLine("DEBUG - DialogoMiCaminoVM - ExecutePrintCommand  found resource: " + res);
+            }
 
         }
 

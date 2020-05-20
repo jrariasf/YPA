@@ -58,7 +58,9 @@ namespace YPA.ViewModels
         public DelegateCommand<Etapa> ItemTappedCommand =>
             _ItemTappedCommand ?? (_ItemTappedCommand = new DelegateCommand<Etapa>(ExecuteItemTappedCommand));
 
+#pragma warning disable CS1998 // El método asincrónico carece de operadores "await" y se ejecutará de forma sincrónica. Puede usar el operador 'await' para esperar llamadas API que no sean de bloqueo o 'await Task.Run(...)' para hacer tareas enlazadas a la CPU en un subproceso en segundo plano.
         async void ExecuteItemTappedCommand(Etapa etapa)
+#pragma warning restore CS1998 // El método asincrónico carece de operadores "await" y se ejecutará de forma sincrónica. Puede usar el operador 'await' para esperar llamadas API que no sean de bloqueo o 'await Task.Run(...)' para hacer tareas enlazadas a la CPU en un subproceso en segundo plano.
         {
             Console.WriteLine("DEBUG2 - VerEtapasVM - ExecuteItemTappedCommand  etapa:{0}", etapa);
             var navigationParams = new NavigationParameters();
@@ -70,7 +72,9 @@ namespace YPA.ViewModels
             navigationParams.Add("primerNodoEtapa", etapa.poblacion_inicio_etapa);
             navigationParams.Add("ultimoNodoEtapa", etapa.poblacion_fin_etapa);
             Console.WriteLine("DEBUG - VerEtapasVM - ExecuteItemTappedCommand  parámetros:{0}", navigationParams.ToString());
+#pragma warning disable CS4014 // Como esta llamada no es 'awaited', la ejecución del método actual continuará antes de que se complete la llamada. Puede aplicar el operador 'await' al resultado de la llamada.
             _navigationService.NavigateAsync("VerCamino", navigationParams);
+#pragma warning restore CS4014 // Como esta llamada no es 'awaited', la ejecución del método actual continuará antes de que se complete la llamada. Puede aplicar el operador 'await' al resultado de la llamada.
 
         }
 

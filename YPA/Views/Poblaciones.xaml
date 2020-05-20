@@ -5,13 +5,15 @@
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
              xmlns:prism="http://prismlibrary.com"
              prism:ViewModelLocator.AutowireViewModel="True"
-             xmlns:local="clr-namespace:YPA.Views.DataTemplates"
+             xmlns:local="clr-namespace:YPA.Views.DataTemplates"             
              mc:Ignorable="d"
              x:Class="YPA.Views.Poblaciones"
              Title="Poblaciones">
+
     
     <ContentPage.ToolbarItems>
-        <ToolbarItem Text="+"  Command="{Binding AddPoblacionClicked}"
+        <ToolbarItem Text="+"  IconImageSource="Images.add_box_24px"
+                               Command="{Binding AddPoblacionClicked}"
                                CommandParameter="toma mi parámetro" />
     </ContentPage.ToolbarItems>
 

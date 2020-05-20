@@ -4,9 +4,14 @@
              xmlns:d="http://xamarin.com/schemas/2014/forms/design"
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
              xmlns:viewModels="clr-namespace:YPA.ViewModels"
+             xmlns:extensions="clr-namespace:YPA;assembly=YPA"
+             xmlns:converter="clr-namespace:YPA.ViewModels"
              mc:Ignorable="d"
              x:Class="YPA.Views.DataTemplates.CellPoblacion" >
+
+
     <ViewCell.View>
+
         <StackLayout Orientation="Vertical" BackgroundColor="#F5FF0D" Margin="0" Padding="0" Spacing="0" VerticalOptions="Fill">
 
             <StackLayout Orientation="Horizontal" Padding="0" Margin="10,0,0,0">
@@ -59,6 +64,32 @@
                     <ColumnDefinition Width="*" />
                     <ColumnDefinition Width="*" />
                 </Grid.ColumnDefinitions>
+
+                <Grid.Resources>
+                    <ResourceDictionary>
+                        <converter:DameImageSourceConverter x:Key="dameImageSourceConverter" />
+                    </ResourceDictionary>
+                </Grid.Resources>
+
+
+
+                <Image Source="{Binding albergueMunicipal, Converter={StaticResource dameImageSourceConverter}, ConverterParameter=ic_albergueMunicipal}" Grid.Column="0" />
+                <Image Source="{Binding albergueParroquial, Converter={StaticResource dameImageSourceConverter}, ConverterParameter=ic_albergueParroquial}" Grid.Column="1" />
+                <Image Source="{Binding alberguePrivado, Converter={StaticResource dameImageSourceConverter}, ConverterParameter=ic_alberguePrivado}" Grid.Column="2" />
+                <Image Source="{Binding restaurante, Converter={StaticResource dameImageSourceConverter}, ConverterParameter=ic_restaurante}" Grid.Column="3" />
+                <Image Source="{Binding cafeteria, Converter={StaticResource dameImageSourceConverter}, ConverterParameter=ic_cafeteria}" Grid.Column="4" />
+                <Image Source="{Binding tienda, Converter={StaticResource dameImageSourceConverter}, ConverterParameter=ic_tienda}" Grid.Column="5" />
+                <Image Source="{Binding cajero, Converter={StaticResource dameImageSourceConverter}, ConverterParameter=ic_cajero}" Grid.Column="6" />
+                <Image Source="{Binding fuente, Converter={StaticResource dameImageSourceConverter}, ConverterParameter=ic_fuente}" Grid.Column="7" />
+                <Image Source="{Binding farmacia, Converter={StaticResource dameImageSourceConverter}, ConverterParameter=ic_farmacia}" Grid.Column="8" />
+                <Image Source="{Binding hospital, Converter={StaticResource dameImageSourceConverter}, ConverterParameter=ic_hospital}" Grid.Column="9" />
+                <Image Source="{Binding bus, Converter={StaticResource dameImageSourceConverter}, ConverterParameter=ic_bus}" Grid.Column="10" />
+                <Image Source="{Binding tren, Converter={StaticResource dameImageSourceConverter}, ConverterParameter=ic_tren}" Grid.Column="11" />
+                <Image Source="{Binding oficinaDeCorreos, Converter={StaticResource dameImageSourceConverter}, ConverterParameter=ic_oficinaDeCorreos}" Grid.Column="12" />
+
+
+
+                <!--
                 <CheckBox IsChecked="{Binding albergueMunicipal}" IsEnabled="False" Scale="0.6" Grid.Column="0" Color="#2028F5" />
                 <CheckBox IsChecked="{Binding albergueParroquial}" IsEnabled="False" Scale="0.6" Grid.Column="1" Color="#2028F5" />
                 <CheckBox IsChecked="{Binding alberguePrivado}" IsEnabled="False" Scale="0.6" Grid.Column="2" Color="#2028F5" />
@@ -72,6 +103,32 @@
                 <CheckBox IsChecked="{Binding bus}" IsEnabled="False" Scale="0.6" Grid.Column="10" Color="#2028F5" />
                 <CheckBox IsChecked="{Binding tren}" IsEnabled="False" Scale="0.6" Grid.Column="11" Color="#2028F5" />
                 <CheckBox IsChecked="{Binding oficinaDeCorreos}" IsEnabled="False" Scale="0.6" Grid.Column="12" Color="#2028F5" />
+                -->
+                
+                <!--
+                <Image Source="{extensions:ImageResource YPA.Images.ic_farmacia_true.png}" />
+                <CheckBox IsChecked="{Binding albergueMunicipal}" IsEnabled="False" Scale="0.6" Grid.Column="0" Color="#2028F5" />
+                <CheckBox IsChecked="{Binding albergueParroquial}" IsEnabled="False" Scale="0.6" Grid.Column="1" Color="#2028F5" />
+                <CheckBox IsChecked="{Binding alberguePrivado}" IsEnabled="False" Scale="0.6" Grid.Column="2" Color="#2028F5" />
+                <CheckBox IsChecked="{Binding restaurante}" IsEnabled="False" Scale="0.6" Grid.Column="3" Color="#2028F5" />
+                <CheckBox IsChecked="{Binding cafeteria}" IsEnabled="False" Scale="0.6" Grid.Column="4" Color="#2028F5" />
+                <CheckBox IsChecked="{Binding tienda}" IsEnabled="False" Scale="0.6" Grid.Column="5" Color="#2028F5" />
+                <CheckBox IsChecked="{Binding cajero}" IsEnabled="False" Scale="0.6" Grid.Column="6" Color="#2028F5" />
+                <CheckBox IsChecked="{Binding fuente}" IsEnabled="False" Scale="0.6" Grid.Column="7" Color="#2028F5" />
+                
+                <CheckBox x:Name="farmacia" IsChecked="{Binding farmacia}" IsEnabled="False" Scale="0.6" IsVisible="False" Color="#2028F5" />
+                <Image Source="{extensions:ImageResource x:Reference farmacia}" Grid.Column="8" />
+                <Image Source="{Binding farmacia, Converter={StaticResource dameImageSourceConverter}, ConverterParameter=ic_farmacia}" Grid.Column="8" />
+
+                <CheckBox IsChecked="{Binding hospital}" IsEnabled="False" Scale="0.6" Grid.Column="9" Color="#2028F5" />
+                <CheckBox IsChecked="{Binding bus}" IsEnabled="False" Scale="0.6" Grid.Column="10" Color="#2028F5" />
+                <CheckBox IsChecked="{Binding tren}" IsEnabled="False" Scale="0.6" Grid.Column="11" Color="#2028F5" />
+                <CheckBox IsChecked="{Binding oficinaDeCorreos}" IsEnabled="False" Scale="0.6" Grid.Column="12" Color="#2028F5" />
+                -->
+
+
+                
+
             </Grid>
 
         </StackLayout>

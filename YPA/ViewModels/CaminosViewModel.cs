@@ -17,7 +17,9 @@ namespace YPA.ViewModels
     {
         INavigationService _navigationService;
 
+#pragma warning disable CS0108 // 'CaminosViewModel.PropertyChanged' oculta el miembro heredado 'BindableBase.PropertyChanged'. Use la palabra clave new si su intención era ocultarlo.
         public event PropertyChangedEventHandler PropertyChanged;
+#pragma warning restore CS0108 // 'CaminosViewModel.PropertyChanged' oculta el miembro heredado 'BindableBase.PropertyChanged'. Use la palabra clave new si su intención era ocultarlo.
         private new void RaisePropertyChanged(string propertyName = null)
         {
             //Console.WriteLine("DEBUG3 - CaminosVM - RaisePropertyChanged{0}", propertyName);

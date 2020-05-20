@@ -15,10 +15,10 @@ namespace YPA.Views.Formularios
             InitializeComponent();
 
             //Task<TablaPOBLACIONES> pob = App.Database.GetPoblacionesAsync(100);
-            string pob = App.Database.DameNombrePoblacionPorId(100);
+            //string pob = App.Database.DameNombrePoblacionPorId(100);
+            //Console.WriteLine("DEBUG - EntryALOJAMIENTOS  nombrePoblacion: {0}", pob);
 
-            Console.WriteLine("DEBUG - EntryALOJAMIENTOS  nombrePoblacion: {0}", pob);
-
+            Console.WriteLine("DEBUG - EntryALOJAMIENTOS  Llamamos a ObtenerPoblaciones()");
             ObtenerPoblaciones();
 
             //listView.ItemsSource = await App.Database.GetCaminosAsync();

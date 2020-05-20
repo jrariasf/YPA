@@ -5,10 +5,70 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <None Remove="ic_farmacia_true.png" />
+    <None Remove="Images\ic_albergueMunicipal_false.png" />
+    <None Remove="Images\ic_albergueMunicipal_true.png" />
+    <None Remove="Images\ic_albergueParroquial_false.png" />
+    <None Remove="Images\ic_albergueParroquial_true.png" />
+    <None Remove="Images\ic_alberguePrivado_false.png" />
+    <None Remove="Images\ic_alberguePrivado_true.png" />
+    <None Remove="Images\ic_bus_false.png" />
+    <None Remove="Images\ic_bus_true.png" />
+    <None Remove="Images\ic_cafeteria_false.png" />
+    <None Remove="Images\ic_cafeteria_true.png" />
+    <None Remove="Images\ic_cajero_false.png" />
+    <None Remove="Images\ic_cajero_true.png" />
+    <None Remove="Images\ic_farmacia_false.png" />
+    <None Remove="Images\ic_farmacia_true.png" />
+    <None Remove="Images\ic_fuente_false.png" />
+    <None Remove="Images\ic_fuente_true.png" />
+    <None Remove="Images\ic_hospital_false.png" />
+    <None Remove="Images\ic_hospital_true.png" />
+    <None Remove="Images\ic_oficinaDeCorreos_false.png" />
+    <None Remove="Images\ic_oficinaDeCorreos_true.png" />
+    <None Remove="Images\ic_restaurante_false.png" />
+    <None Remove="Images\ic_restaurante_true.png" />
+    <None Remove="Images\ic_tienda_false.png" />
+    <None Remove="Images\ic_tienda_true.png" />
+    <None Remove="Images\ic_tren_false.png" />
+    <None Remove="Images\ic_tren_true.png" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <EmbeddedResource Include="ic_farmacia_true.png" />
+    <EmbeddedResource Include="Images\ic_albergueMunicipal_false.png" />
+    <EmbeddedResource Include="Images\ic_albergueMunicipal_true.png" />
+    <EmbeddedResource Include="Images\ic_albergueParroquial_false.png" />
+    <EmbeddedResource Include="Images\ic_albergueParroquial_true.png" />
+    <EmbeddedResource Include="Images\ic_alberguePrivado_false.png" />
+    <EmbeddedResource Include="Images\ic_alberguePrivado_true.png" />
+    <EmbeddedResource Include="Images\ic_bus_false.png" />
+    <EmbeddedResource Include="Images\ic_bus_true.png" />
+    <EmbeddedResource Include="Images\ic_cafeteria_false.png" />
+    <EmbeddedResource Include="Images\ic_cafeteria_true.png" />
+    <EmbeddedResource Include="Images\ic_cajero_false.png" />
+    <EmbeddedResource Include="Images\ic_cajero_true.png" />
+    <EmbeddedResource Include="Images\ic_farmacia_false.png" />
+    <EmbeddedResource Include="Images\ic_farmacia_true.png" />
+    <EmbeddedResource Include="Images\ic_fuente_false.png" />
+    <EmbeddedResource Include="Images\ic_fuente_true.png" />
+    <EmbeddedResource Include="Images\ic_hospital_false.png" />
+    <EmbeddedResource Include="Images\ic_hospital_true.png" />
+    <EmbeddedResource Include="Images\ic_oficinaDeCorreos_false.png" />
+    <EmbeddedResource Include="Images\ic_oficinaDeCorreos_true.png" />
+    <EmbeddedResource Include="Images\ic_restaurante_false.png" />
+    <EmbeddedResource Include="Images\ic_restaurante_true.png" />
+    <EmbeddedResource Include="Images\ic_tienda_false.png" />
+    <EmbeddedResource Include="Images\ic_tienda_true.png" />
+    <EmbeddedResource Include="Images\ic_tren_false.png" />
+    <EmbeddedResource Include="Images\ic_tren_true.png" />
+  </ItemGroup>
+
+  <ItemGroup>
     <PackageReference Include="LiveXAML" Version="2.1.73" />
     <PackageReference Include="sqlite-net-pcl" Version="1.6.292" />
-    <PackageReference Include="Xamarin.Essentials" Version="1.3.1" />
-    <PackageReference Include="Xamarin.Forms" Version="4.4.0.991265" />
+    <PackageReference Include="Xamarin.Essentials" Version="1.5.3" />
+    <PackageReference Include="Xamarin.Forms" Version="4.5.0.617" />
     <PackageReference Include="Prism.DryIoc.Forms" Version="7.2.0.1422" />
   </ItemGroup>
 

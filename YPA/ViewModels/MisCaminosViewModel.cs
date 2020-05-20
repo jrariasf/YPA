@@ -99,7 +99,9 @@ namespace YPA.ViewModels
 
             navigationParams.Add("option", 2);
             navigationParams.Add("tmc", tmc);
+#pragma warning disable CS4014 // Como esta llamada no es 'awaited', la ejecución del método actual continuará antes de que se complete la llamada. Puede aplicar el operador 'await' al resultado de la llamada.
             _navigationService.NavigateAsync("VerCamino", navigationParams);            
+#pragma warning restore CS4014 // Como esta llamada no es 'awaited', la ejecución del método actual continuará antes de que se complete la llamada. Puede aplicar el operador 'await' al resultado de la llamada.
         }
 
         private DelegateCommand<string> _VerEtapasMiCamino;

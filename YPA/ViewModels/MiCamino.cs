@@ -13,7 +13,9 @@ namespace YPA.ViewModels
     
     public class MiCamino: BindableBase, INotifyPropertyChanged
     {
+#pragma warning disable CS0108 // 'MiCamino.PropertyChanged' oculta el miembro heredado 'BindableBase.PropertyChanged'. Use la palabra clave new si su intención era ocultarlo.
         public event PropertyChangedEventHandler PropertyChanged;
+#pragma warning restore CS0108 // 'MiCamino.PropertyChanged' oculta el miembro heredado 'BindableBase.PropertyChanged'. Use la palabra clave new si su intención era ocultarlo.
         private new void RaisePropertyChanged(string propertyName = null)
         {
             //Console.WriteLine("DEBUG3 - PoblacionesVM - RaisePropertyChanged{0}", propertyName);
@@ -296,6 +298,7 @@ namespace YPA.ViewModels
                             listaEtapas.Add(etapa);
                             fecha = fecha + ts;
                         }
+                        continue;
                     }
 
 
@@ -331,7 +334,7 @@ namespace YPA.ViewModels
                 Console.WriteLine("ERROR - MiCamino - RellenarLista()  caminoActual es null !!!");
                 return false;
             }
-            
+
 
             if (caminoAnterior == null || caminoAnterior != caminoActual)
             {
@@ -365,8 +368,9 @@ namespace YPA.ViewModels
             }
             else
             {
-                Console.WriteLine("DEBUG3 - MiCamino - RellenarLista  #### NO SE HACE NADA NUEVO !!!  Sólo marcas los nodos que son etapas ####");
+                Console.WriteLine("DEBUG3 - MiCamino - RellenarLista  #### NO SE HACE NADA NUEVO !!!  Quizás se marquen los nodos que son etapas ####");
                 //_xx_ETAPAS: Voy a marcar las etapas por si desde el MenuMisEtapas hemos modificado algo:
+                /*  Modificado ligeramente abajo:
                 for (int i = 0; i < miLista.Count; i++)
                 {                    
                     int posicion = 0;
@@ -381,7 +385,21 @@ namespace YPA.ViewModels
                         }
                     }
                 }
-
+                */
+                if (etapas != null)
+                {
+                    for (int i = 0; i < miLista.Count; i++)
+                    {
+                        int posicion = 0;
+                        miLista[i].esEtapa = 0;
+                        string buscar = Global.separador[0] + miLista[i].nombrePoblacion + Global.separador[0];
+                        while ((posicion = etapas.IndexOf(buscar, posicion)) > -1)
+                        {   //_xx_ETAPAS  Tenemos que contar cuantos días estamos en ese nodo o población:
+                            miLista[i].esEtapa++;
+                            posicion += (buscar.Length - 1);
+                        }
+                    }
+                }
             }
 
             return true;
@@ -392,7 +410,7 @@ namespace YPA.ViewModels
             //ref string caminoActual, ref string caminoAnterior, out string resumen,
             //string cambiarBifurcacionEn = null, string listadoBifurcaciones = null, string listadoEtapas = null)
         {
-            bool estamosEnBifurcacion = false;
+            int estamosEnBifurcacion = 0;
             double acumulado = 0;
             double distanciaAlInicioPrimeraEtapa = 0;
             double distanciaAlInicioUltimaEtapa = 0;
@@ -408,6 +426,9 @@ namespace YPA.ViewModels
                     primerNodoEtapa == null ? "NULL" : primerNodoEtapa,
                     ultimoNodoEtapa == null ? "NULL" : ultimoNodoEtapa);
 
+            Console.WriteLine("DEBUG4 - MiCamino - MasajearLista() INI: etapas <{0}>", etapas);
+            Console.WriteLine("DEBUG4 - MiCamino - MasajearLista() INI: numEtapas <{0}>    numDias <{1}>", numEtapas, numDias);        
+                 
             //Primero rellenamos de nuevo el respaldo de listaPuntosDePaso con todos los nodos:
 
             bool resp;
@@ -454,7 +475,7 @@ namespace YPA.ViewModels
                 Console.WriteLine("DEBUG - MiCamino - MasajearLista() estamosEnBifurcacion:{0}  siguienteNodo:{1}  nodo actual:{2}",
                             estamosEnBifurcacion, siguienteNodo, dataItem.nombrePoblacion);
 
-                if (!estamosEnBifurcacion)
+                if (estamosEnBifurcacion == 0)
                 {
                     /*
                     dataItem.esVisible = true;
@@ -474,8 +495,8 @@ namespace YPA.ViewModels
                         // Quizás para poner las cosas en su sitio podría ser bueno poner estamosEnBifurcacion a true:
                         if (primerNodoEtapa != null && ultimoNodoEtapa == null)
                         {
-                            Console.WriteLine("DEBUG - MiCamino - MasajearLista: Hemos FORZADO el poner estamosEnBifurcacion a true");
-                            estamosEnBifurcacion = true;
+                            Console.WriteLine("DEBUG - MiCamino - MasajearLista: Hemos FORZADO el poner estamosEnBifurcacion a 1");
+                            estamosEnBifurcacion = 1;
                         }
 
                     }
@@ -517,14 +538,20 @@ namespace YPA.ViewModels
                     //Y más adelante se comprobará si estamos en un inicio de bifurcación (un nodo puede ser las dos cosas):
                     if (dataItem.FinBifurcacion)
                     {
-                        estamosEnBifurcacion = false;
-                        Console.WriteLine("DEBUG - MiCamino - MasajearLista: Aquí finaliza una bifurcación");
+                        estamosEnBifurcacion--; //_xx_bif  Igual hay que controlar que como mínimo sea 0, que nunca sea negativo !!!
+                        if (estamosEnBifurcacion < 0)
+                        {
+                            Console.WriteLine("ERROR - MiCamino - MasajearLista: Aquí finaliza una bifurcación en {0}   Ahora estamosEnBifurcacion se fuerza a {1}", dataItem.nombrePoblacion, estamosEnBifurcacion);
+                            estamosEnBifurcacion = 0;
+                        } else
+                            Console.WriteLine("DEBUG3 - MiCamino - MasajearLista: Aquí finaliza una bifurcación en {0}   Ahora estamosEnBifurcacion será {1}", dataItem.nombrePoblacion, estamosEnBifurcacion);
+                        
                     }
 
                     if (dataItem.IniBifurcacion)
-                    {
-                        Console.WriteLine("DEBUG3 - MiCamino - MasajearLista: Estamos en INI bifurcacion en {0}", dataItem.nombrePoblacion);
-                        estamosEnBifurcacion = true;
+                    {                        
+                        estamosEnBifurcacion++;
+                        Console.WriteLine("DEBUG3 - MiCamino - MasajearLista: Estamos en INI bifurcacion en {0}   Ahora estamosEnBifurcacion será {1}", dataItem.nombrePoblacion, estamosEnBifurcacion);
 
                         string bifConf = "";
                         if (bifurcaciones.TryGetValue(dataItem.nombrePoblacion, out bifConf))
@@ -582,8 +609,37 @@ namespace YPA.ViewModels
                     }
 
                     dataItem.acumulado = acumulado;
-                    acumulado += double.Parse(distancias[indice], Global.culture);
-                    siguienteNodo = nodosSiguientes[indice];
+                    //acumulado += double.Parse(distancias[indice], Global.culture);
+                    double dist;
+                    try
+                    {
+                        if (double.TryParse(distancias[indice], NumberStyles.Float, Global.culture, out dist) == true)
+                            acumulado += dist;
+                        else
+                        {
+                            Console.WriteLine("ERROR - MiCamino - MasajearLista: Distancia incorrecta en {0}", dataItem.nombrePoblacion);
+                            NumberFormatInfo nfi = Global.culture.NumberFormat;
+                            Console.WriteLine("ERROR - MiCamino - MasajearLista: Separador decimal utilizado: <{0}>", nfi.NumberDecimalSeparator);
+                            // No haremos nada, es como si la distancia fuese 0 y no sumásemos nada a "acumulado".
+                        }
+                    } catch (IndexOutOfRangeException e)
+                    {
+                        Console.WriteLine("ERROR - MiCamino - MasajearLista: IndexOutOfRangeException  indice: <{0}>  No especificada distancia en <{1}>", indice, dataItem.nombrePoblacion);
+                    }
+
+
+                    try
+                    {
+                        siguienteNodo = nodosSiguientes[indice];
+                    }
+                    catch (IndexOutOfRangeException e)
+                    {
+                        // Es posible que nos hayamos de especificar los posibles nodos siguientes en esa bifurcación (se supone que estarán separados por ";"):
+                        Console.WriteLine("ERROR - MiCamino - MasajearLista: IndexOutOfRangeException  indice: <{0}>  No especificada nodoSiguiente en <{1}>", indice, dataItem.nombrePoblacion);
+                        // Al menos intentamos coger el valor que haya:
+                        siguienteNodo = nodosSiguientes[0];
+                    }
+
 
                     Console.WriteLine("DEBUG - MiCamino - MasajearLista: siguienteNodo {0}   acumulado:{1}",
                                 siguienteNodo, acumulado);
@@ -639,6 +695,8 @@ namespace YPA.ViewModels
 
             Console.WriteLine("DEBUG - MiCamino - MasajearLista: Número de nodos final en back_listaPuntosDePaso:{0}", back_listaPuntosDePaso.Count);
 
+            Console.WriteLine("DEBUG4 - MiCamino - MasajearLista() FIN: etapas <{0}>", etapas);
+            Console.WriteLine("DEBUG4 - MiCamino - MasajearLista() FIN: numEtapas <{0}>    numDias <{1}>", numEtapas, numDias);
 
             return back_listaPuntosDePaso;
         }
@@ -650,8 +708,6 @@ namespace YPA.ViewModels
             Console.WriteLine("DEBUG - MiCamino - ExecuteCheckPulsado({0})", id);
 
             int indice;
-            //int id2int = int.Parse(id, Global.culture);
-            //TablaBaseCaminos buscar = new TablaBaseCaminos(id2int);
             TablaBaseCaminos buscar = new TablaBaseCaminos(id);
 
             indice = miLista.IndexOf(buscar);
@@ -696,7 +752,8 @@ namespace YPA.ViewModels
                     {
                         if (miLista[i].esEtapa > 0)
                         {
-                            item.acumuladoEtapa = item.acumulado - miLista[i].acumulado;
+                            //Console.WriteLine("DEBUG - MiCamino - ExecuteCheckPulsado() Restamos {0} - {1}", item.acumulado, miLista[i].acumulado);
+                            item.acumuladoEtapa = Math.Round(item.acumulado - (double)miLista[i].acumulado, 1);
                             Console.WriteLine("DEBUG - MiCamino - ExecuteCheckPulsado() Localizado inferior i:{0}  acumuladoEtapa:{1}  restamos:{2}",
                                         i, item.acumuladoEtapa, miLista[i].acumulado);
                             incrementoKmsMiCamino = item.acumuladoEtapa;

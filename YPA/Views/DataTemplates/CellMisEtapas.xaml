@@ -11,15 +11,15 @@
     <ViewCell.View>
         <Grid ColumnSpacing="0" BackgroundColor="#F4F7AE" >
             <Grid.RowDefinitions>
-                <RowDefinition Height="25" />
+                <RowDefinition Height="35" />
             </Grid.RowDefinitions>
             <Grid.ColumnDefinitions >
-                <ColumnDefinition Width="*" />
                 <ColumnDefinition Width="2*" />
+                <ColumnDefinition Width="8*" />
+                <ColumnDefinition Width="16*" />
+                <ColumnDefinition Width="16*" />
+                <ColumnDefinition Width="7*" />
                 <ColumnDefinition Width="4*" />
-                <ColumnDefinition Width="4*" />
-                <ColumnDefinition Width="2*" />
-                <ColumnDefinition Width="2*" />
             </Grid.ColumnDefinitions>
 
             <Label Text="{Binding orden,FallbackValue=No orden}" Grid.Column="0"
@@ -36,12 +36,12 @@
 
             <Label Text="{Binding poblacion_inicio_etapa,FallbackValue=No INI}" Grid.Column="2" 
                                    FontSize="Caption" TextColor="Black" 
-                                   Margin="0" Padding="0" 
+                                   Margin="0" Padding="2,0,0,0" 
                                    HorizontalOptions="StartAndExpand" VerticalOptions="Center"  
                                    VerticalTextAlignment="Center" />
             <Label Text="{Binding poblacion_fin_etapa,FallbackValue=No FIN}" Grid.Column="3" 
                                    FontSize="Caption" TextColor="Black" 
-                                   Margin="0" Padding="0" 
+                                   Margin="0" Padding="2,0,0,0" 
                                    HorizontalOptions="StartAndExpand" VerticalOptions="Center"  
                                    VerticalTextAlignment="Center" />
             <Label Text="{Binding distancia,FallbackValue=No dis, StringFormat='{0:0.0} km'}" Grid.Column="4"

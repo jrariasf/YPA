@@ -22,12 +22,15 @@ namespace YPA.Data
             _database.CreateTableAsync<TablaPOBLACIONES>().Wait();
             _database.CreateTableAsync<TablaALOJAMIENTOS>().Wait();
 
+            _database.CreateTableAsync<TablaMisCaminos>().Wait();
+
             _database.CreateTableAsync<TablaCaminoDeMadrid>().Wait();
             _database.CreateTableAsync<TablaSanSalvador>().Wait();
             _database.CreateTableAsync<TablaSanabres>().Wait();
             _database.CreateTableAsync<TablaFinisterre>().Wait();
+            _database.CreateTableAsync<TablaCaminoDelNorte>().Wait();
+            _database.CreateTableAsync<TablaPrimitivo>().Wait();
 
-            _database.CreateTableAsync<TablaMisCaminos>().Wait();
         }
 
 
@@ -127,7 +130,7 @@ namespace YPA.Data
             string comando = "select id from TablaPOBLACIONES where nombrePoblacion=?";
             //Console.WriteLine("DEBUG - VerVM-OnNavigatedTo() comando:{0}", comando);
             var idPoblacion = App.Database._db.ExecuteScalar<int>(comando, poblacion);
-            Console.WriteLine("DEBUG - VerVM-OnNavigatedTo() La poblacion {0} se corresponde con id: {1}", 
+            Console.WriteLine("DEBUG - DameIdPoblacionDeNombre - La poblacion {0} se corresponde con id: {1}", 
                 poblacion, idPoblacion);
             return idPoblacion; //_xx_ Ver qué pasa si pedimos el id de una población que no existe !!!
         }

@@ -13,10 +13,10 @@
                  BackgroundColor="#F8EDED" HeightRequest="{Binding alturaMenu}" WidthRequest="250"
                  VerticalOptions="Center" Padding="4,0" Spacing="0">
 
-        <Button Text="Insertar día al inicio" HorizontalOptions="Center"  Command="{Binding InsertarDiaAlInicio}" />
-        <Button Text="Añadir día al final" HorizontalOptions="Center"  Command="{Binding InsertarDiaAlFinal}" />
-        <Button Text="Unir esta etapa y la siguiente" HorizontalOptions="Center"  Command="{Binding UnirEtapas}"  IsVisible="{Binding botonUnirVisible}" />
-        <Button Text="CLOSE" HorizontalOptions="Center"  Command="{Binding CloseCommand}" />
+        <Button Text="Insertar día al inicio" HeightRequest="50" WidthRequest="220" HorizontalOptions="CenterAndExpand"  Command="{Binding InsertarDiaAlInicio}" />
+        <Button Text="Añadir día al final" HeightRequest="50" WidthRequest="220" HorizontalOptions="CenterAndExpand"  Command="{Binding InsertarDiaAlFinal}" />
+        <Button Text="Unir esta etapa y la siguiente" HeightRequest="50" WidthRequest="220" HorizontalOptions="CenterAndExpand"  Command="{Binding UnirEtapas}"  IsVisible="{Binding botonUnirVisible}" />
+        <Button Text="CLOSE" MinimumWidthRequest="100" HorizontalOptions="CenterAndExpand"  Command="{Binding CloseCommand}" />
 
     </StackLayout>
     

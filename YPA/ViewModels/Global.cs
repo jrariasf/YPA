@@ -5,7 +5,10 @@ using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Globalization;
 using System.Linq;
+using System.Reflection;
 using System.Threading.Tasks;
+using Xamarin.Essentials;
+using Xamarin.Forms;
 using YPA.Models;
 
 namespace YPA.ViewModels
@@ -19,9 +22,13 @@ namespace YPA.ViewModels
 
         public static string nombreFicheroDeMiCamino = null;
         public static string subetapasModificadas = null;
+        public static string appName = AppInfo.Name; // Application Name
+        public static string packageName = AppInfo.PackageName; // Package Name/Application Identifier
+
 
         public Global()
         {
+            
 
         }
 
@@ -52,5 +59,27 @@ namespace YPA.ViewModels
         }
     }
 
+
+    public class DameImageSourceConverter : IValueConverter
+    {
+        public object Convert(object value, Type targetType, object parameter, CultureInfo culture)
+        {
+            //return !string.IsNullOrEmpty($"{value}");
+            //var valor = (bool)object;
+            string valor = ((bool)value).ToString().ToLower();
+            string source = "YPA.Images." + parameter + "_" + valor + ".png";
+
+            Console.WriteLine("DEBUG - DameImageSourceConverter - source <{0}>", source);
+
+            var imageSource = ImageSource.FromResource(source, typeof(ImageResourceExtension).GetTypeInfo().Assembly);
+
+            return imageSource;
+        }
+
+        public object ConvertBack(object value, Type targetType, object parameter, CultureInfo culture)
+        {
+            throw new NotImplementedException();
+        }
+    }
 
 }

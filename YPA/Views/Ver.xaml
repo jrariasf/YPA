@@ -60,6 +60,7 @@
                     <CheckBox IsChecked="{Binding ordenAscendente}" IsEnabled="True" Scale="0.6" />
                     <Label Text="ASC" VerticalTextAlignment="Center" Padding="5,0,10,0" />
                 </StackLayout>
+                <Image Source="ic_grabar" /> <!--  HeightRequest="300" /> -->
                  
 
             </StackLayout>
@@ -92,7 +93,9 @@
                 </Picker>
                 
             </StackLayout>
-            
+
+            <Label Text="{Binding titulo}" FontSize="Medium" TextColor="blue" Padding="4,0,0,0" />
+
             <ListView x:Name="listView" ItemsSource="{Binding listaAlojamientos}" Margin="5,0" HasUnevenRows = "true" RowHeight="120" >
                 <ListView.ItemTemplate>
                     <DataTemplate>

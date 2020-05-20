@@ -34,6 +34,12 @@ namespace YPA.ViewModels
             set { SetProperty(ref _listaAlojamientos, value); }
         }
 
+        private string _titulo;
+        public string titulo
+        {
+            get { return _titulo; }
+            set { SetProperty(ref _titulo, value); }
+        }
 
         private ObservableCollection<RespPoblaciones> _poblacionesConAlojamiento;
         public ObservableCollection<RespPoblaciones> poblacionesConAlojamiento
@@ -209,6 +215,7 @@ namespace YPA.ViewModels
         {
             _navigationService = navigationService;
             ordenAscendente = false;
+            titulo = "";
             nombreBoton = "Pulsa ya coñññioooo";
 
             IndexValue = 5;
@@ -242,7 +249,9 @@ namespace YPA.ViewModels
             var idPoblacion = parameters["idPoblacion"] as string;
             var poblacion = parameters["poblacion"] as string;
 
-            Console.WriteLine("DEBUG - OnNavigatedTo() listado:{0}  idPoblacion:{1}   idPoblacionActual:{2}", listado, idPoblacion, idPoblacionActual);
+            Console.WriteLine("DEBUG - OnNavigatedTo() listado:{0}  idPoblacion:{1}   idPoblacionActual:{2}   poblacion:{3}", listado, idPoblacion, idPoblacionActual, poblacion);
+            if (poblacion != null)
+                titulo = poblacion != null ? poblacion : "";
 
             if (idPoblacion == null)
             {

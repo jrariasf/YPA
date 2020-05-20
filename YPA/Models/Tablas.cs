@@ -207,7 +207,9 @@ namespace YPA.Models
             try
             {
                 dia = Convert.ToDateTime(_dia);
+#pragma warning disable CS0168 // La variable 'e' se ha declarado pero nunca se usa
             } catch (InvalidCastException e)
+#pragma warning restore CS0168 // La variable 'e' se ha declarado pero nunca se usa
             {
                 Console.WriteLine("DEBUG3 - Tablas - TablaMisCaminos() Ha saltado la excepción al hacer el ToDateTime de {0}", _dia);
                 dia = System.DateTime.Today;
@@ -236,8 +238,15 @@ namespace YPA.Models
             if (other is null)
                 return false;
 
-            if (other.id == this.id || other.nombrePoblacion == this.nombrePoblacion)
-                return true;
+            if (other.id != -1)
+            {
+                if (other.id == this.id) // || other.nombrePoblacion == this.nombrePoblacion) //_xx_ULT Ha sido comentado pq al pinchar en una bifurcación en el CN en Pontarrón, borraba las dos apariciones de "Bifurcación Hazas-Villanueva" pero igual este comentario afecta a algo inesperado !!!
+                    return true;
+            } else
+            {
+                if (other.nombrePoblacion != null && (other.nombrePoblacion == this.nombrePoblacion))
+                    return true;
+            }
 
             return false;
 
@@ -249,19 +258,21 @@ namespace YPA.Models
         }
         public TablaBaseCaminos(int _id)
         {
-            id = _id;
-            nombrePoblacion = "";
             Init();
+            id = _id;
+            //nombrePoblacion = "";
         }
         public TablaBaseCaminos(string nodo)
         {
+            Init();
             nombrePoblacion = nodo;
             id = -1;
-            Init();
+            
         }
 
         public void Init()
         {
+            nombrePoblacion = null;
             checkboxEnabled = true;
         }
 
@@ -337,6 +348,16 @@ namespace YPA.Models
 
     }
     public class TablaFinisterre : TablaBaseCaminos
+    {
+
+    }
+
+    public class TablaCaminoDelNorte : TablaBaseCaminos
+    {
+
+    }
+
+    public class TablaPrimitivo : TablaBaseCaminos
     {
 
     }

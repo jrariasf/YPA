@@ -20,7 +20,8 @@ namespace YPA.ViewModels
 
         public static CultureInfo culture;
         private IDialogService _dialogService { get; }
-        
+
+        string primerNodoEtapa = null, ultimoNodoEtapa = null;
 
         public new event PropertyChangedEventHandler PropertyChanged;
         private new void RaisePropertyChanged(string propertyName = null)
@@ -205,7 +206,9 @@ namespace YPA.ViewModels
 
             if (camino.IniBifurcacion)
             {
-                listaPuntosDePaso = miCamino.MasajearLista(camino.nombrePoblacion);
+                Console.WriteLine("DEBUG - VerCaminoVM - ExecuteLabelPulsada() primerNodoEtapa <{0}>   ultimoNodoEtapa <{1}>",
+                      primerNodoEtapa == null ? "NULL" : primerNodoEtapa, ultimoNodoEtapa == null ? "NULL" : ultimoNodoEtapa);
+                listaPuntosDePaso = miCamino.MasajearLista(camino.nombrePoblacion, primerNodoEtapa, ultimoNodoEtapa);
             }
             else
                 Console.WriteLine("DEBUG - VerCaminoVM - ExecuteLabelPulsada()  No hacemos nada porque NO es una bifurcación");
@@ -304,7 +307,7 @@ namespace YPA.ViewModels
                     if (miCam != null)
                     {
                         miCam.caminoAnterior = null; // Para forzar que al llamar a RellenarLista se recree el miLista.
-                        string primerNodoEtapa = null, ultimoNodoEtapa = null;
+                        //string primerNodoEtapa = null, ultimoNodoEtapa = null;
                         primerNodoEtapa = parameters.GetValue<string>("primerNodoEtapa");
                         ultimoNodoEtapa = parameters.GetValue<string>("ultimoNodoEtapa");
                         Console.WriteLine("DEBUG - VerCaminoVM - OnNavigatedTo: Venimos de VerEtapas con miCamino primerNodoEtapa <{0}>  ultimoNodoEtapa <{1}>",
