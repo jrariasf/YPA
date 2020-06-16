@@ -107,19 +107,34 @@ namespace YPA.ViewModels
         private int _numEtapas;
         public int numEtapas
         {
-            get => _numEtapas;
+            //get => _numEtapas;
+            get
+            {
+                //return _numEtapas < 2 ? 0 : _numEtapas - 1;
+                return _numEtapas;
+            }
             set
             {
                 Console.WriteLine("DEBUG3 - MiCamino - numEtapas <{0}>", value);
                 SetProperty(ref _numEtapas, value);
-                //_xx_ETAPAS  resumen = "[ " + numEtapas.ToString() + " etapas, " + distanciaTotal.ToString(CultureInfo.CreateSpecificCulture("es-ES")) + " km ]";
-                //resumen = "[ " + NumEtapas() + " etapas, " + distanciaTotalMiCamino.ToString(CultureInfo.CreateSpecificCulture("es-ES")) + " kms ]";
-                resumen = "[ " + NumEtapas() + " etapas, " + distanciaTotalMiCamino.ToString(Global.culture) + " kms ]";
+                //resumen = "[ " + NumEtapas() + " etapas, " + distanciaTotalMiCamino.ToString(Global.culture) + " kms ]";
+                resumen = NumEtapas() + " etapas, " + distanciaTotalMiCamino.ToString(Global.culture) + " kms";
                 RaisePropertyChanged(nameof(numEtapas));
             }
         }
 
-        public int numDias;
+        private int _numDias;
+        public int numDias
+        {
+            //get { return _numDias; }
+            //set { _numDias = value; }
+            get => _numDias;
+            set
+            {                
+                SetProperty(ref _numDias, value);                
+                RaisePropertyChanged(nameof(numDias));
+            }
+        }
 
         private double _distanciaTotalMiCamino;
         public double distanciaTotalMiCamino
@@ -129,9 +144,8 @@ namespace YPA.ViewModels
             {
                 Console.WriteLine("DEBUG3 - MiCamino - distanciaTotalMiCamino; <{0}>", value);
                 SetProperty(ref _distanciaTotalMiCamino, value);
-
-                //_xx_ETAPAS resumen = "[ " + numEtapas.ToString() + " etapas, " + distanciaTotalMiCamino.ToString(CultureInfo.CreateSpecificCulture("es-ES")) + " kms ]";
-                resumen = "[ " + NumEtapas() + " etapas, " + distanciaTotalMiCamino.ToString(Global.culture) + " kms ]";
+                //resumen = "[ " + NumEtapas() + " etapas, " + distanciaTotalMiCamino.ToString(Global.culture) + " kms ]";
+                resumen = NumEtapas() + " etapas, " + distanciaTotalMiCamino.ToString(Global.culture) + " kms";
                 RaisePropertyChanged(nameof(distanciaTotalMiCamino));
             }
         }
@@ -186,6 +200,30 @@ namespace YPA.ViewModels
                 etapas = tmc.etapas;
         }
 
+        public void MostrarInfo()
+        {
+            string mensaje;
+
+            mensaje = "\n" + "miNombreCamino: " + miNombreCamino;
+            mensaje += "\n" + "descripcion: " + descripcion;
+            mensaje += "\n" + "str_bifurcaciones: " + (str_bifurcaciones == null ? "NULL" : str_bifurcaciones);
+            mensaje += "\n" + "etapas: " + (etapas == null ? "NULL" : etapas);
+            mensaje += "\n" + "distanciaTotal: " + distanciaTotal;
+            mensaje += "\n" + "numEtapas: " + numEtapas;
+            mensaje += "\n" + "numDias: " + numDias;
+            mensaje += "\n";
+
+            Console.WriteLine("DEBUG - MiCamino - MostrarInfo(): {0}", mensaje);
+            /*
+            Console.WriteLine("DEBUG - MiCamino - MostrarInfo():");
+            Console.WriteLine("DEBUG - MiCamino - MostrarInfo():");
+            Console.WriteLine("DEBUG - MiCamino - MostrarInfo():");
+            Console.WriteLine("DEBUG - MiCamino - MostrarInfo():");
+            Console.WriteLine("DEBUG - MiCamino - MostrarInfo():");
+            */
+
+
+        }
         public int NumEtapas()
         {
             // Retorna el número real de etaps:
@@ -206,11 +244,16 @@ namespace YPA.ViewModels
                     {
                         listado += item.nombrePoblacion;
                         listado += Global.separador[0]; // ";";
-                        numEtapas++;
+                        numDias++;   //_xx_numEtapas   numEtapas++;
                     }
-                    numDias += item.esEtapa;
+                    numEtapas++;     //_xx_numEtapas   numDias += item.esEtapa;
                 }
             }
+            //_xx_numEtapas:  Esto se añade nuevo:
+            //_xx_numEtapas  numEtapas--;
+            numDias--;
+
+            Console.WriteLine("DEBUG2 - MiCamino - DameStringListaEtapas()  numEtapas <{0}>   numDias <{1}>", numEtapas, numDias);
 
             return listado;
         }
@@ -655,11 +698,12 @@ namespace YPA.ViewModels
 
             //Ahora relleno el campo "distanciaAlFinal" que es el que dice los kms que restan hasta el final:
             distanciaTotal = acumulado;
+            //_xx_numEtapas   numEtapas = numEtapasLocal > 0 ? numEtapasLocal - 1 : 0;  
             numEtapas = numEtapasLocal;
 
             distanciaTotalMiCamino = NumEtapas() == 0 ? 0 : distanciaAlInicioUltimaEtapa - distanciaAlInicioPrimeraEtapa;
 
-            numDias = numDiasLocal;
+            numDias = numDiasLocal > 0 ? numDiasLocal - 1 : 0;  //_xx_numEtapas    numDias = numDiasLocal;
 
             //_xx_esVisible  foreach (var item in back_listaPuntosDePaso)
             foreach (var item in miLista)
@@ -862,7 +906,15 @@ namespace YPA.ViewModels
                    
                 }
                 item.acumuladoEtapa = 0;
-            }            
+            }
+
+            //_xx_numEtapas   Añado esto nuevo:
+            /*
+            if (numDias == 1)
+                numDias = 0;
+            if (numEtapas == 1)
+                numEtapas = 0;
+            */
 
 
         }

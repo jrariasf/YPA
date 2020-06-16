@@ -18,8 +18,9 @@
         <!-- <Label Text="{Binding miTexto}"  WidthRequest="300" HeightRequest="60" FontSize="14"/> -->
         <ListView x:Name="listView"
             ItemsSource="{Binding listaMisCaminos, Mode=TwoWay}"
-            IsGroupingEnabled="False" RowHeight="170"
+            IsGroupingEnabled="False" RowHeight="80"
             SeparatorVisibility="None" BackgroundColor="White">
+            <!--RowHeight="170"-->
 
             <ListView.Behaviors>
                 <prism:EventToCommandBehavior EventName="ItemTapped"

@@ -9,53 +9,55 @@
 
     <ViewCell.View>
 
-        <Grid ColumnSpacing="0" BackgroundColor="#F5FF0D" Margin="10,0,0,0" VerticalOptions="Center" >
+        <Grid ColumnSpacing="0" BackgroundColor="#F5FF0D" Margin="4,0" VerticalOptions="Center" >
             <Grid.RowDefinitions>
-                <RowDefinition Height="Auto" />
-                <RowDefinition Height="Auto" />
-                <RowDefinition Height="Auto" />
+                <RowDefinition Height="30" />
+                <RowDefinition Height="30" />
             </Grid.RowDefinitions>
             <Grid.ColumnDefinitions >
-                <ColumnDefinition Width="Auto" />
+                <ColumnDefinition Width="3*" />
+                <ColumnDefinition Width="*" />
             </Grid.ColumnDefinitions>
 
-            <StackLayout Orientation="Horizontal" Grid.Row="0" >
-                <Label x:Name="id" Text="{Binding id}" />
+            <StackLayout Orientation="Horizontal" Grid.Row="0" Grid.Column="0" >
+                <Label Text="{Binding id,StringFormat='{0}.-'}" />
+                <Label x:Name="id" Text="{Binding id}" IsEnabled="False" IsVisible="False" />
                 <Label Text="{Binding miNombreCamino}" 
                    FontSize="Small" FontAttributes="Bold" TextColor="#2028F5" 
-                   Margin="0" Padding="0" VerticalOptions="Center"/>
-                <Label Text="{Binding caminoBase}" />
-                <Label Text="{Binding dia}" />
+                   Margin="0" Padding="0" />
+                <Label Text="{Binding caminoBase,StringFormat='({0})'}" />
+                <Label Text="{Binding dia,StringFormat='{0:dd/MM/yyyy}'}"  HorizontalOptions="End"/>
             </StackLayout>
 
-            <StackLayout Orientation="Vertical" Grid.Row="1" >
-                <Label Text="{Binding descripcion}" />
-                <!-- <Label Text="{Binding longitud, StringFormat='{0}km'}" Grid.Column="1"
-                       FontSize="Small" VerticalOptions="Center" /> -->
-
+            <StackLayout Orientation="Vertical" Grid.Row="1" Grid.Column="0" >
+                <Label Text="{Binding descripcion,StringFormat='Descripción: {0}'}" />
+                <!--
                 <Label Text="{Binding bifurcaciones}" />
                 <Label Text="{Binding etapas}" />
+                -->
             </StackLayout>
 
-            <StackLayout Orientation="Horizontal" HeightRequest="50" Grid.Row="2" >
+            <StackLayout Orientation="Horizontal" Grid.Row="0" Grid.Column="1" >
 
-                <Button Text="Etapas"
+                <Button Text="E" ImageSource="ic_boton_etapas" WidthRequest="30"
                     Command="{Binding Source={RelativeSource AncestorType={x:Type viewModels:MisCaminosViewModel}}, Path=VerEtapasMiCamino}" 
                     CommandParameter="{Binding Text, Source={x:Reference id}}" 
-                    FontSize="Medium" Padding="0" Margin="0" WidthRequest="120" HeightRequest="20"
-                    BackgroundColor="Red" BorderColor="Brown" BorderWidth="2" />
-
-                <Button Text="Ampliar"
+                    FontSize="Small" Padding="0" Margin="0"
+                    BackgroundColor="Red" />
+            </StackLayout>
+            
+            <StackLayout Orientation="Horizontal" Grid.Row="1" Grid.Column="1" >
+                <Button Text="L" ImageSource="ic_boton_listado" WidthRequest="30"
                     Command="{Binding Source={RelativeSource AncestorType={x:Type viewModels:MisCaminosViewModel}}, Path=AmpliarMiCamino}" 
                     CommandParameter="{Binding Text, Source={x:Reference id}}" 
-                    FontSize="Medium" Padding="0" Margin="0" WidthRequest="120" HeightRequest="20"
-                    BackgroundColor="Red" BorderColor="Brown" BorderWidth="2" />
+                    FontSize="Small" Padding="0" Margin="0" HeightRequest="20"
+                    BackgroundColor="Red" />
 
-                <Button Text="Borrar"
+                <Button Text="B" ImageSource="ic_boton_delete" WidthRequest="30"
                     Command="{Binding Source={RelativeSource AncestorType={x:Type viewModels:MisCaminosViewModel}}, Path=BorrarMiCamino}" 
                     CommandParameter="{Binding Text, Source={x:Reference id}}" 
-                    FontSize="Medium" Padding="0" Margin="0" WidthRequest="120" HeightRequest="20"
-                    BackgroundColor="Red" BorderColor="Brown" BorderWidth="2" />
+                    FontSize="Small" Padding="0" Margin="0"  HeightRequest="20"
+                    BackgroundColor="Red" />
             </StackLayout>
 
         </Grid>

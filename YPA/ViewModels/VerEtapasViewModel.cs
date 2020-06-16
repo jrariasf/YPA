@@ -43,14 +43,20 @@ namespace YPA.ViewModels
         public MiCamino miCamino
         {
             get { return _miCamino; }
-            set { SetProperty(ref _miCamino, value); }
+            set { 
+                SetProperty(ref _miCamino, value);
+                RaisePropertyChanged(nameof(miCamino));
+            }
         }
 
         private TablaMisCaminos _miTMC;
         public TablaMisCaminos miTMC
         {
             get { return _miTMC; }
-            set { SetProperty(ref _miTMC, value); }
+            set { 
+                SetProperty(ref _miTMC, value);
+                RaisePropertyChanged(nameof(miTMC));
+            }
         }
       
 
@@ -93,7 +99,8 @@ namespace YPA.ViewModels
             Console.WriteLine("DEBUG3 - VerEtapasVM - ExecuteOpcionesSobreEtapaCommand  miTMC.etapas <{0}>", miTMC.etapas);
             Console.WriteLine("DEBUG - VerEtapasVM - ExecuteOpcionesSobreEtapaCommand miCamino.etapas <{0}>", miCamino.etapas);
 
-            if (miCamino.NumEtapas() == etapa.orden + 1) // Si se trata de la última etapa (lo indicamos para deshabilitar el botón "Unir esta etapa y la siguiente"
+            //_xx_numEtapas  if (miCamino.NumEtapas() == etapa.orden + 1) // Si se trata de la última etapa (lo indicamos para deshabilitar el botón "Unir esta etapa y la siguiente"
+            if (miCamino.numDias == etapa.orden + 1) // Si se trata del último día (lo indicamos para deshabilitar el botón "Unir esta etapa y la siguiente"
                 param.Add("esUltimaEtapa", true);
             else
                 param.Add("esUltimaEtapa", false);
@@ -160,7 +167,22 @@ namespace YPA.ViewModels
 
         }
 
-        public void OnNavigatedFrom(INavigationParameters parameters)
+        private DelegateCommand _MostrarInfo;
+        public DelegateCommand MostrarInfo =>
+                _MostrarInfo ?? (_MostrarInfo = new DelegateCommand(ExecuteMostrarInfo));
+
+        async void ExecuteMostrarInfo()
+        {
+            Console.WriteLine("DEBUG - VerEtapasVM - ExecuteMostrarInfo()");
+
+            if (miCamino != null)
+                miCamino.MostrarInfo();
+            else
+                Console.WriteLine("DEBUG - VerEtapasVM - ExecuteMostrarInfo():  miCamino es null");
+
+        }
+
+            public void OnNavigatedFrom(INavigationParameters parameters)
         {
             //throw new NotImplementedException();
         }

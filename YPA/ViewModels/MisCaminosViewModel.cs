@@ -6,6 +6,7 @@ using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.ComponentModel;
 using System.Linq;
+using Xamarin.Forms;
 using YPA.Models;
 
 namespace YPA.ViewModels
@@ -67,17 +68,31 @@ namespace YPA.ViewModels
         async void ExecuteBorrarMiCamino(string id)
         {
             Console.WriteLine("DEBUG - MisCaminosVM - ExecuteBorrarMiCamino  id:{0}", id);
-            int res = await App.Database.DeleteMiCaminoAsync(int.Parse(id));
-            Console.WriteLine("DEBUG - MisCaminosVM - ExecuteBorrarMiCamino  Se han borrado {0} registros", res);
-
-            if (res > 0)
+            var respuesta = false;
+            Device.BeginInvokeOnMainThread(async () =>
             {
-                Console.WriteLine("DEBUG - MisCaminosVM - ExecuteBorrarMiCamino: Se va a quitar de la lista el camino para que no se vea");
-                TablaMisCaminos tmc = new TablaMisCaminos(int.Parse(id));
-                bool quitar = false;
-                quitar = listaMisCaminos.Remove(tmc);
-                Console.WriteLine("DEBUG - MisCaminosVM - ExecuteBorrarMiCamino: Remove ha devuelto {0}", quitar);
+                respuesta = await App.Current.MainPage.DisplayAlert("Aviso", "Confirme que quiere borrar el camino:", "Borrar", "Cancelar");    //("Error", "Hay que dar un nombre a tu camino", "OK");
+            });
+
+            if (respuesta)
+            {
+                Console.WriteLine("DEBUG - MisCaminosVM - ExecuteBorrarMiCamino  SE VA A BORRAR EL CAMINO!!!");
+                /*
+                int res = await App.Database.DeleteMiCaminoAsync(int.Parse(id));
+                Console.WriteLine("DEBUG - MisCaminosVM - ExecuteBorrarMiCamino  Se han borrado {0} registros", res);
+
+                if (res > 0)
+                {
+                    Console.WriteLine("DEBUG - MisCaminosVM - ExecuteBorrarMiCamino: Se va a quitar de la lista el camino para que no se vea");
+                    TablaMisCaminos tmc = new TablaMisCaminos(int.Parse(id));
+                    bool quitar = false;
+                    quitar = listaMisCaminos.Remove(tmc);
+                    Console.WriteLine("DEBUG - MisCaminosVM - ExecuteBorrarMiCamino: Remove ha devuelto {0}", quitar);
+                }
+                */
             }
+            else
+                Console.WriteLine("DEBUG - MisCaminosVM - ExecuteBorrarMiCamino  SE CANCELA EL BORRADO DEL CAMINO");
         }
 
         private DelegateCommand<string> _AmpliarMiCamino;

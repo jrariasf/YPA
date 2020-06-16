@@ -12,6 +12,9 @@
     <None Remove="Images\ic_albergueParroquial_true.png" />
     <None Remove="Images\ic_alberguePrivado_false.png" />
     <None Remove="Images\ic_alberguePrivado_true.png" />
+    <None Remove="Images\ic_boton_delete.png" />
+    <None Remove="Images\ic_boton_etapas.png" />
+    <None Remove="Images\ic_boton_listado.png" />
     <None Remove="Images\ic_bus_false.png" />
     <None Remove="Images\ic_bus_true.png" />
     <None Remove="Images\ic_cafeteria_false.png" />
@@ -35,13 +38,15 @@
   </ItemGroup>
 
   <ItemGroup>
-    <EmbeddedResource Include="ic_farmacia_true.png" />
     <EmbeddedResource Include="Images\ic_albergueMunicipal_false.png" />
     <EmbeddedResource Include="Images\ic_albergueMunicipal_true.png" />
     <EmbeddedResource Include="Images\ic_albergueParroquial_false.png" />
     <EmbeddedResource Include="Images\ic_albergueParroquial_true.png" />
     <EmbeddedResource Include="Images\ic_alberguePrivado_false.png" />
     <EmbeddedResource Include="Images\ic_alberguePrivado_true.png" />
+    <EmbeddedResource Include="Images\ic_boton_delete.png" />
+    <EmbeddedResource Include="Images\ic_boton_etapas.png" />
+    <EmbeddedResource Include="Images\ic_boton_listado.png" />
     <EmbeddedResource Include="Images\ic_bus_false.png" />
     <EmbeddedResource Include="Images\ic_bus_true.png" />
     <EmbeddedResource Include="Images\ic_cafeteria_false.png" />

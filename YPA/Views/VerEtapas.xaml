@@ -14,26 +14,67 @@
     </ContentPage.ToolbarItems>
 
 
-    <StackLayout BackgroundColor="Red"  Orientation="Vertical">
-        <!-- <Label Text="{Binding miTexto}"  WidthRequest="300" HeightRequest="60" FontSize="14"/> -->
-        <ListView x:Name="listView"
-            ItemsSource="{Binding listaEtapas, Mode=TwoWay}"    
-            IsGroupingEnabled="False" RowHeight="30"
-            SeparatorVisibility="None" BackgroundColor="White">
+    <StackLayout BackgroundColor="Transparent"  Orientation="Vertical" Padding="4,0,0,0">
+        <StackLayout Orientation="Vertical" BackgroundColor="#FFE1FAF9" IsVisible="{Binding mostrarCabecera}"  >
+            <StackLayout Orientation="Vertical" BackgroundColor="#FFE1FAF9" >
+                <StackLayout Orientation="Horizontal" HeightRequest="25" BackgroundColor="#BBF8F6" >
+                    <Label Text="Camino: " FontAttributes="Bold" FontSize="Small" />
+                    <Label Text="{Binding miCamino.miNombreCamino,FallbackValue=-}" TextColor="Black" BackgroundColor="AliceBlue" />
+                    <Label Text="Camino base: " FontAttributes="Bold" FontSize="Small" HorizontalOptions="End" Padding="15,0,0,0" BackgroundColor="Orange" />
+                    <Label Text="{Binding miTMC.caminoBase,FallbackValue=-}" TextColor="Black" HorizontalOptions="End" HorizontalTextAlignment="End" BackgroundColor="red" />
+                </StackLayout>
 
-            <ListView.Behaviors>
-                <prism:EventToCommandBehavior EventName="ItemTapped"
+                <StackLayout Orientation="Horizontal" HeightRequest="20" BackgroundColor="#FFE1FAF9" >
+                    <Label Text="{Binding miCamino.distanciaTotalMiCamino,StringFormat='Distancia: {0} kms'}" />
+                    <Label Text="{Binding miCamino.numDias,StringFormat='Duración: {0} días'}" Padding="10,0,0,0" />
+                    <Label Text="{Binding miCamino.numEtapas,StringFormat=', {0} etapas'}" />
+                    
+                    <Button Text="INFO" Command="{Binding MostrarInfo,FallbackValue=Funcion no definida}" FontSize="Micro" />
+                </StackLayout>
+
+                <Label Text="{Binding miTMC.descripcion,StringFormat='Descripción: {0}'}" HeightRequest="20" />
+            </StackLayout>
+        
+            <Grid ColumnSpacing="0" BackgroundColor="OrangeRed" >
+              <Grid.RowDefinitions>
+                    <RowDefinition Height="35" />
+              </Grid.RowDefinitions>
+              <Grid.ColumnDefinitions >
+                <ColumnDefinition Width="2*" />
+                <ColumnDefinition Width="8*" />
+                <ColumnDefinition Width="16*" />
+                <ColumnDefinition Width="16*" />
+                <ColumnDefinition Width="7*" />
+                <ColumnDefinition Width="4*" />
+              </Grid.ColumnDefinitions>
+
+              <Label Text="#"         Grid.Column="0" FontSize="Small" TextColor="Black" Margin="0" Padding="0" HorizontalOptions="StartAndExpand" VerticalOptions="Center" VerticalTextAlignment="Center" />
+              <Label Text="Día"       Grid.Column="1" FontSize="Small" TextColor="Black" Margin="0" Padding="0" HorizontalOptions="StartAndExpand" VerticalOptions="Center" VerticalTextAlignment="Center" />
+              <Label Text="Origen"    Grid.Column="2" FontSize="Small" TextColor="Black" Margin="0" Padding="0" HorizontalOptions="StartAndExpand" VerticalOptions="Center" VerticalTextAlignment="Center" />
+              <Label Text="Destino"   Grid.Column="3" FontSize="Small" TextColor="Black" Margin="0" Padding="0" HorizontalOptions="StartAndExpand" VerticalOptions="Center" VerticalTextAlignment="Center" />
+              <Label Text="kms"       Grid.Column="4" FontSize="Small" TextColor="Black" Margin="0" Padding="0" HorizontalOptions="StartAndExpand" VerticalOptions="Center" VerticalTextAlignment="Center" />
+              <Label Text=""          Grid.Column="5" FontSize="Small" TextColor="Black" Margin="0" Padding="0" HorizontalOptions="StartAndExpand" VerticalOptions="Center" VerticalTextAlignment="Center" />
+            </Grid>
+        </StackLayout>
+        
+        <ListView x:Name="listView"
+              ItemsSource="{Binding listaEtapas, Mode=TwoWay}"    
+              IsGroupingEnabled="False" RowHeight="30"
+              SeparatorVisibility="None" BackgroundColor="White">
+
+              <ListView.Behaviors>
+                     <prism:EventToCommandBehavior EventName="ItemTapped"
                                           Command="{Binding ItemTappedCommand}"
                                           EventArgsParameterPath="Item" />
-            </ListView.Behaviors>
+              </ListView.Behaviors>
             
 
-            <ListView.ItemTemplate>
-                <DataTemplate>
-                    <local:CellMisEtapas />
-                </DataTemplate>
-            </ListView.ItemTemplate>
-        </ListView>
+              <ListView.ItemTemplate>
+                   <DataTemplate>
+                        <local:CellMisEtapas />
+                   </DataTemplate>
+              </ListView.ItemTemplate>
+         </ListView>
     </StackLayout>
     
 </ContentPage>
