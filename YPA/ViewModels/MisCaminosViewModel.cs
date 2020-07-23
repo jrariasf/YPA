@@ -6,6 +6,7 @@ using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.ComponentModel;
 using System.Linq;
+using Xamarin.Essentials;
 using Xamarin.Forms;
 using YPA.Models;
 
@@ -69,15 +70,22 @@ namespace YPA.ViewModels
         {
             Console.WriteLine("DEBUG - MisCaminosVM - ExecuteBorrarMiCamino  id:{0}", id);
             var respuesta = false;
-            Device.BeginInvokeOnMainThread(async () =>
-            {
-                respuesta = await App.Current.MainPage.DisplayAlert("Aviso", "Confirme que quiere borrar el camino:", "Borrar", "Cancelar");    //("Error", "Hay que dar un nombre a tu camino", "OK");
+
+      
+            //await MainThread.InvokeOnMainThreadAsync(async () =>
+            await Device.InvokeOnMainThreadAsync(async () =>
+            {                
+                respuesta = await App.Current.MainPage.DisplayAlert("Aviso", "Confirme que quiere borrar el camino:", "Borrar", "Cancelar");
+                //Console.WriteLine("DEBUG - MisCaminosVM - ExecuteBorrarMiCamino JUSTO despues del DisplayAlert y dentro del BeginInvoke respuesta:", respuesta.ToString());
             });
+
+
+            Console.WriteLine("DEBUG - MisCaminosVM - ExecuteBorrarMiCamino Regresamos de la DisplayAlert");
 
             if (respuesta)
             {
                 Console.WriteLine("DEBUG - MisCaminosVM - ExecuteBorrarMiCamino  SE VA A BORRAR EL CAMINO!!!");
-                /*
+                
                 int res = await App.Database.DeleteMiCaminoAsync(int.Parse(id));
                 Console.WriteLine("DEBUG - MisCaminosVM - ExecuteBorrarMiCamino  Se han borrado {0} registros", res);
 
@@ -89,7 +97,7 @@ namespace YPA.ViewModels
                     quitar = listaMisCaminos.Remove(tmc);
                     Console.WriteLine("DEBUG - MisCaminosVM - ExecuteBorrarMiCamino: Remove ha devuelto {0}", quitar);
                 }
-                */
+                
             }
             else
                 Console.WriteLine("DEBUG - MisCaminosVM - ExecuteBorrarMiCamino  SE CANCELA EL BORRADO DEL CAMINO");
@@ -153,7 +161,7 @@ namespace YPA.ViewModels
             var navigationMode = parameters.GetNavigationMode();
             Console.WriteLine("DEBUG3 - MisCaminosVM - OnNavigatedTo GetNavigationMode() es {0}", navigationMode);
 
-            if (navigationMode == NavigationMode.Back)
+            if (navigationMode == Prism.Navigation.NavigationMode.Back)
             {
                 Console.WriteLine("DEBUG3 - MisCaminosVM - OnNavigatedTo Vamos a recargar mis caminos");
                 CargarCaminosAsync();

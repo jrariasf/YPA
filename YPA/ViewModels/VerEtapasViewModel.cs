@@ -159,9 +159,13 @@ namespace YPA.ViewModels
                               miCamino.fechaInicio == null ? "NULL" : miCamino.fechaInicio);
             Console.WriteLine("DEBUG - VerEtapasVM - ExecuteGuardarCamino() bifurcaciones:{0}", listadoBifurcaciones);
             Console.WriteLine("DEBUG - VerEtapasVM - ExecuteGuardarCamino() etapas:{0}", listadoEtapas);
+            Console.WriteLine("DEBUG - VerEtapasVM - ExecuteGuardarCamino() NumEtapas:{0}", miCamino.NumEtapas());
+            Console.WriteLine("DEBUG - VerEtapasVM - ExecuteGuardarCamino() numDias:{0}", miCamino.numDias);
+            Console.WriteLine("DEBUG - VerEtapasVM - ExecuteGuardarCamino() distanciaTotalMiCamino:{0}", miCamino.distanciaTotalMiCamino);
 
             TablaMisCaminos tmc = new TablaMisCaminos(miCamino.miNombreCamino, miCamino.descripcion, miCamino.caminoActual,
-                                                      miCamino.fechaInicio, listadoBifurcaciones, listadoEtapas);
+                                                      miCamino.fechaInicio, listadoBifurcaciones, listadoEtapas,
+                                                      miCamino.numDias, miCamino.NumEtapas(), miCamino.distanciaTotalMiCamino);
 
             await App.Database.SaveMiCaminoAsync(tmc);
 

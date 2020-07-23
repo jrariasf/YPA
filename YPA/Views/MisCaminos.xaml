@@ -8,32 +8,66 @@
              Title="MisCaminos">
 
     <ContentPage.ToolbarItems>
-        <!-- <ToolbarItem Text="+"  Clicked="OnNoteAddedClicked" CommandParameter="prueba" /> -->
+            <!-- <ToolbarItem Text="+"  Clicked="OnNoteAddedClicked" CommandParameter="prueba" /> 
         <ToolbarItem Text="+"  Command="{Binding AddMiCaminoClicked,FallbackValue=Funcion no definida}"
                                CommandParameter="toma mi parámetro" />
-    </ContentPage.ToolbarItems>
+        -->
+        </ContentPage.ToolbarItems>
 
 
-    <StackLayout BackgroundColor="Red"  Orientation="Vertical">
-        <!-- <Label Text="{Binding miTexto}"  WidthRequest="300" HeightRequest="60" FontSize="14"/> -->
-        <ListView x:Name="listView"
+        <StackLayout  Orientation="Vertical" HeightRequest="15">
+            <!-- CABECERA -->
+            <FlexLayout Direction="Row"  >
+                <FlexLayout Direction="Row"  FlexLayout.Grow="1" Padding="0" />
+
+                <Grid ColumnSpacing="0"  Margin="0" Padding="0" WidthRequest="60" >
+                    <Grid.RowDefinitions>
+                        <RowDefinition Height="15" />
+                    </Grid.RowDefinitions>
+                    <Grid.ColumnDefinitions >
+                        <ColumnDefinition Width="*" />
+                        <ColumnDefinition Width="*" />
+                        <ColumnDefinition Width="2*" />
+                    </Grid.ColumnDefinitions>
+
+                    <Label Text="d" Grid.Column="0" HorizontalOptions="End" VerticalTextAlignment="End" 
+                           VerticalOptions="End"/>
+                    <Label Text="E" Grid.Column="1" HorizontalOptions="End" VerticalTextAlignment="End" />
+                    <Label Text="km" Grid.Column="2" HorizontalOptions="End" VerticalTextAlignment="End" />
+                </Grid>
+
+                <StackLayout Orientation="Horizontal" HorizontalOptions="End" VerticalOptions="Start"  Margin="2,0,0,0" Padding="0" HeightRequest="25" WidthRequest="90" />
+
+            </FlexLayout>
+
+
+
+            <!-- <Label Text="{Binding miTexto}"  WidthRequest="300" HeightRequest="60" FontSize="14"/> -->
+            <ListView x:Name="listView"
             ItemsSource="{Binding listaMisCaminos, Mode=TwoWay}"
-            IsGroupingEnabled="False" RowHeight="80"
-            SeparatorVisibility="None" BackgroundColor="White">
-            <!--RowHeight="170"-->
+            IsGroupingEnabled="False" HasUnevenRows="False"
+            SeparatorVisibility="Default" BackgroundColor="#FFEB3B" RowHeight="60">
+                <!--RowHeight="170"-->
 
-            <ListView.Behaviors>
-                <prism:EventToCommandBehavior EventName="ItemTapped"
+                <ListView.Behaviors>
+                    <prism:EventToCommandBehavior EventName="ItemTapped"
                                           Command="{Binding ItemTappedCommand}"
                                           EventArgsParameterPath="Item" />
-            </ListView.Behaviors>
+                </ListView.Behaviors>
 
-            <ListView.ItemTemplate>
-                <DataTemplate>
-                    <local:CellMisCaminos />
-                </DataTemplate>
-            </ListView.ItemTemplate>
-        </ListView>
-    </StackLayout>
-    
-</ContentPage>
+                <ListView.ItemTemplate>
+                    <DataTemplate>
+                        <local:CellMisCaminos />
+                    </DataTemplate>
+                </ListView.ItemTemplate>
+            </ListView>
+
+            <!-- PIE DE PAGINA -->
+            <FlexLayout Direction="Row" BackgroundColor="Orange" >
+                <Label Text="d: duración en días;    E: número de etapas;     km: longitud en km del camino" 
+                   TextColor="Black" FontSize="Caption" FontAttributes="Bold" />
+            </FlexLayout>
+
+        </StackLayout>
+
+    </ContentPage> 

@@ -178,8 +178,10 @@ namespace YPA.Models
         public string etapas { get; set; } // Contiene una cadena o listado de poblaciones en las que se hace noche, separadas por punto y coma.
                                            // Además, entre corchetes se podría poner algún comentario. O incluso además del comentario podría ponerse el número de días de esa etapa.
                                            // En ese caso podríamos usar el "#" como separador. Por ejemplo: Tábara#2#Vuelta por la Sierra de la Culebra;Rionegro;Requejo
-                                           // Con eso indicaría que en Tábara me quedo un día y al día siguiente saldría hacia Rionegro que sería la siguiente etapa. Y al día siguiente hasta Requejo.
-
+                                           // Con eso indicaría que en Tábara me quedo un día y al día siguiente saldría hacia Rionegro que sería la siguiente etapa. Y al día siguiente hasta Requejo.        
+        public int numDias { get; set; }
+        public int numEtapas { get; set; }
+        public double longitud { get; set; }
         public bool Equals(TablaMisCaminos other)
         {
             //throw new NotImplementedException();
@@ -199,7 +201,9 @@ namespace YPA.Models
         {
             id = _id;
         }
-        public TablaMisCaminos(string _miNombreCamino, string _descripcion, string _caminoBase, string _dia, string _bifurcaciones, string _etapas)
+        public TablaMisCaminos(string _miNombreCamino, string _descripcion, string _caminoBase,
+                               string _dia, string _bifurcaciones, string _etapas,
+                               int _numDias, int _numEtapas, double _longitud)
         {
             miNombreCamino = _miNombreCamino;
             descripcion = _descripcion;
@@ -216,6 +220,9 @@ namespace YPA.Models
             }
             bifurcaciones = _bifurcaciones;
             etapas = _etapas;
+            numDias = _numDias;
+            numEtapas = _numEtapas;
+            longitud = _longitud;
 
         }
     }

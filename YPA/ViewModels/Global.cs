@@ -66,8 +66,17 @@ namespace YPA.ViewModels
         {
             //return !string.IsNullOrEmpty($"{value}");
             //var valor = (bool)object;
-            string valor = ((bool)value).ToString().ToLower();
-            string source = "YPA.Images." + parameter + "_" + valor + ".png";
+            string source;
+
+            if (value == null || !value.GetType().Equals(typeof(bool)))
+            {
+                source = "YPA.Images." + parameter + ".png";
+            }
+            else
+            {
+                string valor = ((bool)value).ToString().ToLower();
+                source = "YPA.Images." + parameter + "_" + valor + ".png";
+            }
 
             Console.WriteLine("DEBUG - DameImageSourceConverter - source <{0}>", source);
 

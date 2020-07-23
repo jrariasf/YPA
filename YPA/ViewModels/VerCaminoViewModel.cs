@@ -108,10 +108,15 @@ namespace YPA.ViewModels
                               miCamino.fechaInicio == null ? "NULL" : miCamino.fechaInicio);
             Console.WriteLine("DEBUG - VerCaminoVM - ExecuteGuardarCamino() bifurcaciones:{0}", listadoBifurcaciones);
             Console.WriteLine("DEBUG - VerCaminoVM - ExecuteGuardarCamino() etapas:{0}", listadoEtapas);
+            Console.WriteLine("DEBUG - VerCaminoVM - ExecuteGuardarCamino() NumEtapas:{0}", miCamino.NumEtapas());
+            Console.WriteLine("DEBUG - VerCaminoVM - ExecuteGuardarCamino() numDias:{0}", miCamino.numDias);
+            Console.WriteLine("DEBUG - VerCaminoVM - ExecuteGuardarCamino() distanciaTotalMiCamino:{0}", miCamino.distanciaTotalMiCamino);
             
 
+
             TablaMisCaminos tmc = new TablaMisCaminos(miCamino.miNombreCamino, miCamino.descripcion, miCamino.caminoActual,
-                                                      miCamino.fechaInicio, listadoBifurcaciones, listadoEtapas);
+                                                      miCamino.fechaInicio, listadoBifurcaciones, listadoEtapas,
+                                                      miCamino.numDias, miCamino.NumEtapas(), miCamino.distanciaTotalMiCamino);
 
             Global.subetapasModificadas = listadoEtapas;
 

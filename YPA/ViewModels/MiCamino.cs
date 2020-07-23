@@ -120,8 +120,21 @@ namespace YPA.ViewModels
                 //resumen = "[ " + NumEtapas() + " etapas, " + distanciaTotalMiCamino.ToString(Global.culture) + " kms ]";
                 resumen = NumEtapas() + " etapas, " + distanciaTotalMiCamino.ToString(Global.culture) + " kms";
                 RaisePropertyChanged(nameof(numEtapas));
+                RaisePropertyChanged(nameof(NUMETAPAS));
             }
         }
+
+        public int NUMETAPAS
+        {
+            get
+            {               
+                return NumEtapas();
+            }
+            set { ; }
+        }
+
+
+
 
         private int _numDias;
         public int numDias
